@@ -19,6 +19,7 @@ import { signInFormSchema } from '@/schema'
 import { api } from '@/lib/utils'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { setAccessToken } from '@/app/api/cookie'
 
 type SignInFormValues = z.infer<typeof signInFormSchema>
 
@@ -30,20 +31,21 @@ export const SignInForm = () => {
     resolver: zodResolver(signInFormSchema),
     mode: 'onChange',
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'test111@mail.com',
+      password: 'test1234',
     },
   })
 
-  const onSubmit = async (values: SignInFormValues) => {
+  const onSubmit = (values: SignInFormValues) => {
     startTransition(async () => {
       const { email, password } = values
       try {
         const response = await api.post('/auth/login', { email, password })
         const { accessToken } = response.data
-        localStorage.setItem('token', accessToken)
+        await setAccessToken(accessToken)
+
         toast.success('로그인 성공')
-        router.push('/dashboard')
+        router.replace('/dashboard')
       } catch (error) {
         toast.error('로그인에 실패하였습니다')
       }

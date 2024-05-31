@@ -38,7 +38,7 @@ export const SignUpForm = () => {
     },
   })
 
-  const onSubmit = async (values: SignUpFormValues) => {
+  const onSubmit = (values: SignUpFormValues) => {
     startTransition(async () => {
       const { email, name: nickname, password } = values
       try {

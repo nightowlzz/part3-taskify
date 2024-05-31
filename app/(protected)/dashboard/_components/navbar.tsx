@@ -1,20 +1,14 @@
-'use client'
+import { api } from '@/lib/utils'
+import { LogoutButton } from './logout-button'
 
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-
-export const Navbar = () => {
-  const router = useRouter()
-
-  const onClick = () => {
-    localStorage.removeItem('token')
-    router.push('/sign-in')
-  }
+export const Navbar = async () => {
+  const user = await api.get('/users/me')
+  // console.log(user.data)
 
   return (
-    <nav className='flex items-center justify-between bg-slate-200 px-10'>
-      <span>logo</span>
-      <Button onClick={onClick}>로그아웃</Button>
+    <nav className='flex h-14 items-center justify-between border-b px-10'>
+      <span className='text-sm font-bold'>내 대시보드</span>
+      <LogoutButton />
     </nav>
   )
 }
