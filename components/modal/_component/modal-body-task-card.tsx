@@ -15,11 +15,11 @@ import styled from './modal.module.css'
 const TaskCard = () => {
   return (
     <DialogContent className='block h-screen max-w-[730px] md:max-h-[80vh]'>
-      <ScrollArea className=' h-full w-full'>
-        <div className='md:pr-[228px]'>
+      <ScrollArea className='h-full w-full'>
+        <div className='px-[28px] py-8 md:pr-[244px]'>
           <ModalHead>새로운 일정 관리 Taskify</ModalHead>
           {/* 담당자 */}
-          <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-0 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
+          <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
             <li className='flex-1 md:pb-5'>
               <h6 className='pb-[2px] text-xs font-bold leading-5 md:pb-1'>
                 담당자
@@ -116,13 +116,13 @@ const TaskCard = () => {
       </ScrollArea>
       {/* 팝오버 */}
       <Popover>
-        <PopoverTrigger className='absolute right-12 top-3 h-6 w-6 md:right-20 md:top-9 md:h-7 md:w-7'>
+        <PopoverTrigger className='absolute right-[52px] top-3 h-6 w-6 md:right-20 md:right-[78px] md:top-9 md:h-7 md:w-7'>
           <Image
             fill
-            src={'/icon_dotted.svg'}
+            src={`/icon-dotted.svg`}
             alt={'팝오버'}
             style={{
-              objectFit: 'cover', // cover, contain, none
+              objectFit: 'cover',
             }}
           />
         </PopoverTrigger>

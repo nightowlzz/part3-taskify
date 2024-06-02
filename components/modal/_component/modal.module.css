@@ -17,3 +17,17 @@
   border-radius: 50em;
   background-color: #5534DA;
 }
+
+.failLabel {
+  width: 76px;
+  height: 76px;
+  background-color: #F5F5F5;
+
+
+}
+
+.inputFile {
+  display: none;
+}
+
+.fail-label::before {}

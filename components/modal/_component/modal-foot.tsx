@@ -4,21 +4,20 @@ import { Button } from '@/components/ui/button'
 
 export const ModalFoot = () => {
   return (
-    <DialogFooter className='flex-end pt-7'>
-      <DialogClose asChild>
-        <Button
-          type='button'
-          variant={'outline'}
-          className='h-12 w-full max-w-[120px]'
-        >
-          취소
-        </Button>
-      </DialogClose>
-      <DialogClose asChild>
-        <Button type='button' className='h-12 w-full max-w-[120px]'>
-          확인
-        </Button>
-      </DialogClose>
+    <DialogFooter className='flex-end gap-3 pt-7'>
+      <Button
+        type='button'
+        variant={'outline'}
+        className='h-12 w-full md:max-w-[120px]'
+      >
+        취소
+      </Button>
+      <Button
+        type='button'
+        className='h-12 w-full bg-[#5534DA] md:max-w-[120px]'
+      >
+        확인
+      </Button>
     </DialogFooter>
   )
 }
