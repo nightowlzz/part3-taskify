@@ -15,9 +15,7 @@ const Modal = ({ text, order }: modalType) => {
       <DialogTrigger asChild>
         <Button variant='outline'>{text}</Button>
       </DialogTrigger>
-      <DialogContent className='max-w-[540px]'>
-        <ModalBody order={order} />
-      </DialogContent>
+      <ModalBody order={order} />
     </Dialog>
   )
 }
