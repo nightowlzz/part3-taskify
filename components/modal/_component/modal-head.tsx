@@ -5,7 +5,7 @@ import React from 'react'
 export const ModalHead = ({ children }: { children: React.ReactNode }) => {
   return (
     <DialogHeader>
-      <DialogTitle className='pb-6 sm:text-2xl'>{children}</DialogTitle>
+      <DialogTitle className='py-5 sm:text-2xl md:pb-6'>{children}</DialogTitle>
     </DialogHeader>
   )
 }

@@ -2,7 +2,7 @@ import Modal from '@/components/modal/modal-layout'
 
 const StyleGuide = () => {
   return (
-    <div className='mx-auto flex w-[600px] flex-col py-[30px]'>
+    <div className='mx-auto flex max-w-[600px] flex-col p-[30px]'>
       <h2 className='py-[30px]'>모달</h2>
       <div>
         <Modal text='할 일 카드' order='taskCard' />
