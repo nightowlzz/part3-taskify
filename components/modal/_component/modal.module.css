@@ -1,3 +1,7 @@
+.dialogWrap {
+  width: calc(100% - 48px);
+}
+
 .separator::before {
   content: '';
   position: absolute;
@@ -18,16 +22,6 @@
   background-color: #5534DA;
 }
 
-.failLabel {
-  width: 76px;
-  height: 76px;
-  background-color: #F5F5F5;
-
-
-}
-
 .inputFile {
   display: none;
 }
-
-.fail-label::before {}

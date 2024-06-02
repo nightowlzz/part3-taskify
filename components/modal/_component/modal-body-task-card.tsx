@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { DialogContent } from '@/components/ui/dialog'
+import { DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
   Popover,
   PopoverContent,
@@ -14,9 +14,9 @@ import styled from './modal.module.css'
 
 const TaskCard = () => {
   return (
-    <DialogContent className='block h-screen max-w-[730px] md:max-h-[80vh]'>
+    <DialogContent className='block h-[90vh] max-w-[730px] md:max-h-[80vh]'>
       <ScrollArea className='h-full w-full'>
-        <div className='px-[28px] py-8 md:pr-[244px]'>
+        <div className='px-5 pb-7 pt-10 md:px-7 md:py-8 md:pr-[244px]'>
           <ModalHead>새로운 일정 관리 Taskify</ModalHead>
           {/* 담당자 */}
           <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
@@ -102,12 +102,20 @@ const TaskCard = () => {
                   오늘안에 CCC 까지 만들 수 있을까요?
                 </div>
                 <div className='flex gap-2.5'>
-                  <Button variant={'underline'} className='h-auto p-0'>
-                    수정
-                  </Button>
-                  <Button variant={'underline'} className='h-auto p-0'>
-                    삭제
-                  </Button>
+                  <DialogTrigger asChild>
+                    <Button
+                      type='button'
+                      variant={'outline'}
+                      className='h-12 w-full md:max-w-[120px]'
+                    >
+                      취소
+                    </Button>
+                  </DialogTrigger>
+                  <DialogTrigger asChild>
+                    <Button variant={'underline'} className='h-auto p-0'>
+                      삭제
+                    </Button>
+                  </DialogTrigger>
                 </div>
               </li>
             </ul>
@@ -116,7 +124,7 @@ const TaskCard = () => {
       </ScrollArea>
       {/* 팝오버 */}
       <Popover>
-        <PopoverTrigger className='absolute right-[52px] top-3 h-6 w-6 md:right-20 md:right-[78px] md:top-9 md:h-7 md:w-7'>
+        <PopoverTrigger className='absolute right-[48px] top-3 h-6 w-6 md:right-20 md:right-[78px] md:top-9 md:h-7 md:w-7'>
           <Image
             fill
             src={`/icon-dotted.svg`}
