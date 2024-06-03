@@ -1,5 +1,11 @@
+import FetchDashboardBtn from './_components/api_test/fetch-dashboard-btn'
+
 const DashboardPage = () => {
-  return <main>asd</main>
+  return (
+    <main>
+      <FetchDashboardBtn />
+    </main>
+  )
 }
 
 export default DashboardPage
