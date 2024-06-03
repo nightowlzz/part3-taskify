@@ -23,17 +23,3 @@ api.interceptors.request.use(
     return Promise.reject(error)
   },
 )
-
-export async function fetchDashboards() {
-  try {
-    const response = await api.get('/dashboards', {
-      params: {
-        navigationMethod: 'manual', // 필요한 경우 유효한 값을 사용하십시오
-      },
-    })
-    return response.data
-  } catch (error) {
-    console.error('Error fetching dashboards:')
-    throw error
-  }
-}

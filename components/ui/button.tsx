@@ -21,6 +21,10 @@ const buttonVariants = cva(
         p_btn: 'bg-[#5534DA] text-white hover:bg-[#5534DA]/90',
         w_btn:
           'text-violet-500 border border-[#D9D9D9] bg-white hover:bg-[#D9D9D9]/90',
+        underline:
+          'bg-transparent underline text-[#9fa6b2] leading-5 text-xs w-auto',
+        popover:
+          'bg-transparent hover:bg-[#F1EFFD] hover:text-[#5534da] leading-5 text w-full text-sm',
       },
       size: {
         default: 'h-10 px-4 py-2',

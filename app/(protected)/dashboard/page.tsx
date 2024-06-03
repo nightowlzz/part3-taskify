@@ -1,12 +1,15 @@
-// const DashboardPage = () => {
-//   return <main>asd</main>
+import FetchDashboardBtn from './_components/api_test/fetch-dashboard-btn'
 
-// }
-
-// export default DashboardPage
+const DashboardPage = () => {
+  return (
+    <main>
+      <FetchDashboardBtn />
+    </main>
+  )
+}
 
 // app/(protected)/dashboard/page.tsx
-'use client'
+;('use client')
 
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -14,29 +17,12 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PaginationBtn } from '@/components/ui/pagination'
-import { fetchDashboards } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
 export default function EditBoardPage() {
   // const router = useRouter()
   // const { boardid } = router.query
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const dashboardData = await fetchDashboards()
-        setData(dashboardData)
-        console.log(dashboardData)
-      } catch (err) {
-      } finally {
-        setLoading(false)
-      }
-    }
 
-    getData()
-  }, [])
   return (
     <div>
       <Button variant='ghost' className='flex justify-start text-gray-500'>
