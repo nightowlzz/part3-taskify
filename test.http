@@ -1,0 +1,19 @@
+@baseUrl = https://sp-taskify-api.vercel.app
+@credentials = {
+  "email": "test111@mail.com",
+  "password": "test1234"
+}
+
+### 로그인 요청하여 토큰 발급받기
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{{credentials}}
+
+### 응답에서 토큰 추출
+> {% assign token = response.body.token %}
+
+### 발급받은 토큰을 사용하여 데이터 요청
+GET {{baseUrl}}/your-team-id/dashboards/your-dashboard-id
+Authorization: Bearer {{token}}
+Accept: application/json
