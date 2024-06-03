@@ -16,14 +16,13 @@ interface FetchDashboardsResponse {
   dashboards: Dashboard[]
 }
 
-async function fetchDashboards(
-  teamId: string,
+export async function fetchDashboards(
   navigationMethod: 'infiniteScroll' | 'pagination',
-  cursorId?: number,
   page: number = 1,
-  size: number = 10,
+  cursorId?: number,
+  size: number = 5,
 ): Promise<FetchDashboardsResponse> {
-  const url = `/${teamId}/dashboards`
+  const url = `/dashboards`
   const params = {
     navigationMethod,
     cursorId,

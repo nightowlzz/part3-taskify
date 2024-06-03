@@ -15,7 +15,7 @@ interface CreateDashboardResponse {
   userId: number
 }
 
-async function createDashboard(
+export async function createDashboard(
   teamId: string,
   requestBody: CreateDashboardRequest,
 ): Promise<CreateDashboardResponse> {
