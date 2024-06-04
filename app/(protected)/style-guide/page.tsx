@@ -1,18 +1,65 @@
-import Modal from '@/components/modal/modal-layout'
+import { ColumnAdd } from '@/components/modal/column-add'
+import { ColumnEdit } from '@/components/modal/column-edit'
+import { ConfirmAlert } from '@/components/modal/confirm-alert'
+import TaskCard from '@/components/modal/task-card'
+import TaskCardCreate from '@/components/modal/task-create'
+import { TaskCardEdit } from '@/components/modal/task-edit'
+import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 const StyleGuide = () => {
   return (
     <div className='mx-auto flex max-w-[600px] flex-col p-[30px]'>
       <h2 className='py-[30px]'>모달</h2>
-      <div>
-        <Modal text='할 일 카드' order='taskCard' />
-        <Modal text='할 일 생성' order='taskCardCreate' confirmText='생성' />
-        <Modal text='할 일 수정' order='taskCardEdit' confirmText='수정' />
-        <Modal text='컬럼 추가' order='columnAdd' confirmText='생성' />
-        <Modal text='컬럼 수정' order='columnEdit' confirmText='변경' />
-        <Modal text='기본 확인 취소 모달' order='baseAlert'>
-          텍스트 내용
-        </Modal>
+      <div className='flex flex-wrap gap-5'>
+        {/* 할 일 카드 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            할 일 카드
+          </AlertDialogTrigger>
+          <TaskCard />
+        </AlertDialog>
+
+        {/* 할 일 카드 생성 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            할 일 카드 생성
+          </AlertDialogTrigger>
+          <TaskCardCreate />
+        </AlertDialog>
+
+        {/* 할 일 카드 수정 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            할 일 카드 수정
+          </AlertDialogTrigger>
+          <TaskCardEdit />
+        </AlertDialog>
+
+        {/* 컬럼 추가 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            컬럼 추가
+          </AlertDialogTrigger>
+          <ColumnAdd />
+        </AlertDialog>
+
+        {/* 컬럼 수정 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            컬럼 수정
+          </AlertDialogTrigger>
+          <ColumnEdit />
+        </AlertDialog>
+
+        {/* 확인 팝업 */}
+        <AlertDialog>
+          <AlertDialogTrigger className='bg-violet_light p-3'>
+            확인 팝업
+          </AlertDialogTrigger>
+          <ConfirmAlert>컬럼의 모든 카드가 삭제됩니다.</ConfirmAlert>
+        </AlertDialog>
       </div>
     </div>
   )

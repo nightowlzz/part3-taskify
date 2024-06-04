@@ -1,13 +1,19 @@
 'use client'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { ModalHead } from './_component/modal-head'
+
+import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+} from '@/components/ui/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import {
-  DialogContent,
-  DialogFooter,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -32,14 +38,10 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import Image from 'next/image'
-import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
-import { ModalHead } from './modal-head'
-import { default as style, default as styled } from './modal.module.css'
+import style from './modal.module.css'
 
 const FormSchema = z.object({
   email: z
@@ -68,8 +70,7 @@ const FormSchema = z.object({
     message: 'Username must be at least 2 characters.',
   }),
 })
-
-export const TaskCardEdit = () => {
+const TaskCardCreate = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
@@ -78,100 +79,59 @@ export const TaskCardEdit = () => {
     toast.success('작성 완료')
     // toast.error('로그인에 실패하였습니다')
   }
+
   return (
-    <DialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>
+    <AlertDialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>
       <ScrollArea className='h-full w-full'>
-        <div className='px-7 py-7 md:py-8'>
-          <ModalHead>할 일 수정</ModalHead>
+        <div className='px-5 pb-[100px] pt-7 md:pb-[136px] md:pt-8'>
+          <ModalHead>할 일 생성</ModalHead>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className='w-full space-y-6'
             >
-              <div className='flex gap-4'>
-                {/* 상태 */}
-                <FormField
-                  control={form.control}
-                  name='email'
-                  render={({ field }) => (
-                    <FormItem className='flex-1'>
-                      <FormLabel className='text-base font-medium md:text-lg'>
-                        상태
-                      </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder='이름을 입력해 주세요' />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value='todo'>
-                            <Badge
-                              variant='dotted'
-                              className={`${styled.badge} bg-[#F1EFFD] text-[#5534DA]`}
-                            >
-                              To Do
-                            </Badge>
-                          </SelectItem>
-                          <SelectItem value='progress'>
-                            <Badge
-                              variant='dotted'
-                              className={`${styled.badge} bg-[#F1EFFD] text-[#5534DA]`}
-                            >
-                              On Progress
-                            </Badge>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-                {/* 담당자 */}
-                <FormField
-                  control={form.control}
-                  name='email'
-                  render={({ field }) => (
-                    <FormItem className='flex-1 md:pt-2'>
-                      <FormLabel className='text-base font-medium md:text-lg'>
-                        담당자
-                      </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder='Select a verified email to display' />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value='todo'>
-                            <div className='flex items-center'>
-                              <Avatar className='mr-2'>
-                                <AvatarImage src='https://github.com/shadcn.png' />
-                                <AvatarFallback>CN</AvatarFallback>
-                              </Avatar>
-                              <span className='text-sm'>배유철</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value='progress'>
-                            <div className='flex items-center'>
-                              <Avatar className='mr-2'>
-                                <AvatarImage src='https://github.com/shadcn.png' />
-                                <AvatarFallback>CN</AvatarFallback>
-                              </Avatar>
-                              <span className='text-sm'>배유철</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              {/* 담당자 */}
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem className='w-[218px] flex-1'>
+                    <FormLabel className='text-base font-medium md:text-lg'>
+                      담당자
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select a verified email to display' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value='todo'>
+                          <div className='flex items-center'>
+                            <Avatar className='mr-2'>
+                              <AvatarImage src='https://github.com/shadcn.png' />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <span className='text-sm'>배유철</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value='progress'>
+                          <div className='flex items-center'>
+                            <Avatar className='mr-2'>
+                              <AvatarImage src='https://github.com/shadcn.png' />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <span className='text-sm'>배유철</span>
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
               {/* 제목 */}
               <FormField
                 control={form.control}
@@ -195,7 +155,7 @@ export const TaskCardEdit = () => {
                 render={({ field }) => (
                   <FormItem className='md:pt-2'>
                     <FormLabel className='text-base font-medium md:text-lg'>
-                      설명 <sup className='text-ms text-[#5534DA]'>*</sup>
+                      설명 <sup>*</sup>
                     </FormLabel>
                     <FormControl>
                       <Textarea
@@ -280,7 +240,9 @@ export const TaskCardEdit = () => {
                 name='image'
                 render={({ field }) => (
                   <FormItem className='md:pt-2'>
-                    <FormLabel>이미지</FormLabel>
+                    <FormLabel className='text-base font-medium md:text-lg'>
+                      이미지
+                    </FormLabel>
                     <div className='flex'>
                       <FormControl>
                         <Input
@@ -294,7 +256,15 @@ export const TaskCardEdit = () => {
                         htmlFor='picture'
                         className={`${style.failLabel} relative flex h-[76px] w-[76px] items-center justify-center rounded-md bg-[#f5f5f5]`}
                       >
-                        <Image fill src={`/logo.png`} alt='추가' />
+                        {/* 이미지 없을때 */}
+                        <Image
+                          src={`/icon-purple-add.svg`}
+                          alt='추가'
+                          width={28}
+                          height={28}
+                        />
+                        {/* 이미지 있을때 */}
+                        {/* <Image fill src={`/logo.png`} alt='추가' /> */}
                       </FormLabel>
                     </div>
                     <FormMessage />
@@ -303,31 +273,18 @@ export const TaskCardEdit = () => {
               />
             </form>
           </Form>
-          <DialogFooter
-            className={`flex-col items-start justify-start justify-end pt-6 md:flex-row md:items-end md:pt-7`}
-          >
-            <div className={`flex w-full justify-end gap-3`}>
-              <DialogTrigger asChild>
-                <Button
-                  type='button'
-                  variant={'outline'}
-                  className='h-12 w-full md:max-w-[120px]'
-                >
-                  취소
-                </Button>
-              </DialogTrigger>
-              <DialogTrigger asChild>
-                <Button
-                  type='button'
-                  className='h-12 w-full bg-[#5534DA] md:max-w-[120px]'
-                >
-                  수정
-                </Button>
-              </DialogTrigger>
-            </div>
-          </DialogFooter>
+          <AlertDialogFooter className='absolute bottom-0 left-0 flex w-full gap-3 bg-white px-5 pb-7 pt-6 md:justify-end md:p-7'>
+            <AlertDialogCancel className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'>
+              취소
+            </AlertDialogCancel>
+            <AlertDialogAction className='h-10 w-full bg-violet md:h-12 md:w-[120px]'>
+              생성
+            </AlertDialogAction>
+          </AlertDialogFooter>
         </div>
       </ScrollArea>
-    </DialogContent>
+    </AlertDialogContent>
   )
 }
+
+export default TaskCardCreate
