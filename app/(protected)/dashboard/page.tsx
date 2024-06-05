@@ -10,7 +10,7 @@ const DashboardPage = () => {
 		 md:w-[504px] md:grid-cols-2 md:gap-x-[10px] md:gap-y-[10px] 
 		 xl:w-[1024px] xl:grid-cols-3 xl:gap-x-[13px] xl:gap-y-[10px] '
       >
-        <CreateDashboard />
+        <CreateDashboard mode={"main"}/>
         <DashboardCta
           id={8689}
           color={'#76A5EA'}

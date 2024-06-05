@@ -1,10 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
 import Image from 'next/image'
+import CreateDashboard from './create-dashboard'
 
 export const SideBar = () => {
   return (
-    <div className='w-[80px] border-r px-2 py-5 md:w-[150px] xl:w-[300px]'>
+    <div className='w-[80px] border-r md:w-[160px] md:px-[14px] xl:w-[300px] xl:px-[12px]'>
       <Image
         src={'/logo2.png'}
         alt={'logo'}
@@ -12,13 +11,7 @@ export const SideBar = () => {
         height={33}
         className='mx-3'
       />
-      <Button
-        variant='ghost'
-        className='mt-14 flex w-full justify-between text-gray-500'
-      >
-        <span className='text-sm'>Dash Boards</span>
-        <Plus />
-      </Button>
+      <CreateDashboard mode={'sidebar'} />
     </div>
   )
 }

@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { FaCheck } from 'react-icons/fa'
+import { Button } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,13 +13,23 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog'
 import { Input } from '@/components/ui/input'
+import { createDashboard } from '../_api-wrapper/create-dashboard' // Adjust the path as necessary
 
 interface CreateDashboardProps {
-  onConfirm?: () => void
+  mode: String
+}
+
+// Color mapping
+const colorMap: { [key: string]: string } = {
+  violet: '#5534DA',
+  green: '#7AC555',
+  orange: '#FFA500',
+  blue: '#76A5EA',
+  pink: '#E876EA',
 }
 
 // CreateDashboard 컴포넌트 정의
-const CreateDashboard: React.FC<CreateDashboardProps> = ({ onConfirm }) => {
+const CreateDashboard: React.FC<CreateDashboardProps> = ({ mode }) => {
   const [isModal, setIsModal] = useState(false)
   const [dashboardName, setDashboardName] = useState('')
   const [selectedColor, setSelectedColor] = useState('green')
@@ -27,6 +39,8 @@ const CreateDashboard: React.FC<CreateDashboardProps> = ({ onConfirm }) => {
   }
 
   const handleClose = () => {
+    setDashboardName('')
+    setSelectedColor('green')
     setIsModal(false)
   }
 
@@ -34,17 +48,35 @@ const CreateDashboard: React.FC<CreateDashboardProps> = ({ onConfirm }) => {
     setSelectedColor(color)
   }
 
-  const handleConfirm = () => {
-    if (onConfirm) {
-      onConfirm()
+  const handleConfirm = async () => {
+    const colorHex = colorMap[selectedColor]
+    try {
+      await createDashboard(dashboardName, colorHex)
+      setDashboardName('')
+      setSelectedColor('green')
+      handleClose()
+    } catch (error) {
+      console.error('Failed to create dashboard:', error)
     }
-    handleClose()
   }
 
   return (
     <>
-      <button
-        className='
+      {mode == 'sidebar' && (
+        <Button
+          variant='ghost'
+          className='text-gray-500 ml-5 mt-14 flex h-[40px] w-[40px] justify-center p-0 md:ml-0 md:h-[43px] md:w-[134px] md:justify-between xl:ml-0 xl:h-[45px] xl:w-[276px] xl:justify-between xl:px-[12px]'
+          onClick={handleClick}
+        >
+          <div className='w-0 truncate text-sm md:w-[80px] xl:w-[80px]'>
+            Dash Boards
+          </div>
+          <Plus className='h-[14px] w-[14px]' />
+        </Button>
+      )}
+      {mode == 'main' && (
+        <button
+          className='
           flex h-[58px] w-[260px]
           items-center justify-center
           gap-[10px] rounded-lg 
@@ -52,11 +84,12 @@ const CreateDashboard: React.FC<CreateDashboardProps> = ({ onConfirm }) => {
           shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[68px] 
           md:w-[247px] xl:h-[70px] xl:w-[332px]
         '
-        onClick={handleClick}
-      >
-        <span className='text-black_light_2'>새로운 대시보드</span>
-        <span className='rounded bg-violet_light px-1 text-violet'>+</span>
-      </button>
+          onClick={handleClick}
+        >
+          <span className='text-black_light_2'>새로운 대시보드</span>
+          <span className='rounded bg-violet_light px-1 text-violet'>+</span>
+        </button>
+      )}
 
       {isModal && (
         <AlertDialog open={isModal} onOpenChange={handleClose}>

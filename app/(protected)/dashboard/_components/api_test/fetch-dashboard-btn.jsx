@@ -6,7 +6,7 @@ import { fetchDashboards } from '../../_api-wrapper/fetch-dashboards'
 const FetchDashboardBtn = () => {
   const handleClick = async () => {
     try {
-      const data = await fetchDashboards('pagination', 1, 3352)
+      const data = await fetchDashboards('pagination', 1)
       console.log('Fetched dashboards:', data)
     } catch (error) {
       console.error('Error fetching dashboards:', error)

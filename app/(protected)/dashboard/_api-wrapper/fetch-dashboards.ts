@@ -31,7 +31,7 @@ export async function fetchDashboards(
   }
   try {
     const response = await api.get<FetchDashboardsResponse>(url, { params })
-    return response.data.dashboards
+    return response.data
   } catch (error) {
     throw new Error(`Failed to fetch dashboards: ${error}`)
   }
