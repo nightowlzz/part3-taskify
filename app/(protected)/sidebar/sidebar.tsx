@@ -37,7 +37,7 @@ const SideBar: React.FC = () => {
   }, [])
 
   return (
-    <div className='relative w-[80px] border-r md:w-[160px] md:px-[14px] xl:w-[300px] xl:px-[12px] '>
+    <div className='relative w-[80px] h-screen overflow-x-hidden overflow-y-auto scrollbar-hide border-r md:w-[160px] md:px-[14px] xl:w-[300px] xl:px-[12px]'>
       <Image
         src={'/logo2.png'}
         alt={'logo'}
@@ -49,6 +49,7 @@ const SideBar: React.FC = () => {
         <CreateDashboard mode={'sidebar'} />
         {dashboards.map((dashboard) => (
           <SidebarCta
+            key={dashboard.id}
             id={dashboard.id}
             title={dashboard.title}
             color={dashboard.color}
