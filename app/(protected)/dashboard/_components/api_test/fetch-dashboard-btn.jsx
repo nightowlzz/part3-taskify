@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react'
-import { fetchDashboards } from '../../_utils/fetch-dashboards'
+import { fetchDashboards } from '../../_api-wrapper/fetch-dashboards'
 
 const FetchDashboardBtn = () => {
   const handleClick = async () => {
     try {
-      const data = await fetchDashboards('pagination', 3)
+      const data = await fetchDashboards('pagination', 1, 3352)
       console.log('Fetched dashboards:', data)
     } catch (error) {
       console.error('Error fetching dashboards:', error)
@@ -27,7 +27,7 @@ const FetchDashboardBtn = () => {
       '
       onClick={handleClick}
     >
-      <span className='text-black_light_2'>새로운 대시보드</span>
+      <span className='text-black_light_2'>FetchDashboardBtn</span>
       <span className='rounded bg-violet_light px-1 text-violet'>+</span>
     </button>
   )

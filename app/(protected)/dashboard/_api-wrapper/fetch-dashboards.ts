@@ -21,7 +21,7 @@ export async function fetchDashboards(
   page: number = 1,
   cursorId?: number,
   size: number = 5,
-): Promise<FetchDashboardsResponse> {
+) {
   const url = `/dashboards`
   const params = {
     navigationMethod,
@@ -31,7 +31,7 @@ export async function fetchDashboards(
   }
   try {
     const response = await api.get<FetchDashboardsResponse>(url, { params })
-    return response.data
+    return response.data.dashboards
   } catch (error) {
     throw new Error(`Failed to fetch dashboards: ${error}`)
   }

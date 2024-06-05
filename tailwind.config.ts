@@ -14,6 +14,8 @@ const config = {
       center: true,
       padding: '2rem',
       screens: {
+        md: '768px',
+        lg: '1024px',
         '2xl': '1400px',
       },
     },
@@ -66,7 +68,7 @@ const config = {
         violet: '#5534DA',
         violet_light: '#F1EFFD',
         red: '#D6173A',
-        green: '##7AC555',
+        green: '#7AC555',
         purple: '#760DDE',
         orange: '#FFA500',
         blue: '#76A5EA',
