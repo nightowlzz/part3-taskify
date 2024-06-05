@@ -4,6 +4,7 @@ import { ConfirmAlert } from '@/components/modal/confirm-alert'
 import TaskCard from '@/components/modal/task-card'
 import TaskCardCreate from '@/components/modal/task-create'
 import { TaskCardEdit } from '@/components/modal/task-edit'
+import TestFile from '@/components/modal/test-file'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -11,8 +12,10 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 const StyleGuide = () => {
   return (
     <div className='mx-auto flex max-w-[600px] flex-col p-[30px]'>
-      <h2 className='py-[30px]'>모달</h2>
-      <div className='flex flex-wrap gap-5'>
+      <h2 className='py-[30px]' style={{ display: 'none' }}>
+        모달
+      </h2>
+      <div className='flex flex-wrap gap-5' style={{ display: 'block' }}>
         {/* 할 일 카드 */}
         <AlertDialog>
           <AlertDialogTrigger className='bg-violet_light p-3'>
@@ -61,6 +64,7 @@ const StyleGuide = () => {
           <ConfirmAlert>컬럼의 모든 카드가 삭제됩니다.</ConfirmAlert>
         </AlertDialog>
       </div>
+      <TestFile />
     </div>
   )
 }

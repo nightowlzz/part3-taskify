@@ -213,12 +213,10 @@ export const TaskCardEdit = () => {
               {/* 마감일 */}
               <FormField
                 control={form.control}
-                name='dob'
+                name='endDate'
                 render={({ field }) => (
-                  <FormItem className='flex flex-col md:pt-2'>
-                    <FormLabel className='text-base font-medium md:text-lg'>
-                      마감일
-                    </FormLabel>
+                  <FormItem className='flex flex-col'>
+                    <FormLabel>Date of birth</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -230,6 +228,7 @@ export const TaskCardEdit = () => {
                             )}
                           >
                             <Image
+                              className='mr-2'
                               src='/icon-calendar.svg'
                               width={20}
                               height={20}
@@ -238,12 +237,12 @@ export const TaskCardEdit = () => {
                             {field.value ? (
                               format(field.value, 'PPP')
                             ) : (
-                              <span>날짜를 입력해 주세요</span>
+                              <span>Pick a date</span>
                             )}
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className='p-0' align='start'>
+                      <PopoverContent className='w-auto p-0' align='start'>
                         <Calendar
                           mode='single'
                           selected={field.value}
@@ -259,6 +258,7 @@ export const TaskCardEdit = () => {
                   </FormItem>
                 )}
               />
+
               {/* 태그 추가 */}
               {/* 태그 라이브러리 찾기 */}
               <FormField
