@@ -1,5 +1,5 @@
 import { Navbar } from './_components/navbar'
-import { SideBar } from './_components/sidebar'
+import SideBar from '../sidebar/sidebar'
 
 type Props = {
   children: React.ReactNode

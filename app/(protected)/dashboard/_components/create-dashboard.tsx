@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { FaCheck } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +13,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Input } from '@/components/ui/input'
 import { createDashboard } from '../_api-wrapper/create-dashboard' // Adjust the path as necessary
+import { CiSquarePlus } from "react-icons/ci";
 
 interface CreateDashboardProps {
   mode: String
@@ -65,13 +65,13 @@ const CreateDashboard: React.FC<CreateDashboardProps> = ({ mode }) => {
       {mode == 'sidebar' && (
         <Button
           variant='ghost'
-          className='text-gray-500 ml-5 mt-14 flex h-[40px] w-[40px] justify-center p-0 md:ml-0 md:h-[43px] md:w-[134px] md:justify-between xl:ml-0 xl:h-[45px] xl:w-[276px] xl:justify-between xl:px-[12px]'
+          className='text-gray-500 ml-5 flex h-[40px] w-[40px] justify-center p-0 md:ml-0 md:h-[43px] md:w-[134px] md:justify-between xl:ml-0 xl:h-[45px] xl:w-[276px] xl:justify-between xl:px-[12px]'
           onClick={handleClick}
         >
           <div className='w-0 truncate text-sm md:w-[80px] xl:w-[80px]'>
             Dash Boards
           </div>
-          <Plus className='h-[14px] w-[14px]' />
+          <CiSquarePlus className='h-[14px] w-[14px]' />
         </Button>
       )}
       {mode == 'main' && (
