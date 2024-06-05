@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 import CreateDashboard from '../dashboard/_components/create-dashboard'
-import SidebarCta from './dashboard-item'
+import SidebarCta from './sidebar-cta'
 import { fetchDashboards } from '../dashboard/_api-wrapper/fetch-dashboards'
 
 interface Dashboard {
@@ -19,6 +20,7 @@ interface Dashboard {
 const SideBar: React.FC = () => {
   const [dashboards, setDashboards] = useState<Dashboard[]>([])
   const [loading, setLoading] = useState(false)
+  const { boardid } = useParams()
 
   useEffect(() => {
     const loadDashboards = async () => {
@@ -54,6 +56,7 @@ const SideBar: React.FC = () => {
             title={dashboard.title}
             color={dashboard.color}
             isOwner={dashboard.createdByMe}
+            isSelected={boardid === String(dashboard.id)}
           />
         ))}
       </div>

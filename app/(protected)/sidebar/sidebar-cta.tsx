@@ -1,23 +1,30 @@
 import React from 'react'
 import { FaCrown } from 'react-icons/fa'
 import Link from 'next/link'
+import classNames from 'classnames'
+
 interface DashboardItemProps {
-  id: Number
+  id: number
   title: string
   color: string
   isOwner: boolean
+  isSelected?: boolean
 }
 
 const SidebarCta: React.FC<DashboardItemProps> = ({
-  id,
+  id: boardid,
   title,
   color,
   isOwner,
+  isSelected,
 }) => {
   return (
     <Link
-      className='ml-5 flex h-[40px] w-[40px] items-center justify-center p-0 hover:bg-accent hover:text-accent-foreground md:ml-0 md:h-[43px] md:w-[134px] md:justify-between xl:ml-0 xl:h-[45px] xl:w-[276px] xl:justify-between xl:px-[12px]'
-      href={`/dashboard/${id}`}
+      className={classNames(
+        'ml-5 flex h-[40px] w-[40px] items-center justify-center p-0 hover:bg-accent hover:text-accent-foreground md:ml-0 md:h-[43px] md:w-[134px] md:justify-between xl:ml-0 xl:h-[45px] xl:w-[276px] xl:justify-between xl:px-[12px]',
+        { 'bg-violet_light': isSelected }
+      )}
+      href={`/dashboard/${boardid}/edit`}
     >
       <div
         className={`h-3 w-3 rounded-full`}

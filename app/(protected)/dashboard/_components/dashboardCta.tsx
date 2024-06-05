@@ -21,7 +21,7 @@ interface DashboardCtaProps {
 }
 
 const DashboardCta: React.FC<DashboardCtaProps> = ({
-  id,
+  id: boardid,
   color,
   createdByMe,
   title,
@@ -36,7 +36,7 @@ const DashboardCta: React.FC<DashboardCtaProps> = ({
 	  shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[68px] 
 	  md:w-[247px] xl:h-[70px] xl:w-[332px] 
       '
-      href={`/dashboard/${id}`}
+      href={`/dashboard/${boardid}`}
     >
       <div className='flex h-[18px] w-[220px] items-center justify-between md:h-[19px] md:w-[206px] xl:h-[19px] xl:w-[292px] '>
         <div className='gap-3 flex h-[17px] items-center justify-between md:h-[19px] xl:h-[19px]'>
