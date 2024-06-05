@@ -1,4 +1,4 @@
-import { api } from '@/lib/utils' // Adjust the path as necessary
+import { api } from '@/lib/utils'
 
 interface Dashboard {
   id: number
