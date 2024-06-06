@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom, RecoilState } from 'recoil'
 import { Column, CardInfo } from '@/lib/type'
 
 export const dashboardIdState = atom<string>({
@@ -37,4 +37,19 @@ export const countAboutCardList = (columnId: number) => {
   }
 
   return atomCardCount.get(columnId)
+}
+
+const createTodoCache = new Map()
+export const createTodoAboutColumnId = (
+  ColumnId: number,
+): RecoilState<boolean> => {
+  if (!createTodoCache.has(ColumnId)) {
+    const createTodo = atom<boolean>({
+      key: `createTodo${ColumnId}`,
+      default: false,
+    })
+    createTodoCache.set(ColumnId, createTodo)
+  }
+
+  return createTodoCache.get(ColumnId)
 }
