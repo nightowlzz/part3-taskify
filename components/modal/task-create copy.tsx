@@ -94,15 +94,15 @@ const FormSchema = z.object({
   image: z.string().nonempty({ message: '이미지 첨부는 필수입니다.' }),
 })
 
-export const getUser = async (id: number) => {
+export const getUser = async (dashboardId: number) => {
   const {
     data: { members },
-  } = await api.get<IMembers>(`/members?dashboardId=${id}`)
+  } = await api.get<IMembers>(`/members?dashboardId=${dashboardId}`)
 
   return members
 }
 
-const TaskCardCreate = () => {
+const TaskCardCreate = ({ dashboardId }: { dashboardId: number }) => {
   const [users, setUsers] = useState<IMember[]>()
   const form = useForm<z.infer<typeof FormSchema>>({
     mode: 'onChange',
@@ -127,7 +127,7 @@ const TaskCardCreate = () => {
 
   useEffect(() => {
     const aaaaa = async () => {
-      const user = await getUser(8689)
+      const user = await getUser(dashboardId)
       setUsers(user)
     }
     aaaaa()
@@ -207,7 +207,7 @@ const TaskCardCreate = () => {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder='Tell us a little bit about yourself'
+                        placeholder='설명을 입력해 주세요'
                         className='resize-none'
                         {...field}
                       />
@@ -276,7 +276,7 @@ const TaskCardCreate = () => {
                       태그
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder='shadcn' {...field} />
+                      <Input placeholder='입력 후 Enter' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

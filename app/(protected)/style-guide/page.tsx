@@ -16,22 +16,6 @@ const StyleGuide = () => {
           </AlertDialogTrigger>
           <TaskCard />
         </AlertDialog>
-
-        {/* 할 일 카드 생성 */}
-        <AlertDialog>
-          <AlertDialogTrigger className='bg-violet_light p-3'>
-            할 일 카드 생성
-          </AlertDialogTrigger>
-          <TaskCardCreate />
-        </AlertDialog>
-
-        {/* 할 일 카드 수정 */}
-        <AlertDialog>
-          <AlertDialogTrigger className='bg-violet_light p-3'>
-            할 일 카드 수정
-          </AlertDialogTrigger>
-          <TaskCardEdit />
-        </AlertDialog>
       </div>
       <div></div>
     </div>
