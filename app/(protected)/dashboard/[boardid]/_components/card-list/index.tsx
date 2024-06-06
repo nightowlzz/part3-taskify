@@ -1,6 +1,6 @@
 'use client'
 
-import settingIcon from '@/public/icons/settings_icon.svg'
+import settingIcon from '@/public/settings_icon.svg'
 import Colors from './color'
 import { CardInfo } from '@/lib/type'
 import Card from '@/src/app/(afterLogin)/dashboard/[dashboardId]/_component/Card'
@@ -113,7 +113,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
           </button>
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <AddTodo screen='mobile' onClick={openCreateTodoModal} />
+          <AddTodo onClick={openCreateTodoModal} />
         </div>
       </div>
       <div className='flex flex-col justify-center gap-[0.625rem] md:gap-4'>

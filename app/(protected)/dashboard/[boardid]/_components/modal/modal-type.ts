@@ -15,3 +15,7 @@ export interface IColumnEditOpen extends IColumnDashboardId {
 }
 
 export interface ITaskCreateOpen extends IColumnDashboardId {}
+
+export interface IColumnEditButton extends IColumnDashboardId {
+  title: string
+}
