@@ -6,12 +6,9 @@ import {
   AlertDialogPortal,
   AlertDialogOverlay,
   AlertDialogContent,
-  AlertDialogHeader,
   AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogAction,
 } from '@/components/ui/alert-dialog'
 import {
   Form,
@@ -48,7 +45,7 @@ const ColumnSchema = z.object({
 })
 export type ColumnFormValues = z.infer<typeof ColumnSchema>
 
-export const CreateColumn = ({ dashboardId }: { dashboardId: number }) => {
+export const CreateColumn = ({ dashboardId, onUpdate }: { dashboardId: number, onUpdate: () => void }) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useRecoilState(createColumnState)
   const [columnList, setColumnList] = useState<IColumnCreate[]>()
@@ -80,6 +77,7 @@ export const CreateColumn = ({ dashboardId }: { dashboardId: number }) => {
         dashboardId: Number(dashboardId),
       })
       toast.success('새로운 컬럼이 생성되었습니다.')
+      onUpdate() // 데이터 업데이트 함수 호출
     } catch {
       toast.success('컬럼이 생성되지 않았습니다.')
     } finally {

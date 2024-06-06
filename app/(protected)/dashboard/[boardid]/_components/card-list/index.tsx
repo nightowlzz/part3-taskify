@@ -3,11 +3,9 @@
 import settingIcon from '@/public/settings_icon.svg'
 import Colors from './color'
 import { CardInfo } from '@/lib/type'
-// import Card from '@/src/app/(afterLogin)/dashboard/[dashboardId]/_component/Card'
 import AddTodo from '../add-todo-button'
 import Number from './number'
-// import DeleteColumn from '@/src/app/_component/modal/column/delete'
-import UpdateColumn from '../update-column'
+// import UpdateColumn from '../update-column'
 import CreateTask from '../create-task'
 import useInfiniteScroll from '../../_hook/useInfiniteScroll'
 import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
@@ -25,6 +23,10 @@ import {
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+// import UpdateColumn from '../update-column'
+import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import Card from './card'
+
 interface CardListProps {
   id: number
   title: string
@@ -113,7 +115,12 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
           </button>
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <AddTodo onClick={openCreateTodoModal} />
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <AddTodo onClick={openCreateTodoModal} />
+            </AlertDialogTrigger>
+            <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
+          </AlertDialog>
         </div>
       </div>
       <div className='flex flex-col justify-center gap-[0.625rem] md:gap-4'>
@@ -130,7 +137,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                 style={getStyle(draggableProps.style, snapshot)}
               >
                 <div {...dragHandleProps}>
-                  {/* <Card
+                  <Card
                     id={card.id}
                     title={card.title}
                     columnId={id}
@@ -140,21 +147,15 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                     bgColor={Colors[card.id % 5]}
                     nickname={card.assignee?.nickname}
                     profileImageUrl={card.assignee?.profileImageUrl}
-                  /> */}
+                  />
                 </div>
               </div>
             )}
           </Draggable>
         ))}
       </div>
-      {cursorId !== null && (
-        <div className='h-4 flex-shrink-0' ref={target}></div>
-      )}
-      {isOpenUpdateColumn && <UpdateColumn columnId={id} />}
-      {/* {isOpenDeleteColumnState && <DeleteColumn columnId={id} />} */}
-      {isOpenCreateTodo && (
-        <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
-      )}
+      {cursorId !== null && <div className='h-4 flex-shrink-0' ref={target} />}
+      {/* {isOpenUpdateColumn && <UpdateColumn columnId={id} />} */}
     </div>
   )
 }

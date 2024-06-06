@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -169,8 +168,10 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
       } else {
         await api.post(`/cards`, { ...requestData })
       }
-      setIsOpen(false)
+	  setIsOpen(false)
+      form.reset()
       toast.success('전송 완료')
+      router.refresh()
     } catch (e: any) {
       if (e.response && e.response.data && e.response.data.message) {
         toast.error(e.response.data.message)
@@ -180,8 +181,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
     } finally {
       setTagList([])
       setPreview(null)
-      form.reset()
-      router.refresh()
     }
   }
 
@@ -411,8 +410,9 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 <AlertDialogCancel
                   className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
                   onClick={() => {
+					form.reset()
                     setIsOpen(false)
-                    form.reset()
+                    
                   }}
                 >
                   취소
