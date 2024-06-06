@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
-import { ModalHead } from './_component/modal-head'
+import { ModalHead } from './components/modal-head'
 import styled from './modal.module.css'
 
 const TaskCard = () => {

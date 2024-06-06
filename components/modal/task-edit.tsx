@@ -5,6 +5,12 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
 import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+} from '@/components/ui/alert-dialog'
+import {
   Form,
   FormControl,
   FormField,
@@ -34,14 +40,8 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { ModalHead } from './_component/modal-head'
+import { ModalHead } from './components/modal-head'
 import { default as style, default as styled } from './modal.module.css'
-import {
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog'
 
 const FormSchema = z.object({
   email: z

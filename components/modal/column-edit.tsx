@@ -22,16 +22,9 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { ModalHead } from './_component/modal-head'
-import { ColumnFormValues, IColumnCreate } from './column-add'
-
-interface IColumnEdit {
-  columnId: number
-  title: string
-  dashboardId: number
-  setOpen: (open: boolean) => void
-  setStep: (step: number) => void
-}
+import { ColumnFormValues } from './column-add'
+import { ModalHead } from './components/modal-head'
+import { IColumnCreate, IColumnEditOpen } from './types/modal-type'
 
 const ColumnSchema = z.object({
   title: z
@@ -51,7 +44,7 @@ export const ColumnEdit = ({
   dashboardId,
   setOpen,
   setStep,
-}: IColumnEdit) => {
+}: IColumnEditOpen) => {
   const router = useRouter()
   const [columnList, setColumnList] = useState<IColumnCreate[]>() // 컬럼리스트 불러오기
   const form = useForm<ColumnFormValues>({
@@ -121,15 +114,7 @@ export const ColumnEdit = ({
                 </FormItem>
               )}
             />
-            <AlertDialogFooter className='flex-col items-start justify-start pt-6 md:flex-row md:items-end md:justify-between md:pt-7'>
-              <Button
-                variant='underline'
-                className='mb-4 h-5 p-0 leading-none md:mb-0'
-                onClick={() => setStep(2)}
-              >
-                삭제하기
-              </Button>
-
+            <AlertDialogFooter className='flex-col-reverse  items-start justify-start pt-6 md:flex-row-reverse md:items-end md:justify-between md:pt-7'>
               <div className='flex w-full items-end justify-end gap-3'>
                 <AlertDialogCancel
                   className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
@@ -144,6 +129,13 @@ export const ColumnEdit = ({
                   변경
                 </Button>
               </div>
+              <Button
+                variant='underline'
+                className='mb-4 h-5 p-0 leading-none md:mb-0'
+                onClick={() => setStep(2)}
+              >
+                삭제하기
+              </Button>
             </AlertDialogFooter>
           </form>
         </Form>

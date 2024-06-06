@@ -1,6 +1,5 @@
 'use client'
-// 8739 내가 만든
-// 8689 만들어진거
+
 import {
   Form,
   FormControl,
@@ -23,12 +22,8 @@ import {
   AlertDialogFooter,
 } from '../ui/alert-dialog'
 import { Button } from '../ui/button'
-
-export interface IColumnCreate {
-  id: string
-  title: string
-  dashboardId: number
-}
+import { IColumnCreate } from './types/modal-type'
+import { ModalHead } from './components/modal-head'
 
 const ColumnSchema = z.object({
   title: z
@@ -83,6 +78,7 @@ export const ColumnAdd = ({
     } catch {
       toast.success('컬럼이 생성되지 않았습니다.')
     } finally {
+      form.reset()
       router.refresh()
       setOpen(false)
     }
@@ -100,6 +96,7 @@ export const ColumnAdd = ({
   return (
     <AlertDialogContent>
       <div className='px-5 py-7 md:py-8'>
+        <ModalHead>새 컬럼 생성</ModalHead>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
             <FormField

@@ -1,6 +1,7 @@
 import TaskCard from '@/components/modal/task-card'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 
+// 추 후 삭제예정[파일]
 const StyleGuide = () => {
   return (
     <div className='mx-auto flex max-w-[600px] flex-col p-[30px]'>

@@ -1,17 +1,17 @@
-import { ColumnCreactButton } from '@/components/modal/_component/column-create-button'
-import { ColumnEditButton } from '@/components/modal/_component/column-edit-button'
-import { TaskCreactButton } from '@/components/modal/_component/task-create-button'
+import { ColumnCreactButton } from '@/components/modal/components/column-create-button'
+import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
+import { TaskCreactButton } from '@/components/modal/components/task-create-button'
+import { TaskCardEdit } from '@/components/modal/task-edit'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { api } from '@/lib/utils'
 import { TaskList } from './task-list'
-import { TaskCardEdit } from '@/components/modal/task-edit'
 
 async function getDashboardId(id: number) {
   const res = await api.get(`/columns?dashboardId=${id}`)
   const { data } = await res.data
   return data
 }
-
+// 추 후 삭제예정[파일]
 export default async function Page({ params }: { params: { id: number } }) {
   const data = await getDashboardId(params.id)
 

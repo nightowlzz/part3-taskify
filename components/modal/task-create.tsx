@@ -42,6 +42,8 @@ import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import style from './modal.module.css'
+import { ITaskCreateOpen } from './types/modal-type'
+import { ModalHead } from './components/modal-head'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 
@@ -57,30 +59,6 @@ interface IMember {
 interface IMembers {
   members: IMember[]
   totalCount: number
-}
-
-interface ITaskCreate {
-  id: number
-  title: string
-  description: string
-  tags: [string]
-  dueDate: string
-  assignee: {
-    profileImageUrl: string
-    nickname: string
-    id: number
-  }
-  imageUrl: string
-  teamId: string
-  columnId: number
-  createdAt: string
-  updatedAt: string
-}
-
-interface ITaskCreateProps {
-  columnId: number
-  dashboardId: number
-  setOpen: (open: boolean) => void
 }
 
 const FormSchema = z.object({
@@ -119,7 +97,7 @@ const TaskCardCreate = ({
   dashboardId,
   columnId,
   setOpen,
-}: ITaskCreateProps) => {
+}: ITaskCreateOpen) => {
   const router = useRouter()
   const [users, setUsers] = useState<IMember[]>() // 담당자
   const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지
@@ -188,10 +166,13 @@ const TaskCardCreate = ({
 
     try {
       if (imageFile) {
-        const res = await api.post(`/columns/${columnId}/card-image`, formData)
-        const res2 = await api.post(`/cards`, { ...res.data, ...requestData })
+        const image = await api.post(
+          `/columns/${columnId}/card-image`,
+          formData,
+        )
+        await api.post(`/cards`, { ...image.data, ...requestData })
       } else {
-        const res2 = await api.post(`/cards`, { ...requestData })
+        await api.post(`/cards`, { ...requestData })
       }
       setOpen(false)
       toast.success('전송 완료')
@@ -202,6 +183,9 @@ const TaskCardCreate = ({
         toast.error('전송 실패')
       }
     } finally {
+      setTagList([])
+      setPreview(null)
+      form.reset()
       router.refresh()
     }
   }
@@ -218,6 +202,7 @@ const TaskCardCreate = ({
     <AlertDialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>
       <ScrollArea className='h-full w-full'>
         <div className='px-5 pb-[100px] pt-7 md:pb-[136px] md:pt-8'>
+          <ModalHead>할 일 생성</ModalHead>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}

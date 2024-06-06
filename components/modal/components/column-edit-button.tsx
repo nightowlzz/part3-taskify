@@ -1,19 +1,19 @@
 'use client'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
-import { ColumnEdit } from '../column-edit'
-import { useState } from 'react'
-import { ConfirmAlert } from '../confirm-alert'
 import { api } from '@/lib/utils'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { ColumnEdit } from '../column-edit'
+import { ConfirmAlert } from '../confirm-alert'
+import { IColumnEditButton } from '../types/modal-type'
 
-type aaaa = {
-  columnId: number
-  title: string
-  dashboardId: number
-}
-
-export const ColumnEditButton = ({ columnId, title, dashboardId }: aaaa) => {
+// 추 후 삭제예정[파일]
+export const ColumnEditButton = ({
+  columnId,
+  title,
+  dashboardId,
+}: IColumnEditButton) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1)
@@ -33,10 +33,7 @@ export const ColumnEditButton = ({ columnId, title, dashboardId }: aaaa) => {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger
-        className='bg-violet_light p-3'
-        onClick={() => console.log(columnId)}
-      >
+      <AlertDialogTrigger className='bg-violet_light p-3'>
         {title}
       </AlertDialogTrigger>
       {step === 1 && (
