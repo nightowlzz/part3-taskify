@@ -53,7 +53,7 @@ export const ColumnEdit = ({
   setStep,
 }: IColumnEdit) => {
   const router = useRouter()
-  const [dashboardList, setDashboardList] = useState<IColumnCreate[]>()
+  const [columnList, setColumnList] = useState<IColumnCreate[]>() // 컬럼리스트 불러오기
   const form = useForm<ColumnFormValues>({
     resolver: zodResolver(ColumnSchema),
     mode: 'onBlur',
@@ -62,11 +62,10 @@ export const ColumnEdit = ({
     },
   })
 
+  // 컬럼 중복 이름
   const checkDuplicateTitle = (title: string) => {
-    if (dashboardList) {
-      return dashboardList.some(
-        (column) => column.title.trim() === title.trim(),
-      )
+    if (columnList) {
+      return columnList.some((column) => column.title.trim() === title.trim())
     }
     return false
   }
@@ -96,7 +95,7 @@ export const ColumnEdit = ({
     const getColumns = async () => {
       const res = await api.get(`/columns?dashboardId=${dashboardId}`)
       const { data } = res.data
-      setDashboardList(data)
+      setColumnList(data)
     }
     getColumns()
   }, [])

@@ -7,7 +7,7 @@ import ColumnAdd from '../column-add'
 export const ColumnCreactButton = ({
   dashboardId,
 }: {
-  dashboardId: string
+  dashboardId: number
 }) => {
   const [open, setOpen] = useState(false)
 

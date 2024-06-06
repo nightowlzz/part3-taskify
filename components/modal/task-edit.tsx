@@ -63,7 +63,7 @@ const FormSchema = z.object({
     .max(160, {
       message: 'Bio must not be longer than 30 characters.',
     }),
-  dob: z.date({
+  endDate: z.date({
     required_error: 'A date of birth is required.',
   }),
   tag: z.string().min(2, {
@@ -78,7 +78,6 @@ export const TaskCardEdit = () => {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast.success('작성 완료')
-    // toast.error('로그인에 실패하였습니다')
   }
   return (
     <AlertDialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>

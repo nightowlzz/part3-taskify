@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import {
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
@@ -39,7 +38,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { api, cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import Image from 'next/image'
-import { ChangeEvent, KeyboardEvent, memo, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import style from './modal.module.css'
 
@@ -77,16 +77,20 @@ interface ITaskCreate {
   updatedAt: string
 }
 
+interface ITaskCreateProps {
+  columnId: number
+  dashboardId: number
+  setOpen: (open: boolean) => void
+}
+
 const FormSchema = z.object({
-  manager: z.string().nonempty({
-    message: '담장자를 선택해 주세요',
-  }),
+  manager: z.string(),
   title: z.string().nonempty({
     message: '제목을 입력해 주세요',
   }),
   desc: z
     .string()
-    .min(5, { message: '5자 이상 작성해 주세요' })
+    .min(3, { message: '5자 이상 작성해 주세요' })
     .max(300, { message: '300자 이내로 적어주세요' }),
   dueDate: z.date().min(new Date('1900-01-01')),
   tags: z.array(z.string(), { message: '하나 이상의 태그 필수 입니다' }),
@@ -111,26 +115,17 @@ const getRandomColor = () => {
   return `${r},${g},${b}`
 }
 
-function getImageData(event: ChangeEvent<HTMLInputElement>) {
-  // FileList is immutable, so we need to create a new one
-  const dataTransfer = new DataTransfer()
-
-  // Add newly uploaded images
-  Array.from(event.target.files!).forEach((image) =>
-    dataTransfer.items.add(image),
-  )
-
-  const files = dataTransfer.files
-  const displayUrl = URL.createObjectURL(event.target.files![0])
-
-  return { files, displayUrl }
-}
-
-const TaskCardCreate = () => {
-  const [users, setUsers] = useState<IMember[]>()
-  const [preview, setPreview] = useState<string>('')
-  const [tagAdd, setTagAdd] = useState<string>('')
-  const [tagList, setTagList] = useState<string[]>()
+const TaskCardCreate = ({
+  dashboardId,
+  columnId,
+  setOpen,
+}: ITaskCreateProps) => {
+  const router = useRouter()
+  const [users, setUsers] = useState<IMember[]>() // 담당자
+  const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지
+  const [preview, setPreview] = useState<string | null>(null) // 미리보기 이미지
+  const [tagAdd, setTagAdd] = useState<string>('') // input tag 추가
+  const [tagList, setTagList] = useState<string[]>() // 추가된 tag 리스트
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: 'onBlur',
@@ -144,8 +139,8 @@ const TaskCardCreate = () => {
     },
   })
 
-  // tag
-  const handleTagList = (e: KeyboardEvent<HTMLInputElement>) => {
+  // tag 키보드 Enter로 추가하기
+  const handleTagAdd = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!tagAdd) return
 
     if (e.key === 'Enter') {
@@ -158,61 +153,62 @@ const TaskCardCreate = () => {
     }
   }
 
+  // tag input 값
   const handleTagChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim()
     setTagAdd(value)
   }
 
   // image
-
-  // 이미지 미리보기
-  // const getImageData = () => {
-  //   const image = form.image
-  //   const url = URL.createObjectURL(e.target.files![0])
-  //   return url
-  // }
-  // const handleImageChange = (e: any) => {
-  //   const url = getImageData(e)
-  //   setPreview(url)
-  // }
-
-  // test id
-
-  // 대쉬보드ID: 8689,
-  // 컬럼ID: 29348, 29349, 29350
-
-  // 대쉬보드ID: 8689
-  // 컬럼ID: 29206, 29207, 29208
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0]
+      const image = URL.createObjectURL(selectedFile)
+      setPreview(image)
+      setImageFile(selectedFile)
+    }
+  }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    const assigneeUserId = parseInt(data.manager, 10)
+    const formData = new FormData()
+    if (imageFile) formData.append('image', imageFile)
+
+    const assigneeUserId = Number(data.manager) // 작업예정: 추후 추가
     const dueDateFormatted = format(data.dueDate, 'yyyy-MM-dd HH:mm')
-    const imageUrlFormatted = data.image?.split('blob:')[0]
+
     const requestData = {
-      assigneeUserId,
-      dashboardId: 8735, // 임시
-      columnId: 29348, // 임시
+      // assigneeUserId:Number(data.manager), // 작업예정: 추후 추가
+      dashboardId,
+      columnId,
       title: data.title,
       description: data.desc,
       dueDate: dueDateFormatted,
       tags: data.tags,
-      imageUrl:
-        'https://sprint-fe-project.s3.ap-northeast-2.amazon…/taskify/profile_image/5-1_3562_1717314829233.png',
     }
-    console.log('폼 전송>>', data)
+
     try {
-      const res = await api.post('/cards', requestData)
-      const resData: ITaskCreate = res.data
-      console.log('resData=>>', resData)
+      if (imageFile) {
+        const res = await api.post(`/columns/${columnId}/card-image`, formData)
+        const res2 = await api.post(`/cards`, { ...res.data, ...requestData })
+      } else {
+        const res2 = await api.post(`/cards`, { ...requestData })
+      }
+      setOpen(false)
       toast.success('전송 완료')
-    } catch {
-      toast.success('전송 실패')
+    } catch (e: any) {
+      if (e.response && e.response.data && e.response.data.message) {
+        toast.error(e.response.data.message)
+      } else {
+        toast.error('전송 실패')
+      }
+    } finally {
+      router.refresh()
     }
   }
 
   useEffect(() => {
     const getMembers = async () => {
-      const user = await getUsers(8735)
+      const user = await getUsers(dashboardId)
       setUsers(user)
     }
     getMembers()
@@ -264,6 +260,7 @@ const TaskCardCreate = () => {
                   </FormItem>
                 )}
               />
+
               {/* 제목 */}
               <FormField
                 control={form.control}
@@ -280,6 +277,7 @@ const TaskCardCreate = () => {
                   </FormItem>
                 )}
               />
+
               {/* 설명 */}
               <FormField
                 control={form.control}
@@ -300,6 +298,7 @@ const TaskCardCreate = () => {
                   </FormItem>
                 )}
               />
+
               {/* 마감일 */}
               <FormField
                 control={form.control}
@@ -328,7 +327,7 @@ const TaskCardCreate = () => {
                               alt='달력'
                             />
                             {field.value ? (
-                              format(field.value, 'yyyy년 M월 d일 h:mm')
+                              format(field.value, 'yyyy년 M월 d일 hh:mm')
                             ) : (
                               <span>날짜를 입력해 주세요.</span>
                             )}
@@ -386,7 +385,7 @@ const TaskCardCreate = () => {
                               : '태그를 입력해 주세요'
                           }
                           onChange={(e) => handleTagChange(e)}
-                          onKeyDown={(e) => handleTagList(e)}
+                          onKeyDown={(e) => handleTagAdd(e)}
                         />
                       </FormControl>
                     </div>
@@ -394,11 +393,9 @@ const TaskCardCreate = () => {
                   </FormItem>
                 )}
               />
-              {/* <div> 파일</div>
-              <input type='file' width={100} className='border' />
-              <div> 파일</div> */}
+
               {/* 이미지 추가 */}
-              {/* <FormField
+              <FormField
                 control={form.control}
                 name='image'
                 render={({ field }) => (
@@ -408,42 +405,11 @@ const TaskCardCreate = () => {
                         <Input
                           id='picture'
                           type='file'
-                          accept='.jpg,.png,.jpeg,.png,.svg'
+                          accept='image/*'
                           className={`${style.inputFile}`}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormLabel
-                        htmlFor='picture'
-                        className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-[#f5f5f5] bg-center bg-no-repeat`}
-                        style={{
-                          backgroundSize: preview ? '100% auto' : 'auto auto',
-                          backgroundImage: preview
-                            ? `url(${preview})`
-                            : `url(${IMAGE_ADD_ICON})`,
-                        }}
-                      ></FormLabel>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-              <FormField
-                control={form.control}
-                name='image'
-                render={({ field: { onChange, value, ...rest } }) => (
-                  <>
-                    <FormItem>
-                      <FormLabel>Circle Image</FormLabel>
-                      <FormControl>
-                        <Input
-                          id='picture'
-                          type='file'
-                          {...rest}
-                          onChange={(event) => {
-                            const { files, displayUrl } = getImageData(event)
-                            setPreview(displayUrl)
-                            onChange(files)
+                          onChange={(e) => {
+                            handleImageChange(e)
+                            field.onChange(e)
                           }}
                         />
                       </FormControl>
@@ -457,28 +423,24 @@ const TaskCardCreate = () => {
                             : `url(${IMAGE_ADD_ICON})`,
                         }}
                       ></FormLabel>
-                      <FormMessage />
-                    </FormItem>
-                  </>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
               <AlertDialogFooter className='absolute bottom-0 left-0 flex w-full gap-3 bg-white px-5 pb-7 pt-6 md:justify-end md:p-7'>
-                <AlertDialogCancel className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'>
+                <AlertDialogCancel
+                  className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
+                  onClick={() => form.reset()}
+                >
                   취소
                 </AlertDialogCancel>
-                <button
+                <Button
                   type='submit'
                   className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
                 >
                   생성
-                </button>
-                {/* <AlertDialogAction
-                  type='submit'
-                  className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
-                  disabled={!form.formState.isValid}
-                >
-                  생성
-                </AlertDialogAction> */}
+                </Button>
               </AlertDialogFooter>
             </form>
           </Form>
@@ -488,4 +450,4 @@ const TaskCardCreate = () => {
   )
 }
 
-export default memo(TaskCardCreate)
+export default TaskCardCreate

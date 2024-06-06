@@ -2,18 +2,26 @@
 
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { useState } from 'react'
-import ColumnAdd from '../column-add'
-import TaskCardCreate from '../task-create copy'
+import TaskCreate from '../task-create'
 
-export const TaskCreactButton = ({ dashboardId }: { dashboardId: string }) => {
+export interface ITackCreate {
+  dashboardId: number
+  columnId: number
+}
+
+export const TaskCreactButton = ({ dashboardId, columnId }: ITackCreate) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger className='bg-violet_light p-3'>
         할 일 카드 생성
       </AlertDialogTrigger>
-      <TaskCardCreate dashboardId={Number(dashboardId)} />
+      <TaskCreate
+        dashboardId={dashboardId}
+        columnId={columnId}
+        setOpen={setOpen}
+      />
     </AlertDialog>
   )
 }

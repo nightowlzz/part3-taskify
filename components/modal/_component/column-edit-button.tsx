@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { ConfirmAlert } from '../confirm-alert'
 import { api } from '@/lib/utils'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 type aaaa = {
   columnId: number
@@ -13,16 +14,19 @@ type aaaa = {
 }
 
 export const ColumnEditButton = ({ columnId, title, dashboardId }: aaaa) => {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1)
 
   const onDelete = async () => {
     try {
       await api.delete(`/columns/${columnId}`)
+
       toast.success(`'${title}'컬럼 삭제 되었습니다.`)
     } catch {
       toast.success(`삭제 되지 않았습니다.`)
     } finally {
+      router.refresh()
       setStep(1)
     }
   }

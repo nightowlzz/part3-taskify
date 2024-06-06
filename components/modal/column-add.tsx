@@ -47,11 +47,11 @@ export const ColumnAdd = ({
   dashboardId,
   setOpen,
 }: {
-  dashboardId: string
+  dashboardId: number
   setOpen: (open: boolean) => void
 }) => {
   const router = useRouter()
-  const [dashboardList, setDashboardList] = useState<IColumnCreate[]>()
+  const [columnList, setColumnList] = useState<IColumnCreate[]>() // 컬럼리스트 불러오기
   const form = useForm<z.infer<typeof ColumnSchema>>({
     resolver: zodResolver(ColumnSchema),
     mode: 'onBlur',
@@ -59,19 +59,12 @@ export const ColumnAdd = ({
       title: '',
     },
   })
-
+  // 컬럼 중복 이름
   const checkDuplicateTitle = (title: string) => {
-    if (dashboardList) {
-      return dashboardList.some(
-        (column) => column.title.trim() === title.trim(),
-      )
+    if (columnList) {
+      return columnList.some((column) => column.title.trim() === title.trim())
     }
     return false
-  }
-
-  // 취소 클릭시
-  const onReset = () => {
-    form.reset()
   }
 
   const onSubmit = async (data: ColumnFormValues) => {
@@ -99,7 +92,7 @@ export const ColumnAdd = ({
     const getColumns = async () => {
       const res = await api.get(`/columns?dashboardId=${dashboardId}`)
       const { data } = res.data
-      setDashboardList(data)
+      setColumnList(data)
     }
     getColumns()
   }, [])
@@ -127,7 +120,7 @@ export const ColumnAdd = ({
             <AlertDialogFooter className='flex w-full gap-3 bg-white pt-6 md:mt-2 md:justify-end md:pt-1'>
               <AlertDialogCancel
                 className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
-                onClick={onReset}
+                onClick={() => form.reset()}
               >
                 취소
               </AlertDialogCancel>

@@ -1,7 +1,4 @@
 import TaskCard from '@/components/modal/task-card'
-import TaskCardCreate from '@/components/modal/task-create'
-import { TaskCardEdit } from '@/components/modal/task-edit'
-import TestFile from '@/components/modal/test-file'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 
 const StyleGuide = () => {
@@ -17,7 +14,6 @@ const StyleGuide = () => {
           <TaskCard />
         </AlertDialog>
       </div>
-      <div></div>
     </div>
   )
 }
