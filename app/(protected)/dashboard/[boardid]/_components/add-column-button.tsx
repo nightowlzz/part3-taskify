@@ -18,7 +18,7 @@ export default function AddColumn({
         '
       onClick={onClick}
     >
-      <span className='text-black_light_2'>새로운 대시보드</span>
+      <span className='text-black_light_2'>새로운 컬럼 추가하기</span>
       <span className='rounded bg-violet_light px-1 text-violet'>+</span>
     </button>
   )
