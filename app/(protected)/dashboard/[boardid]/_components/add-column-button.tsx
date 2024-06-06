@@ -12,9 +12,9 @@ export default function AddColumn({
           flex h-full w-full items-center
           justify-center gap-[10px]
           rounded-lg border 
-          border-gray_dark3 bg-white text-[4px] 
-          shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[17.5px] 
-          md:w-[136px] md:text-[4.5px] xl:h-[17.5px] xl:w-[88.5px] xl:text-[4.5px] 
+          border-gray_dark3 bg-white text-[16px] 
+          shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[70px]
+          md:text-[18px] xl:h-[70px] xl:text-[18px] 
         '
       onClick={onClick}
     >

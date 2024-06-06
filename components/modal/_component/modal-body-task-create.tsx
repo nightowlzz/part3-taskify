@@ -40,7 +40,7 @@ import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { toast } from 'sonner'
-import style from './modal.module.css'
+import style from '@/components/modal/_component/modal.module.css'
 
 const FormSchema = z.object({
   email: z

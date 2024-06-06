@@ -3,10 +3,10 @@
 import settingIcon from '@/public/settings_icon.svg'
 import Colors from './color'
 import { CardInfo } from '@/lib/type'
-import Card from '@/src/app/(afterLogin)/dashboard/[dashboardId]/_component/Card'
+// import Card from '@/src/app/(afterLogin)/dashboard/[dashboardId]/_component/Card'
 import AddTodo from '../add-todo-button'
 import Number from './number'
-import DeleteColumn from '@/src/app/_component/modal/column/delete'
+// import DeleteColumn from '@/src/app/_component/modal/column/delete'
 import UpdateColumn from '../update-column'
 import CreateTask from '../create-task'
 import useInfiniteScroll from '../../_hook/useInfiniteScroll'
@@ -95,7 +95,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
   }, [setCardList])
 
   return (
-    <div className='md:min-w-none hide-scrollbar bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
+    <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
       <div className='bg-gray10 flex flex-col gap-4 dark:bg-black md:gap-6 lg:sticky lg:top-0 lg:z-10 lg:pb-4 lg:pt-5'>
         <div className='flex items-center gap-2'>
           <span
@@ -130,7 +130,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                 style={getStyle(draggableProps.style, snapshot)}
               >
                 <div {...dragHandleProps}>
-                  <Card
+                  {/* <Card
                     id={card.id}
                     title={card.title}
                     columnId={id}
@@ -140,7 +140,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                     bgColor={Colors[card.id % 5]}
                     nickname={card.assignee?.nickname}
                     profileImageUrl={card.assignee?.profileImageUrl}
-                  />
+                  /> */}
                 </div>
               </div>
             )}
@@ -151,7 +151,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
         <div className='h-4 flex-shrink-0' ref={target}></div>
       )}
       {isOpenUpdateColumn && <UpdateColumn columnId={id} />}
-      {isOpenDeleteColumnState && <DeleteColumn columnId={id} />}
+      {/* {isOpenDeleteColumnState && <DeleteColumn columnId={id} />} */}
       {isOpenCreateTodo && (
         <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
       )}

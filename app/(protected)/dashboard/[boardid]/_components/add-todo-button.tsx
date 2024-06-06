@@ -6,12 +6,12 @@ export default function AddTodo({ onClick }: AddTodoProps) {
   return (
     <button
       className='
-	    flex h-full items-center
+	    flex w-full h-[32px] items-center
 	    justify-center gap-[10px]
 	    rounded-lg border 
-    	border-gray_dark3 bg-white text-[4px] 
-	    shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[10px] 
-	    md:text-[4.5px] xl:h-[10px] xl:text-[4.5px] 
+    	border-gray_dark3 bg-white text-[10px] 
+	    shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[40px] 
+	    md:text-[18px] xl:h-[40px] xl:text-[18px] 
       '
       onClick={onClick}
     >

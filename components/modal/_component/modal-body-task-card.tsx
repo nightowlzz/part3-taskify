@@ -10,7 +10,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
 import { ModalHead } from './modal-head'
-import styled from './modal.module.css'
+import styled from '@/components/modal/_component/modal.module.css'
 
 const TaskCard = () => {
   return (
