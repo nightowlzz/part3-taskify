@@ -4,10 +4,10 @@ import settingIcon from '@/public/icons/settings_icon.svg'
 import Colors from './color'
 import { CardInfo } from '@/lib/type'
 import Card from '@/src/app/(afterLogin)/dashboard/[dashboardId]/_component/Card'
-import AddTodo from '@/src/app/_component/Button/AddTodo'
+import AddTodo from '../add-todo-button'
 import Number from './number'
 import DeleteColumn from '@/src/app/_component/modal/column/delete'
-import UpdateColumn from '@/src/app/_component/modal/column/update'
+import UpdateColumn from '../update-column'
 import CreateTask from '../create-task'
 import useInfiniteScroll from '../../_hook/useInfiniteScroll'
 import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
@@ -153,7 +153,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
       {isOpenUpdateColumn && <UpdateColumn columnId={id} />}
       {isOpenDeleteColumnState && <DeleteColumn columnId={id} />}
       {isOpenCreateTodo && (
-        <CreateTask columnId={id} dashboardId={Number(dashboardId)} />
+        <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
       )}
     </div>
   )
