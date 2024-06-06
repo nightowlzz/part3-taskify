@@ -21,7 +21,7 @@ function PaginationBtn() {
 
   return (
     <div>
-      <span>99 페이지 중 {page}</span>
+      <span className='mr-4 text-sm'>99 페이지 중 {page}</span>
       <Button variant='outline' size='icon' onClick={handlePrevPage}>
         <Image src={arrowleft} alt='이전 페이지' />
       </Button>

@@ -1,19 +1,48 @@
 @baseUrl = https://sp-taskify-api.vercel.app
-@credentials = {
+
+### 로그인 요청하여 토큰 발급받기
+POST {{baseUrl}}/5-1/auth/login
+Content-Type: application/json
+
+{
   "email": "test111@mail.com",
   "password": "test1234"
 }
+###
+POST https://sp-taskify-api.vercel.app/5-1/dashboards
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU2MiwidGVhbUlkIjoiNS0xIiwiaWF0IjoxNzE3MzM3NDczLCJpc3MiOiJzcC10YXNraWZ5In0.kms86tk-maSrBvDUkh9o77miiy9dFhLTELZ_wmWgp7Q
 
-### 로그인 요청하여 토큰 발급받기
-POST {{baseUrl}}/auth/login
+{
+  "navigationMethod": "manual",
+  "title": "hi",
+  "color": "#76A5EA"
+}
+###
+GET https://sp-taskify-api.vercel.app/5-1/members?dashboardId=8689
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU2MiwidGVhbUlkIjoiNS0xIiwiaWF0IjoxNzE3NjA5ODY1LCJpc3MiOiJzcC10YXNraWZ5In0.N-vznS1EvFqqKP6SC-t-V6OKwaJGEi47RbbK28HXHvo
+
+###
+POST https://sp-taskify-api.vercel.app/5-1/dashboards/8689/invitations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU2MiwidGVhbUlkIjoiNS0xIiwiaWF0IjoxNzE3NjgxODkzLCJpc3MiOiJzcC10YXNraWZ5In0.Stvtd9ku7xUoKJDq85pDiQ1pjZCt-kObN7AOSOwl490
+
+{
+  "email": "asdf5678@mail.com"
+}
+
+###
+GET https://sp-taskify-api.vercel.app/5-1/dashboards/8689/invitations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU2MiwidGVhbUlkIjoiNS0xIiwiaWF0IjoxNzE3NjIxMzUxLCJpc3MiOiJzcC10YXNraWZ5In0.om3bUhnmoJWqSsaboGgH98UPtK-KDAjXIe_5bPTV60I
+
+###
+POST https://sp-taskify-api.vercel.app/5-1/users
 Content-Type: application/json
 
-{{credentials}}
-
-### 응답에서 토큰 추출
-> {% assign token = response.body.token %}
-
-### 발급받은 토큰을 사용하여 데이터 요청
-GET {{baseUrl}}/your-team-id/dashboards/your-dashboard-id
-Authorization: Bearer {{token}}
-Accept: application/json
+{
+  "email": "asdf5678@mail.com",
+  "nickname": "asdf",
+  "password": "asdf5678"
+}

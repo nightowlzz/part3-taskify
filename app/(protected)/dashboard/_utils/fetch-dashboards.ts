@@ -36,3 +36,15 @@ export async function fetchDashboards(
     throw new Error(`Failed to fetch dashboards: ${error}`)
   }
 }
+
+export async function fetchDashboardId(
+  dashboardId: number,
+): Promise<Dashboard> {
+  const url = `/dashboards/${dashboardId}`
+  try {
+    const response = await api.get<Dashboard>(url)
+    return response.data
+  } catch (error) {
+    throw new Error(`Failed to fetch dashboard with ID ${id}: ${error}`)
+  }
+}
