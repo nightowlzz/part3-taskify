@@ -115,12 +115,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
           </button>
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <AddTodo onClick={openCreateTodoModal} />
-            </AlertDialogTrigger>
-            <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
-          </AlertDialog>
+          <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
         </div>
       </div>
       <div className='flex flex-col justify-center gap-[0.625rem] md:gap-4'>

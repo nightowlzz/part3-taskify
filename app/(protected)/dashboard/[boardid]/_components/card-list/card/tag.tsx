@@ -9,10 +9,10 @@ export default function Tag({ content }: TagProps) {
   const [color, setColor] = useState('')
 
   const colors: Record<string, { bgColor: string; color: string }> = {
-    '1': { bgColor: 'bg-orange10', color: 'text-orange20' },
-    '2': { bgColor: 'bg-green10', color: 'text-green20' },
-    '3': { bgColor: 'bg-pink10', color: 'text-pink20' },
-    '4': { bgColor: 'bg-blue10', color: 'text-blue20' },
+    '1': { bgColor: 'bg-orange_light', color: 'text-orange' },
+    '2': { bgColor: 'bg-green_light', color: 'text-green' },
+    '3': { bgColor: 'bg-pink_light', color: 'text-pink' },
+    '4': { bgColor: 'bg-blue_light', color: 'text-blue' },
   }
 
   useEffect(() => {
