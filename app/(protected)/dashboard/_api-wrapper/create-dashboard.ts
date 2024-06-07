@@ -1,10 +1,5 @@
 import { api } from '@/lib/utils' // Adjust the path as necessary
 
-interface CreateDashboardRequest {
-  title: string
-  color: string
-}
-
 interface CreateDashboardResponse {
   id: number
   title: string
@@ -16,10 +11,14 @@ interface CreateDashboardResponse {
 }
 
 export async function createDashboard(
-  teamId: string,
-  requestBody: CreateDashboardRequest,
+  title: string,
+  color: string,
 ): Promise<CreateDashboardResponse> {
-  const url = `/${teamId}/dashboards`
+  const url = `/dashboards`
+  const requestBody = {
+    title,
+    color,
+  }
   try {
     const response = await api.post<CreateDashboardResponse>(url, requestBody, {
       headers: {

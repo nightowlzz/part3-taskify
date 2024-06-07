@@ -9,7 +9,7 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
-} from '@/components/ui/alert-dialog'
+} from '../ui/alert-dialog'
 import {
   Form,
   FormControl,

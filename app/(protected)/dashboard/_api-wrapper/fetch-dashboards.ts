@@ -1,4 +1,4 @@
-import { api } from '@/lib/utils' // Adjust the path as necessary
+import { api } from '@/lib/utils'
 
 interface Dashboard {
   id: number
@@ -19,9 +19,9 @@ interface FetchDashboardsResponse {
 export async function fetchDashboards(
   navigationMethod: 'infiniteScroll' | 'pagination',
   page: number = 1,
+  size: number = 1000,
   cursorId?: number,
-  size: number = 5,
-): Promise<FetchDashboardsResponse> {
+) {
   const url = `/dashboards`
   const params = {
     navigationMethod,
