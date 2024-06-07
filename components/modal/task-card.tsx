@@ -1,7 +1,7 @@
+import { AlertDialogCancel, AlertDialogContent } from '../ui/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
   Popover,
   PopoverContent,
@@ -9,12 +9,12 @@ import {
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
-import { ModalHead } from './modal-head'
+import { ModalHead } from './components/modal-head'
 import styled from './modal.module.css'
 
 const TaskCard = () => {
   return (
-    <DialogContent className='block h-[90vh] max-w-[730px] md:max-h-[80vh]'>
+    <AlertDialogContent className='block h-[90vh] max-w-[730px] md:max-h-[80vh]'>
       <ScrollArea className='h-full w-full'>
         <div className='px-5 pb-7 pt-10 md:px-7 md:py-8 md:pr-[244px]'>
           <ModalHead>새로운 일정 관리 Taskify</ModalHead>
@@ -102,20 +102,12 @@ const TaskCard = () => {
                   오늘안에 CCC 까지 만들 수 있을까요?
                 </div>
                 <div className='flex gap-2.5'>
-                  <DialogTrigger asChild>
-                    <Button
-                      type='button'
-                      variant={'outline'}
-                      className='h-12 w-full md:max-w-[120px]'
-                    >
-                      취소
-                    </Button>
-                  </DialogTrigger>
-                  <DialogTrigger asChild>
-                    <Button variant={'underline'} className='h-auto p-0'>
-                      삭제
-                    </Button>
-                  </DialogTrigger>
+                  <Button variant={'underline'} className='h-auto p-0'>
+                    삭제
+                  </Button>
+                  <Button variant={'underline'} className='h-auto p-0'>
+                    삭제
+                  </Button>
                 </div>
               </li>
             </ul>
@@ -123,23 +115,35 @@ const TaskCard = () => {
         </div>
       </ScrollArea>
       {/* 팝오버 */}
-      <Popover>
-        <PopoverTrigger className='absolute right-[48px] top-3 h-6 w-6 md:right-20 md:right-[78px] md:top-9 md:h-7 md:w-7'>
+      <div className='absolute right-3 top-3 flex w-[60px] items-center justify-between md:right-7 md:top-8 md:w-[84px]'>
+        <Popover>
+          <PopoverTrigger className='relative h-6 w-6 rounded bg-white md:h-8 md:w-8'>
+            <Image
+              fill
+              src={`/icon-dotted.svg`}
+              alt={'팝오버'}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <Button variant={'popover'}>수정하기</Button>
+            <Button variant={'popover'}>삭제하기</Button>
+          </PopoverContent>
+        </Popover>
+        <AlertDialogCancel className='relative m-0 h-6 w-6 border-0 p-0 md:h-8 md:w-8'>
           <Image
             fill
-            src={`/icon-dotted.svg`}
-            alt={'팝오버'}
+            src='/icon-close.svg'
+            alt='닫기'
             style={{
               objectFit: 'cover',
             }}
           />
-        </PopoverTrigger>
-        <PopoverContent>
-          <Button variant={'popover'}>수정하기</Button>
-          <Button variant={'popover'}>삭제하기</Button>
-        </PopoverContent>
-      </Popover>
-    </DialogContent>
+        </AlertDialogCancel>
+      </div>
+    </AlertDialogContent>
   )
 }
 
