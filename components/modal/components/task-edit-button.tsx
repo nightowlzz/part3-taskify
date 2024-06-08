@@ -25,18 +25,28 @@ export const TaskEditButton = ({
   dashboardId,
 }: columnDashboardId) => {
   const router = useRouter()
-  const [open, setOpen] = useState(false)
+  const [openCardId, setOpenCardId] = useState<number | null>(null)
   const [step, setStep] = useState(1)
   const [cards, setCards] = useState<taskDetail[]>()
 
   const onDelete = async (cardId: number) => {
     try {
       await api.delete(`/cards/${cardId}`)
-      toast.success(`할 일 삭제 되었습니다.`)
+      toast.success(`할 일이 삭제 되었습니다.`)
       router.refresh()
     } catch {
       toast.error(`삭제 되지 않았습니다.`)
     } finally {
+      setStep(1)
+    }
+  }
+  // 모달의 다중 열림으로 cardid에 맞는 모달만 열리도록 수정
+  const addHookAliases = (isOpen: boolean, card: number) => {
+    if (isOpen) {
+      setOpenCardId(card)
+      setStep(1)
+    } else {
+      setOpenCardId(null)
       setStep(1)
     }
   }
@@ -52,21 +62,27 @@ export const TaskEditButton = ({
     <div>
       {cards
         ? cards.map((card: any) => (
-            <AlertDialog key={card.id} open={open} onOpenChange={setOpen}>
+            <AlertDialog
+              key={card.id}
+              open={openCardId === card.id ? true : false}
+              onOpenChange={(isOpen) => addHookAliases(isOpen, card.id)}
+            >
               <AlertDialogTrigger className='bg-orange p-3'>
                 {card.title}
               </AlertDialogTrigger>
               {step === 1 && (
                 <TaskCardEdit
+                  key={card.id + 'edit'}
                   columnId={columnId}
                   dashboardId={dashboardId}
-                  setOpen={setOpen}
                   setStep={setStep}
+                  setOpenCardId={setOpenCardId}
                   {...card}
                 />
               )}
               {step === 2 && (
                 <ConfirmAlert
+                  key={card.id + 'delet'}
                   confirmText={'삭제'}
                   onCancle={() => setStep(1)}
                   onConfirm={() => onDelete(card.id)}

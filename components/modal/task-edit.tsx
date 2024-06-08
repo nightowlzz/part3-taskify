@@ -55,8 +55,8 @@ const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
 
 interface TaskEdit extends taskDetail {
-  setOpen: (setOpen: boolean) => void
   setStep: (setStep: number) => void
+  setOpenCardId: (test: number | null) => void
 }
 
 const FormSchema = z.object({
@@ -113,8 +113,8 @@ export const TaskCardEdit = ({
   imageUrl,
   dashboardId,
   columnId,
-  setOpen,
   setStep,
+  setOpenCardId,
 }: TaskEdit) => {
   const router = useRouter()
   const [users, setUsers] = useState<member[]>([]) // 담당자
@@ -223,7 +223,7 @@ export const TaskCardEdit = ({
       }
 
       toast.success('전송 완료')
-      setOpen(false)
+      setOpenCardId(null)
     } catch (e: any) {
       if (e.response && e.response.data && e.response.data.message) {
         toast.error(e.response.data.message)
