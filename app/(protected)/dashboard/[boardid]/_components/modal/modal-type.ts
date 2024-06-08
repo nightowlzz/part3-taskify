@@ -1,21 +1,18 @@
-export interface IColumnDashboardId {
+export interface columnDashboardId {
   columnId: number
   dashboardId: number
 }
 
-export interface IColumnCreate {
+export interface columnData {
   title: string
-  dashboardId: number
 }
 
-export interface IColumnEditOpen extends IColumnDashboardId {
-  title: string
+export interface columnEdit extends columnDashboardId {
+  initialValues: string
+}
+
+export interface columnEditProps extends columnDashboardId {
+  initialValues: string
   setOpen: (open: boolean) => void
   setStep: (step: number) => void
-}
-
-export interface ITaskCreateOpen extends IColumnDashboardId {}
-
-export interface IColumnEditButton extends IColumnDashboardId {
-  title: string
 }

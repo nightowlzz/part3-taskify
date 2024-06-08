@@ -1,7 +1,5 @@
 import { ColumnCreactButton } from '@/components/modal/components/column-create-button'
 import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
-import { TaskCreactButton } from '@/components/modal/components/task-create-button'
-import { TaskEditButton } from '@/components/modal/components/task-edit-button'
 import { api } from '@/lib/utils'
 
 export const getDashboardId = async (id: number) => {
@@ -31,21 +29,6 @@ export default async function Page({ params }: { params: { id: number } }) {
               <li key={data.id}>
                 <ColumnEditButton
                   title={data.title}
-                  columnId={Number(data.id)}
-                  dashboardId={Number(params.id)}
-                />
-                <br />
-                <hr />
-                <br />
-                <TaskCreactButton
-                  dashboardId={Number(params.id)}
-                  columnId={Number(data.id)}
-                />
-                <br />
-                <hr />
-                <br />
-                <div>[할일]</div>
-                <TaskEditButton
                   columnId={Number(data.id)}
                   dashboardId={Number(params.id)}
                 />

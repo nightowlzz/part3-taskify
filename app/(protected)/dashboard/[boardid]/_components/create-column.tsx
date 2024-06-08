@@ -27,10 +27,10 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
-import { IColumnCreate } from './modal/modal-type'
 import { ModalHead } from './modal/modal-head'
 import { useRecoilState } from 'recoil'
 import { createColumnState } from './modal/modal-atom'
+import { Column } from '@/lib/type'
 
 const ColumnSchema = z.object({
   title: z
@@ -45,10 +45,16 @@ const ColumnSchema = z.object({
 })
 export type ColumnFormValues = z.infer<typeof ColumnSchema>
 
-export const CreateColumn = ({ dashboardId, onUpdate }: { dashboardId: number, onUpdate: () => void }) => {
+export const CreateColumn = ({
+  dashboardId,
+  onUpdate,
+}: {
+  dashboardId: number
+  onUpdate: () => void
+}) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useRecoilState(createColumnState)
-  const [columnList, setColumnList] = useState<IColumnCreate[]>()
+  const [columnList, setColumnList] = useState<Column[]>()
   const form = useForm<z.infer<typeof ColumnSchema>>({
     resolver: zodResolver(ColumnSchema),
     mode: 'onBlur',
