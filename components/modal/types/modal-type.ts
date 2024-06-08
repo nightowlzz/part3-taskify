@@ -52,3 +52,23 @@ export interface ITaskDetails {
   totalCount: number
   cursorId: null
 }
+
+// 수정중
+export interface columnDashboardId {
+  columnId: number
+  dashboardId: number
+}
+
+export interface columnData {
+  title: string
+}
+
+export interface columnEdit extends columnDashboardId {
+  initialValues: string
+}
+
+export interface columnEditProps extends columnDashboardId {
+  initialValues: string
+  setOpen: (open: boolean) => void
+  setStep: (step: number) => void
+}

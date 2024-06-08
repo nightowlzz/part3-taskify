@@ -22,7 +22,6 @@ const ColumnEdit = ({
       columnId: Number(columnId),
     })
   }
-
   return (
     <AlertDialogContent>
       <div className='px-5 py-7 md:py-8'>

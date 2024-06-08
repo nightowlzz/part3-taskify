@@ -14,7 +14,6 @@ export default async function Page({ params }: { params: { id: number } }) {
   return (
     <div className='mx-auto flex max-w-[1000px] flex-col p-[30px]'>
       <h1 className='py-[30px]'>test 페이지</h1>
-      <br />
       <hr />
       <br />
       <h2 className='text-xl'>컬럼</h2>
@@ -28,7 +27,7 @@ export default async function Page({ params }: { params: { id: number } }) {
           ? data.map((data: any) => (
               <li key={data.id}>
                 <ColumnEditButton
-                  title={data.title}
+                  initialValues={data.title}
                   columnId={Number(data.id)}
                   dashboardId={Number(params.id)}
                 />
