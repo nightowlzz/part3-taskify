@@ -32,14 +32,14 @@ export const TaskEditButton = ({
   const [step, setStep] = useState(1)
   const [cards, setCards] = useState<ITaskDetail[]>()
 
-  const onDelete = async () => {
+  const onDelete = async (cardId: number) => {
     try {
-      await api.delete(`/columns/${columnId}`)
+      await api.delete(`/cards/${cardId}`)
       toast.success(`할 일 삭제 되었습니다.`)
+      router.refresh()
     } catch {
       toast.error(`삭제 되지 않았습니다.`)
     } finally {
-      router.refresh()
       setStep(1)
     }
   }
@@ -72,7 +72,7 @@ export const TaskEditButton = ({
                 <ConfirmAlert
                   confirmText={'삭제'}
                   onCancle={() => setStep(1)}
-                  onConfirm={() => onDelete()}
+                  onConfirm={() => onDelete(card.id)}
                 >
                   할 일이 삭제 됩니다.
                 </ConfirmAlert>
