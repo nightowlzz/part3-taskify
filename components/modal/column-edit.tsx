@@ -1,12 +1,9 @@
 'user client'
-import {
-  columnData,
-  columnEditProps,
-} from '@/app/(protected)/dashboard/[boardid]/_components/modal/modal-type'
 import { api } from '@/lib/utils'
 import { AlertDialogContent } from '../ui/alert-dialog'
 import { ColumnForm } from './components/column-form'
 import { ModalHead } from './components/modal-head'
+import { columnEditProps, columnForm } from './types/modal-type'
 
 const ColumnEdit = ({
   columnId,
@@ -16,7 +13,7 @@ const ColumnEdit = ({
   setStep,
 }: columnEditProps) => {
   // 컬럼 추가 API 호출 함수
-  const handleEditColumn = async (data: columnData) => {
+  const handleEditColumn = async (data: columnForm) => {
     await api.put(`/columns/${columnId}`, {
       title: data.title.trim(),
       columnId: Number(columnId),

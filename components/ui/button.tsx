@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'bg-primary text-primary-foreground hover:bg-gray_dark2',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
@@ -21,7 +21,7 @@ const buttonVariants = cva(
         underline:
           'bg-transparent underline text-[#9fa6b2] leading-5 text-xs w-auto',
         popover:
-          'bg-transparent hover:bg-[#F1EFFD] hover:text-[#5534da] leading-5 text w-full text-sm',
+          'bg-transparent hover:bg-violet_light hover:text-violet leading-5 text w-full text-sm',
       },
       size: {
         default: 'h-10 px-4 py-2',

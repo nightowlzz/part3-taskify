@@ -1,4 +1,3 @@
-import { AlertDialogCancel, AlertDialogContent } from '../ui/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,6 +8,7 @@ import {
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
+import { AlertDialogCancel, AlertDialogContent } from '../ui/alert-dialog'
 import { ModalHead } from './components/modal-head'
 import styled from './modal.module.css'
 
@@ -43,7 +43,7 @@ const TaskCard = () => {
           <div className='flex items-center'>
             <Badge
               variant='dotted'
-              className={`${styled.badge} bg-[#F1EFFD] text-[#5534DA]`}
+              className={`${styled.badge} bg-violet_light text-violet`}
             >
               Badge
             </Badge>
@@ -76,7 +76,7 @@ const TaskCard = () => {
                   className='text-6 w-full p-1 placeholder:text-sm'
                 ></textarea>
                 <Button
-                  className='ml-auto block h-[28px] w-[78px] py-0 font-bold text-[#5534DA] md:h-8'
+                  className='ml-auto block h-[28px] w-[78px] py-0 font-bold text-violet md:h-8'
                   variant={'outline'}
                 >
                   입력

@@ -59,7 +59,7 @@ export interface columnDashboardId {
   dashboardId: number
 }
 
-export interface columnData {
+export interface columnForm {
   title: string
 }
 
@@ -71,4 +71,30 @@ export interface columnEditProps extends columnDashboardId {
   initialValues: string
   setOpen: (open: boolean) => void
   setStep: (step: number) => void
+}
+
+export interface member {
+  id: number
+  email: string
+  nickname: string
+  profileImageUrl: string
+  userId: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface members {
+  members: member[]
+  totalCount: number
+}
+
+export interface taskForm {
+  assigneeUserId?: number | null
+  title: string
+  description: string
+  tags: string[]
+  dueDate?: string | null
+  imageUrl?: string | null
+  dashboardId: number
+  columnId: number
 }

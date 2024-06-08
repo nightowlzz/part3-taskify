@@ -3,16 +3,15 @@ import { api } from '@/lib/utils'
 import { AlertDialogContent } from '../ui/alert-dialog'
 import { ColumnForm } from './components/column-form'
 import { ModalHead } from './components/modal-head'
-import { Column } from '@/lib/type'
-import { columnEditProps } from '@/app/(protected)/dashboard/[boardid]/_components/modal/modal-type'
+import { columnEditProps, columnForm } from './types/modal-type'
 
 type ColumnEditPick = Pick<columnEditProps, 'dashboardId' | 'setOpen'>
 
 const ColumnCreate = ({ dashboardId, setOpen }: ColumnEditPick) => {
   // 컬럼 추가 API 호출 함수
-  const handleAddColumn = async ({ title }: { title: string }) => {
+  const handleAddColumn = async (data: columnForm) => {
     await api.post('/columns', {
-      title: title,
+      title: data.title.trim(),
       dashboardId: Number(dashboardId),
     })
   }

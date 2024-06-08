@@ -1,19 +1,16 @@
 'use client'
+import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { api } from '@/lib/utils'
-import { Button } from 'react-day-picker'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { ConfirmAlert } from '../confirm-alert'
+import { TaskCardEdit } from '../task-edit'
 import {
-  IColumnCreate,
   IColumnDashboardId,
   ITaskDetail,
   ITaskDetails,
 } from '../types/modal-type'
-import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
-import { TaskCardEdit, userTaskDedail } from '../task-edit'
-import { countAboutCardList } from '@/app/(protected)/dashboard/[boardid]/_recoil/todo'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
-import { ConfirmAlert } from '../confirm-alert'
 
 async function getTaskList(id: number) {
   const {
@@ -55,7 +52,7 @@ export const TaskEditButton = ({
     <div>
       {cards
         ? cards.map((card: any) => (
-            <AlertDialog key={card.id}>
+            <AlertDialog key={card.id} open={open} onOpenChange={setOpen}>
               <AlertDialogTrigger className='bg-orange p-3'>
                 {card.title}
               </AlertDialogTrigger>

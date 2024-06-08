@@ -1,5 +1,4 @@
 'use client'
-import { columnData } from '@/app/(protected)/dashboard/[boardid]/_components/modal/modal-type'
 import {
   AlertDialogCancel,
   AlertDialogFooter,
@@ -22,6 +21,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { columnForm } from '../types/modal-type'
 
 const ColumnSchema = z.object({
   title: z
@@ -70,7 +70,7 @@ export const ColumnForm = ({
     return false
   }
 
-  const handleSubmit = async (data: columnData) => {
+  const handleSubmit = async (data: columnForm) => {
     if (checkDuplicateTitle(data.title)) {
       toast.success('중복된 이름 입니다.')
       return
