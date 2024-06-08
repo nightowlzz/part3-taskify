@@ -48,10 +48,19 @@ import {
 import { toast } from 'sonner'
 import { ModalHead } from './components/modal-head'
 import style from './modal.module.css'
-import { ITaskCreateOpen, member, members, taskForm } from './types/modal-type'
+import {
+  columnDashboardId,
+  member,
+  memberData,
+  taskForm,
+} from './types/modal-type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
+
+interface taskCreadProps extends columnDashboardId {
+  setOpen: (open: boolean) => void
+}
 
 const FormSchema = z.object({
   manager: z.string(),
@@ -71,7 +80,7 @@ const FormSchema = z.object({
 export const getUsers = async (id: number) => {
   const {
     data: { members },
-  } = await api.get<members>(`/members?dashboardId=${id}`)
+  } = await api.get<memberData>(`/members?dashboardId=${id}`)
 
   return members
 }
@@ -85,11 +94,7 @@ const getRandomColor = () => {
   return `${r},${g},${b}`
 }
 
-const TaskCardCreate = ({
-  dashboardId,
-  columnId,
-  setOpen,
-}: ITaskCreateOpen) => {
+const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
   const router = useRouter()
   const [users, setUsers] = useState<member[]>() // 담당자
   const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지

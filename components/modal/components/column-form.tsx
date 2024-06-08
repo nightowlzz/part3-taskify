@@ -48,7 +48,6 @@ export interface columnEditFrom {
 
 export const ColumnForm = ({
   initialValues,
-  columnId,
   dashboardId,
   setOpen,
   setStep,

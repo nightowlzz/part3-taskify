@@ -48,18 +48,13 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 import { ModalHead } from './components/modal-head'
 import { default as style, default as styled } from './modal.module.css'
-import {
-  IColumnList,
-  ITaskDetail,
-  member,
-  members,
-  taskForm,
-} from './types/modal-type'
+import { taskDetail, member, memberData, taskForm } from './types/modal-type'
+import { Column } from '@/lib/type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
 
-interface TaskEdit extends ITaskDetail {
+interface TaskEdit extends taskDetail {
   setOpen: (setOpen: boolean) => void
   setStep: (setStep: number) => void
 }
@@ -89,7 +84,7 @@ export const getUsers = async (id: number) => {
 
 // 담당자
 export const getSelectUsers = async (id: number) => {
-  const { data } = await api.get<members>(`/cards/${id}`)
+  const { data } = await api.get<memberData>(`/cards/${id}`)
   return data
 }
 
@@ -123,7 +118,7 @@ export const TaskCardEdit = ({
 }: TaskEdit) => {
   const router = useRouter()
   const [users, setUsers] = useState<member[]>([]) // 담당자
-  const [columns, setColumns] = useState<IColumnList[]>() // 상태(컬럼)
+  const [columns, setColumns] = useState<Column[]>() // 상태(컬럼)
   const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지
   const [tagAdd, setTagAdd] = useState<string>('') // input tag 추가
   const [preview, setPreview] = useState<string | null>(imageUrl || null) // 미리보기 이미지

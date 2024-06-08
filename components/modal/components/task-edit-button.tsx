@@ -7,15 +7,15 @@ import { toast } from 'sonner'
 import { ConfirmAlert } from '../confirm-alert'
 import { TaskCardEdit } from '../task-edit'
 import {
-  IColumnDashboardId,
-  ITaskDetail,
-  ITaskDetails,
+  columnDashboardId,
+  taskDetail,
+  taskDetailData,
 } from '../types/modal-type'
 
 async function getTaskList(id: number) {
   const {
     data: { cards },
-  } = await api.get<ITaskDetails>(`/cards?columnId=${id}`)
+  } = await api.get<taskDetailData>(`/cards?columnId=${id}`)
 
   return cards
 }
@@ -23,11 +23,11 @@ async function getTaskList(id: number) {
 export const TaskEditButton = ({
   columnId,
   dashboardId,
-}: IColumnDashboardId) => {
+}: columnDashboardId) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1)
-  const [cards, setCards] = useState<ITaskDetail[]>()
+  const [cards, setCards] = useState<taskDetail[]>()
 
   const onDelete = async (cardId: number) => {
     try {
