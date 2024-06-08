@@ -24,7 +24,7 @@ export const ColumnEditButton = ({
 
       toast.success(`'${title}'컬럼 삭제 되었습니다.`)
     } catch {
-      toast.success(`삭제 되지 않았습니다.`)
+      toast.error(`삭제 되지 않았습니다.`)
     } finally {
       router.refresh()
       setStep(1)

@@ -75,11 +75,11 @@ export const ColumnEdit = ({
         title: title.trim(),
         columnId: Number(columnId),
       })
+      setOpen(false)
       toast.success('컬럼명이 변경 되었습니다.')
     } catch {
       toast.success('컬럼명이 변경 되지 않았습니다..')
     } finally {
-      setOpen(false)
       router.refresh()
     }
   }

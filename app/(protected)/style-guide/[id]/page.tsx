@@ -1,12 +1,10 @@
 import { ColumnCreactButton } from '@/components/modal/components/column-create-button'
 import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
 import { TaskCreactButton } from '@/components/modal/components/task-create-button'
-import { TaskCardEdit } from '@/components/modal/task-edit'
-import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import { TaskEditButton } from '@/components/modal/components/task-edit-button'
 import { api } from '@/lib/utils'
-import { TaskList } from './task-list'
 
-async function getDashboardId(id: number) {
+export const getDashboardId = async (id: number) => {
   const res = await api.get(`/columns?dashboardId=${id}`)
   const { data } = await res.data
   return data
@@ -18,22 +16,6 @@ export default async function Page({ params }: { params: { id: number } }) {
   return (
     <div className='mx-auto flex max-w-[1000px] flex-col p-[30px]'>
       <h1 className='py-[30px]'>test 페이지</h1>
-      <br />
-      <hr />
-      <br />
-      <h2 className='text-xl'>컬럼</h2>
-      <br />
-      <div>생성</div>
-
-      <br />
-      <div>수정</div>
-      {/* 할 일 카드 수정 */}
-      <AlertDialog>
-        <AlertDialogTrigger className='bg-violet_light p-3'>
-          할 일 카드 수정
-        </AlertDialogTrigger>
-        <TaskCardEdit />
-      </AlertDialog>
       <br />
       <hr />
       <br />
@@ -63,7 +45,10 @@ export default async function Page({ params }: { params: { id: number } }) {
                 <hr />
                 <br />
                 <div>[할일]</div>
-                <TaskList columnId={Number(data.id)} />
+                <TaskEditButton
+                  columnId={Number(data.id)}
+                  dashboardId={Number(params.id)}
+                />
               </li>
             ))
           : null}

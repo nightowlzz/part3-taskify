@@ -3,6 +3,10 @@ export interface IColumnDashboardId {
   dashboardId: number
 }
 
+export interface IColumnList {
+  id: number
+  title: string
+}
 export interface IColumnCreate {
   title: string
   dashboardId: number
@@ -21,4 +25,30 @@ export interface ITaskCreateOpen extends IColumnDashboardId {
 // 추 후 삭제예정[타입]
 export interface IColumnEditButton extends IColumnDashboardId {
   title: string
+}
+
+// user
+export interface IAssignDetail {
+  id: number | null
+  nickname: string | null
+  profileImageUrl: string | null
+}
+
+// 할 일 type
+export interface ITaskDetail {
+  id: number
+  title: string
+  description: string
+  tags?: []
+  dueDate?: string
+  assignee?: IAssignDetail | null
+  imageUrl?: string
+  dashboardId: number
+  columnId: number
+}
+
+export interface ITaskDetails {
+  cards: ITaskDetail[]
+  totalCount: number
+  cursorId: null
 }

@@ -52,6 +52,7 @@ interface IMember {
   email: string
   nickname: string
   profileImageUrl: string
+  userId: number
   createdAt: string
   updatedAt: string
 }
@@ -61,6 +62,17 @@ interface IMembers {
   totalCount: number
 }
 
+interface ITask {
+  assigneeUserId?: number | null
+  title: string
+  description: string
+  tags: string[]
+  dueDate?: string | null
+  imageUrl?: string | null
+  dashboardId: number
+  columnId: number
+}
+
 const FormSchema = z.object({
   manager: z.string(),
   title: z.string().nonempty({
@@ -68,11 +80,11 @@ const FormSchema = z.object({
   }),
   desc: z
     .string()
-    .min(3, { message: '5자 이상 작성해 주세요' })
+    .min(1, { message: '1자 이상 작성해 주세요' })
     .max(300, { message: '300자 이내로 적어주세요' }),
   dueDate: z.date().min(new Date('1900-01-01')),
   tags: z.array(z.string(), { message: '하나 이상의 태그 필수 입니다' }),
-  image: z.string().optional(),
+  image: z.string().nullable(),
 })
 
 // 맴버들
@@ -113,7 +125,7 @@ const TaskCardCreate = ({
       desc: '',
       dueDate: new Date(),
       tags: [],
-      image: '',
+      image: null,
     },
   })
 
@@ -151,29 +163,33 @@ const TaskCardCreate = ({
     const formData = new FormData()
     if (imageFile) formData.append('image', imageFile)
 
-    const assigneeUserId = Number(data.manager) // 작업예정: 추후 추가
-    const dueDateFormatted = format(data.dueDate, 'yyyy-MM-dd HH:mm')
-
-    const requestData = {
-      // assigneeUserId:Number(data.manager), // 작업예정: 추후 추가
+    const requestData: ITask = {
       dashboardId,
       columnId,
       title: data.title,
       description: data.desc,
-      dueDate: dueDateFormatted,
-      tags: data.tags,
+      dueDate: format(data.dueDate, 'yyyy-MM-dd HH:mm'),
+      tags: data.tags || [],
+    }
+
+    if (data.manager || !null) {
+      formData.append('assigneeUserId', data.manager)
     }
 
     try {
+      let res
       if (imageFile) {
         const image = await api.post(
           `/columns/${columnId}/card-image`,
           formData,
         )
-        await api.post(`/cards`, { ...image.data, ...requestData })
+        res = await api.post(`/cards`, { ...image.data, ...requestData })
       } else {
-        await api.post(`/cards`, { ...requestData })
+        res = await api.post(`/cards`, { ...requestData })
       }
+      setTagList([])
+      setPreview(null)
+      form.reset()
       setOpen(false)
       toast.success('전송 완료')
     } catch (e: any) {
@@ -183,9 +199,6 @@ const TaskCardCreate = ({
         toast.error('전송 실패')
       }
     } finally {
-      setTagList([])
-      setPreview(null)
-      form.reset()
       router.refresh()
     }
   }
@@ -229,7 +242,7 @@ const TaskCardCreate = ({
                       {/* server component */}
                       <SelectContent>
                         {users?.map((user) => (
-                          <SelectItem key={user.id} value={`${user.id}`}>
+                          <SelectItem key={user.id} value={`${user.userId}`}>
                             <div className='flex items-center'>
                               <Avatar className='mr-2'>
                                 <AvatarImage src={user.profileImageUrl} />

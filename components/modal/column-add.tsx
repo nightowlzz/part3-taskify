@@ -74,13 +74,13 @@ export const ColumnAdd = ({
         title: title.trim(),
         dashboardId: Number(dashboardId),
       })
+      form.reset()
+      setOpen(false)
       toast.success('새로운 컬럼이 생성되었습니다.')
     } catch {
       toast.success('컬럼이 생성되지 않았습니다.')
     } finally {
-      form.reset()
       router.refresh()
-      setOpen(false)
     }
   }
 

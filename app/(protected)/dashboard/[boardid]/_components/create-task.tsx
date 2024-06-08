@@ -40,8 +40,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import style from '@/components/modal/_component/modal.module.css'
 import { ITaskCreateOpen } from './modal/modal-type'
+import style from '@/components/modal/modal.module.css'
 import { ModalHead } from './modal/modal-head'
 import { useRecoilState } from 'recoil'
 import { createTaskState } from './modal/modal-atom'
@@ -168,7 +168,7 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
       } else {
         await api.post(`/cards`, { ...requestData })
       }
-	  setIsOpen(false)
+      setIsOpen(false)
       form.reset()
       toast.success('전송 완료')
       router.refresh()
@@ -410,9 +410,8 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 <AlertDialogCancel
                   className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
                   onClick={() => {
-					form.reset()
+                    form.reset()
                     setIsOpen(false)
-                    
                   }}
                 >
                   취소
