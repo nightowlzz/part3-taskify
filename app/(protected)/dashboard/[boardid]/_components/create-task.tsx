@@ -40,11 +40,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import style from '@/components/modal/modal.module.css'
+import style from '@/components/modal/_component/modal.module.css'
+import { ITaskCreateOpen } from './modal/modal-type'
 import { ModalHead } from './modal/modal-head'
 import { useRecoilState } from 'recoil'
 import { createTaskState } from './modal/modal-atom'
-import { columnDashboardId } from './modal/modal-type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 
@@ -94,7 +94,7 @@ const getRandomColor = () => {
   return `${r},${g},${b}`
 }
 
-const CreateTask = ({ dashboardId, columnId }: columnDashboardId) => {
+const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useRecoilState(createTaskState)
   const [users, setUsers] = useState<IMember[]>()
