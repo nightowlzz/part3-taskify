@@ -69,12 +69,33 @@ export interface taskDetailData {
 }
 
 // 댓글
-// export interface commnet {
-//   columnId: number
-//   dashboardId: number
-//   cardId: number
-// }
+export interface commentRelatedIDs {
+  columnId: number
+  dashboardId: number
+  cardId: number
+}
 
-// export interface commnetData extends commnet {
-//   content: string
-// }
+export interface commnetData extends commentRelatedIDs {
+  content: string
+  columnId: number
+  dashboardId: number
+  cardId: number
+}
+
+export interface commnet {
+  id: number
+  content: string
+  createdAt: string
+  updatedAt: string
+  cardId: number
+  author: {
+    profileImageUrl: string
+    nickname: string
+    id: number
+  }
+}
+
+export interface commnetApi {
+  cursorId: number
+  comments: commnet[]
+}

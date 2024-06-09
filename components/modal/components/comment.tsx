@@ -1,9 +1,16 @@
 'use client'
+import { Button } from '@/components/ui/button'
+import { api } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import {
+  commentRelatedIDs,
+  commnet,
+  commnetApi,
+  commnetData,
+} from '../types/modal-type'
 
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,17 +19,16 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { api } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-interface commnet {
-  columnId: number
-  dashboardId: number
-  cardId: number
-}
+import { CommentView } from './commnet-write'
 
-interface commnetData extends commnet {
-  content: string
+export const getComments = async (cardId: number) => {
+  const {
+    data: { comments },
+  } = await api.get<commnetApi>(`/comments?cardId=${cardId}`)
+  return comments
 }
 
 const FormSchema = z.object({
@@ -31,14 +37,24 @@ const FormSchema = z.object({
   }),
 })
 
-export const CommentForm = ({ columnId, dashboardId, cardId }: commnet) => {
+export const Comment = ({
+  cardId,
+  dashboardId,
+  columnId,
+}: commentRelatedIDs) => {
   const router = useRouter()
+  const [comments, setComments] = useState<commnet[]>()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
 
+  // 댓글 리스트 갱신
+  const fetchComments = async () => {
+    const result = await getComments(cardId)
+    setComments(result)
+  }
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('data', data)
     const requestData: commnetData = {
       content: data.commnet.trim(),
       cardId: cardId,
@@ -46,12 +62,14 @@ export const CommentForm = ({ columnId, dashboardId, cardId }: commnet) => {
       dashboardId: dashboardId,
     }
     try {
-      const res = api.post('/comments', { ...requestData })
-      console.log('res', res)
-      toast.error('댓글을 작성하였습니다.')
-      form.reset()
+      api.post('/comments', { ...requestData }).then((res) => {
+        toast.success('댓글을 작성하였습니다.')
+        form.reset()
+        fetchComments()
+      })
     } catch (e: any) {
       if (e.response && e.response.data && e.response.data.message) {
+        toast.error(e.response.data.message)
       } else {
         toast.error('전송 실패')
       }
@@ -59,8 +77,13 @@ export const CommentForm = ({ columnId, dashboardId, cardId }: commnet) => {
       router.refresh()
     }
   }
+
+  useEffect(() => {
+    fetchComments()
+  }, [cardId])
   return (
     <>
+      {/* 댓글 입력 */}
       <div>
         <h3 className='pb-[10px] font-bold'>댓글</h3>
         <Form {...form}>
@@ -93,6 +116,16 @@ export const CommentForm = ({ columnId, dashboardId, cardId }: commnet) => {
           </form>
         </Form>
       </div>
+      <>
+        {comments &&
+          comments.map((comment) => (
+            <CommentView
+              key={comment.id}
+              fetchComments={fetchComments}
+              comment={comment}
+            />
+          ))}
+      </>
     </>
   )
 }

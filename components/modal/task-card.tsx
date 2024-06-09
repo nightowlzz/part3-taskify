@@ -9,7 +9,7 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from '../ui/alert-dialog'
-import { Button } from '../ui/button'
+import { Comment } from './components/comment'
 import { ModalHead } from './components/modal-head'
 import { TaskPopoder } from './components/task-popoder'
 import styled from './modal.module.css'
@@ -128,54 +128,11 @@ export const TaskCard = async ({
                       </div>
                     )}
                   </div>
-                  {/* 댓글 입력 */}
-                  <div>
-                    <h3 className='pb-[10px] font-bold'>댓글</h3>
-                    <form>
-                      <div className='rounded-md border p-3'>
-                        <textarea
-                          name=''
-                          id=''
-                          placeholder='댓글 작성하기'
-                          className='text-6 w-full p-1 placeholder:text-sm'
-                        ></textarea>
-                        <Button
-                          className='ml-auto block h-[28px] w-[78px] py-0 font-bold text-violet md:h-8'
-                          variant={'outline'}
-                        >
-                          입력
-                        </Button>
-                      </div>
-                    </form>
-                  </div>
-                  {/* 댓글 보기 */}
-                  <div className='flex gap-2.5 pt-5'>
-                    <Avatar>
-                      <AvatarImage src='https://github.com/shadcn.png' />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <ul>
-                      <li>
-                        <div className='flex gap-2 pb-1 pt-2'>
-                          <strong className='text-sm font-bold'>장만철</strong>
-                          <span className='text=[#9FA6B2] text-xs'>
-                            2022.12.27 14:00
-                          </span>
-                        </div>
-                        <div className='pb-2.5 text-sm'>
-                          오늘안에 CCC 까지 만들 수 있을까요?
-                        </div>
-                        <div className='flex gap-2.5'>
-                          <Button variant={'underline'} className='h-auto p-0'>
-                            삭제
-                          </Button>
-                          <Button variant={'underline'} className='h-auto p-0'>
-                            삭제
-                          </Button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                  <Comment
+                    cardId={task.id}
+                    dashboardId={task.dashboardId}
+                    columnId={task.columnId}
+                  />
                 </div>
               </ScrollArea>
               {/* 팝오버 */}
