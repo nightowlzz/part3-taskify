@@ -20,8 +20,6 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         underline:
           'bg-transparent underline text-[#9fa6b2] leading-5 text-xs w-auto',
-        popover:
-          'bg-transparent hover:bg-violet_light hover:text-violet leading-5 text w-full text-sm',
       },
       size: {
         default: 'h-10 px-4 py-2',

@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { Column } from '@/lib/type'
 import { api, cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
@@ -48,15 +49,13 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 import { ModalHead } from './components/modal-head'
 import { default as style, default as styled } from './modal.module.css'
-import { taskDetail, member, memberData, taskForm } from './types/modal-type'
-import { Column } from '@/lib/type'
+import { member, memberData, taskDetail, taskForm } from './types/modal-type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
 
-interface TaskEdit extends taskDetail {
-  setStep: (setStep: number) => void
-  setOpenCardId: (test: number | null) => void
+interface taskEdit extends taskDetail {
+  setOpen?: (open: boolean) => void
 }
 
 const FormSchema = z.object({
@@ -113,9 +112,8 @@ export const TaskCardEdit = ({
   imageUrl,
   dashboardId,
   columnId,
-  setStep,
-  setOpenCardId,
-}: TaskEdit) => {
+  setOpen,
+}: taskEdit) => {
   const router = useRouter()
   const [users, setUsers] = useState<member[]>([]) // 담당자
   const [columns, setColumns] = useState<Column[]>() // 상태(컬럼)
@@ -195,7 +193,6 @@ export const TaskCardEdit = ({
 
     type TaskFormWithoutDashboard = Omit<taskForm, 'dashboardId'>
     let requestData: TaskFormWithoutDashboard = {
-      // assigneeUserId: Number(data.manager),
       columnId: Number(data.status),
       title: data.title,
       description: data.desc,
@@ -223,7 +220,7 @@ export const TaskCardEdit = ({
       }
 
       toast.success('전송 완료')
-      setOpenCardId(null)
+      if (setOpen) setOpen(false)
     } catch (e: any) {
       if (e.response && e.response.data && e.response.data.message) {
         toast.error(e.response.data.message)
@@ -542,13 +539,6 @@ export const TaskCardEdit = ({
                   변경
                 </Button>
               </div>
-              <Button
-                variant='underline'
-                className='mb-4 h-5 p-0 leading-none md:mb-0'
-                onClick={() => setStep(2)}
-              >
-                삭제하기
-              </Button>
             </AlertDialogFooter>
           </form>
         </Form>

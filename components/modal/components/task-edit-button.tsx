@@ -34,12 +34,17 @@ export const TaskEditButton = ({
       await api.delete(`/cards/${cardId}`)
       toast.success(`할 일이 삭제 되었습니다.`)
       router.refresh()
-    } catch {
-      toast.error(`삭제 되지 않았습니다.`)
+    } catch (e: any) {
+      if (e.response && e.response.data && e.response.data.message) {
+        toast.error(e.response.data.message)
+      } else {
+        toast.error(`삭제 되지 않았습니다.`)
+      }
     } finally {
       setStep(1)
     }
   }
+
   // 모달의 다중 열림으로 cardid에 맞는 모달만 열리도록 수정
   const addHookAliases = (isOpen: boolean, card: number) => {
     if (isOpen) {
@@ -52,11 +57,11 @@ export const TaskEditButton = ({
   }
 
   useEffect(() => {
-    const aaaa = async () => {
+    const taskList = async () => {
       const result = await getTaskList(columnId)
       setCards(result)
     }
-    aaaa()
+    taskList()
   }, [])
   return (
     <div>

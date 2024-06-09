@@ -253,7 +253,9 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                           <div className='flex items-center'>
                             <Avatar className='mr-2'>
                               <AvatarImage src={user.profileImageUrl} />
-                              <AvatarFallback>CN</AvatarFallback>
+                              <AvatarFallback>
+                                {user.nickname[0]}
+                              </AvatarFallback>
                             </Avatar>
                             <span className='text-sm'>{user.nickname}</span>
                           </div>

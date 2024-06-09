@@ -67,3 +67,14 @@ export interface taskDetailData {
   totalCount: number
   cursorId: null
 }
+
+// 댓글
+// export interface commnet {
+//   columnId: number
+//   dashboardId: number
+//   cardId: number
+// }
+
+// export interface commnetData extends commnet {
+//   content: string
+// }
