@@ -3,13 +3,13 @@
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { useState } from 'react'
 import TaskCreate from '../task-create'
-import { IColumnDashboardId } from '../types/modal-type'
+import { columnDashboardId } from '../types/modal-type'
 
 // 추 후 삭제예정[파일]
 export const TaskCreactButton = ({
   dashboardId,
   columnId,
-}: IColumnDashboardId) => {
+}: columnDashboardId) => {
   const [open, setOpen] = useState(false)
 
   return (

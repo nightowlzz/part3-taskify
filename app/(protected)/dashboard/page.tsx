@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import CreateDashboard from './_components/create-dashboard'
-import FetchDashboardBtn from './_components/api_test/fetch-dashboard-btn'
 import DashboardCta from './_components/dashboardCta'
 import { fetchDashboards } from './_api-wrapper/fetch-dashboards'
+import InvitationDashboard from './_components/invitation'
+import PageNation from './_components/pagenation'
 
 interface Dashboard {
   id: number
@@ -20,13 +21,18 @@ const DashboardPage: React.FC = () => {
   const [page, setPage] = useState(1)
   const [dashboards, setDashboards] = useState<Dashboard[]>([])
   const [totalPages, setTotalPages] = useState(1)
+  const [isActiveBack, setIsActiveBack] = useState(false)
+  const [isActiveForward, setIsActiveForward] = useState(false)
 
   useEffect(() => {
     const loadDashboards = async () => {
       try {
-        const data = await fetchDashboards('pagination', page, 5)
+        const data = await fetchDashboards(page, 5, 'pagination')
         setDashboards(data.dashboards)
         setTotalPages(Math.ceil(data.totalCount / 5))
+        console.log(totalPages)
+        setIsActiveBack(page > 1)
+        setIsActiveForward(data.totalCount > page * 5)
       } catch (error) {
         console.error('Failed to fetch dashboards:', error)
       }
@@ -35,15 +41,11 @@ const DashboardPage: React.FC = () => {
     loadDashboards()
   }, [page])
 
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1)
-    }
-  }
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
+  const handlePageNation = (direction: 'back' | 'forward') => {
+    if (direction === 'back') {
       setPage(page - 1)
+    } else if (direction === 'forward') {
+      setPage(page + 1)
     }
   }
 
@@ -65,24 +67,21 @@ const DashboardPage: React.FC = () => {
           />
         ))}
       </div>
-      <div className='flex justify-between mt-4'>
-        <button
-          className='px-4 py-2 bg-gray-300 rounded'
-          onClick={handlePreviousPage}
-          disabled={page === 1}
+      <div className='w-[200px] ml-auto flex items-center gap-3'>
+        <span
+          className='flex w-full text-[0.75rem] md:text-[0.875rem]'
         >
-          Previous
-        </button>
-        <span>Page {page} of {totalPages}</span>
-        <button
-          className='px-4 py-2 bg-gray-300 rounded'
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-        >
-          Next
-        </button>
+          {totalPages} 페이지 중 {page}
+        </span>
+        <PageNation
+          size='small'
+          isActiveBack={isActiveBack}
+          isActiveForward={isActiveForward}
+          onClickBack={() => handlePageNation('back')}
+          onClickForward={() => handlePageNation('forward')}
+        />
       </div>
-      <FetchDashboardBtn />
+      <InvitationDashboard setDashboards={setDashboards} page={page} />
     </main>
   )
 }

@@ -17,9 +17,9 @@ interface FetchDashboardsResponse {
 }
 
 export async function fetchDashboards(
-  navigationMethod: 'infiniteScroll' | 'pagination',
   page: number = 1,
   size: number = 1000,
+  navigationMethod: 'infiniteScroll' | 'pagination' = 'infiniteScroll',
   cursorId?: number,
 ) {
   const url = `/dashboards`

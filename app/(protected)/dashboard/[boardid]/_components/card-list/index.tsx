@@ -7,7 +7,7 @@ import AddTodo from '../add-todo-button'
 import Number from './number'
 // import UpdateColumn from '../update-column'
 import CreateTask from '../create-task'
-import useInfiniteScroll from '../../_hook/useInfiniteScroll'
+import useInfiniteScroll from '../../../_hook/useInfiniteScroll'
 import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
 import {
   cardListStateAboutColumn,
@@ -115,7 +115,12 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
           </button>
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
+          <AlertDialog open={isOpenCreateTodo} onOpenChange={openCreateTodoModal}>
+            <AlertDialogTrigger asChild>
+              <AddTodo onClick={openCreateTodoModal} />
+            </AlertDialogTrigger>
+            <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
+          </AlertDialog>
         </div>
       </div>
       <div className='flex flex-col justify-center gap-[0.625rem] md:gap-4'>

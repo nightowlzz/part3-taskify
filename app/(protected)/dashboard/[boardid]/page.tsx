@@ -18,7 +18,8 @@ export default function DashboardId({
 }) {
   const [columns, setColumns] = useRecoilState(columnState)
   const setDashBoardId = useSetRecoilState(dashboardIdState)
-  const [isOpenCreateColumn, setIsOpenCreateColumn] = useRecoilState(createColumnState)
+  const [isOpenCreateColumn, setIsOpenCreateColumn] =
+    useRecoilState(createColumnState)
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -43,11 +44,15 @@ export default function DashboardId({
   const handleOnDragEnd = useDragCardEnd()
 
   const handleScroll = (e: WheelEvent): void => {
+    if (!e.cancelable) {
+      return
+    }
+    e.preventDefault()
+
     const el = scrollRef.current
     const { deltaY } = e
     if (el) {
       if (deltaY === 0) return
-      e.preventDefault()
       el.scrollTo({
         left: el.scrollLeft + deltaY,
         behavior: 'auto',
@@ -62,7 +67,7 @@ export default function DashboardId({
   return (
     <>
       <div
-        className='flex w-full flex-col overflow-x-auto scrollbar-hide pt-[4.3125rem] dark:bg-black lg:h-screen lg:flex-row'
+        className='scrollbar-hide flex w-full flex-col overflow-x-auto pt-[4.3125rem] dark:bg-black lg:h-screen lg:flex-row'
         ref={scrollRef}
         onWheel={handleScroll}
       >
@@ -74,7 +79,9 @@ export default function DashboardId({
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={`${
-                    snapshot.isDraggingOver ? 'bg-violet8' : 'bg-gray10 dark:bg-black'
+                    snapshot.isDraggingOver
+                      ? 'bg-violet8'
+                      : 'bg-gray10 dark:bg-black'
                   } border-gray-20 bg-gray10 dark:border-black80 flex flex-col border-b lg:h-full lg:min-w-[22.125rem] lg:flex-col lg:border-b-0 lg:border-r`}
                 >
                   <CardList
