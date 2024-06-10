@@ -45,7 +45,13 @@ const ColumnSchema = z.object({
 })
 export type ColumnFormValues = z.infer<typeof ColumnSchema>
 
-export const CreateColumn = ({ dashboardId, onUpdate }: { dashboardId: number, onUpdate: () => void }) => {
+export const CreateColumn = ({
+  dashboardId,
+  onUpdate,
+}: {
+  dashboardId: number
+  onUpdate: () => void
+}) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useRecoilState(createColumnState)
   const [columnList, setColumnList] = useState<IColumnCreate[]>()

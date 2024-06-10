@@ -1,12 +1,12 @@
 'use client'
+import ColumnEdit from '@/components/modal/column-edit'
+import { ConfirmAlert } from '@/components/modal/confirm-alert'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { api } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { ColumnEdit } from '../column-edit'
-import { ConfirmAlert } from './modal/confirm-alert'
-import { IColumnEditButton } from './modal/modal-type'
+import { IColumnEditButton } from '../modal/modal-type'
 
 // 추 후 삭제예정[파일]
 export const ColumnEditButton = ({
@@ -39,7 +39,7 @@ export const ColumnEditButton = ({
       {step === 1 && (
         <ColumnEdit
           columnId={Number(columnId)}
-          title={title}
+          initialValues={title}
           dashboardId={dashboardId}
           setOpen={setOpen}
           setStep={setStep}
