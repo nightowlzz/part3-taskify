@@ -1,7 +1,7 @@
 import { api } from '@/lib/utils'
 
-export async function deleteInvitee(dashboardId: number, invitationId: number) {
-  const url = `/dashboards/${dashboardId}/invitations/${invitationId}`
+export async function deleteMember(memberId: number) {
+  const url = `/members${memberId}`
   try {
     await api.delete(url)
   } catch (error) {

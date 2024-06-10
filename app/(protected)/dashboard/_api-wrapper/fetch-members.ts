@@ -17,7 +17,7 @@ interface FetchMembersResponse {
 }
 
 export async function fetchMembers(
-  dashboardId: string,
+  dashboardId: number,
 ): Promise<FetchMembersResponse> {
   const url = `/members?dashboardId=${dashboardId}`
   try {

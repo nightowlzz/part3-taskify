@@ -1,6 +1,6 @@
 import { api } from '@/lib/utils'
 
-interface Dashboard {
+export interface Dashboard {
   id: number
   title: string
   color: string
@@ -45,6 +45,6 @@ export async function fetchDashboardId(
     const response = await api.get<Dashboard>(url)
     return response.data
   } catch (error) {
-    throw new Error(`Failed to fetch dashboard with ID ${id}: ${error}`)
+    throw new Error(`Failed to fetch dashboardID: ${error}`)
   }
 }
