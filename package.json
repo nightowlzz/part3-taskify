@@ -31,12 +31,8 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
-<<<<<<< HEAD
-    "react-js-pagination": "^3.0.3",
-=======
     "react-icons": "^5.2.1",
     "recoil": "^0.7.7",
->>>>>>> origin/develop
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

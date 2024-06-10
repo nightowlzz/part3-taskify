@@ -30,7 +30,7 @@ interface FetchInviteesResponse {
 }
 
 export async function fetchInvitees(
-  dashboardId: string,
+  dashboardId: number,
 ): Promise<FetchInviteesResponse> {
   const url = `/dashboards/${dashboardId}/invitations`
   try {
