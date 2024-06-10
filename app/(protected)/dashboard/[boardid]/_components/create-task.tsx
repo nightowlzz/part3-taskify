@@ -40,8 +40,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import style from '@/components/modal/_component/modal.module.css'
 import { ITaskCreateOpen } from './modal/modal-type'
+import styled from '@/components/modal/modal.module.css'
 import { ModalHead } from './modal/modal-head'
 import { useRecoilState } from 'recoil'
 import { createTaskState } from './modal/modal-atom'
@@ -168,7 +168,7 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
       } else {
         await api.post(`/cards`, { ...requestData })
       }
-	  setIsOpen(false)
+      setIsOpen(false)
       form.reset()
       toast.success('전송 완료')
       router.refresh()
@@ -246,7 +246,7 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 render={({ field }) => (
                   <FormItem className='md:pt-2'>
                     <FormLabel className='text-base font-bold md:text-lg'>
-                      제목 <sup className='text-ms text-[#5534DA]'>*</sup>
+                      제목 <sup className='text-ms text-violet'>*</sup>
                     </FormLabel>
                     <FormControl>
                       <Input placeholder='제목을 입력해 주세요' {...field} />
@@ -384,7 +384,7 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                           id='picture'
                           type='file'
                           accept='image/*'
-                          className={`${style.inputFile}`}
+                          className={`${styled.inputFile}`}
                           onChange={(e) => {
                             handleImageChange(e)
                             field.onChange(e)
@@ -393,7 +393,7 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                       </FormControl>
                       <FormLabel
                         htmlFor='picture'
-                        className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-[#f5f5f5] bg-center bg-no-repeat`}
+                        className={`${styled.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-gray_light bg-center bg-no-repeat`}
                         style={{
                           backgroundSize: preview ? '100% auto' : 'auto auto',
                           backgroundImage: preview
@@ -410,9 +410,8 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 <AlertDialogCancel
                   className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
                   onClick={() => {
-					form.reset()
+                    form.reset()
                     setIsOpen(false)
-                    
                   }}
                 >
                   취소
