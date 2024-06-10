@@ -4,16 +4,15 @@ import { api } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { ColumnEdit } from '../column-edit'
+import ColumnEdit from '../column-edit'
 import { ConfirmAlert } from '../confirm-alert'
-import { IColumnEditButton } from '../types/modal-type'
+import { columnEdit } from '../types/modal-type'
 
-// 추 후 삭제예정[파일]
 export const ColumnEditButton = ({
   columnId,
-  title,
+  initialValues,
   dashboardId,
-}: IColumnEditButton) => {
+}: columnEdit) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1)
@@ -22,9 +21,9 @@ export const ColumnEditButton = ({
     try {
       await api.delete(`/columns/${columnId}`)
 
-      toast.success(`'${title}'컬럼 삭제 되었습니다.`)
+      toast.success(`'${initialValues}' 컬럼이 삭제 되었습니다.`)
     } catch {
-      toast.success(`삭제 되지 않았습니다.`)
+      toast.error(`삭제 되지 않았습니다.`)
     } finally {
       router.refresh()
       setStep(1)
@@ -34,12 +33,12 @@ export const ColumnEditButton = ({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger className='bg-violet_light p-3'>
-        {title}
+        {initialValues}
       </AlertDialogTrigger>
       {step === 1 && (
         <ColumnEdit
+          initialValues={initialValues}
           columnId={Number(columnId)}
-          title={title}
           dashboardId={dashboardId}
           setOpen={setOpen}
           setStep={setStep}
