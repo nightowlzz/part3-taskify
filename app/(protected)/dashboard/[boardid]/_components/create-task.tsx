@@ -40,10 +40,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-<<<<<<< HEAD
-=======
-import style from '@/components/modal/modal.module.css'
->>>>>>> develop
 import { ITaskCreateOpen } from './modal/modal-type'
 import styled from '@/components/modal/modal.module.css'
 import { ModalHead } from './modal/modal-head'
