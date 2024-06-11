@@ -18,6 +18,9 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        p_btn: 'bg-[#5534DA] text-white hover:bg-[#5534DA]/90',
+        w_btn:
+          'text-violet border border-[#D9D9D9] bg-white hover:bg-[#D9D9D9]/90',
         underline:
           'bg-transparent underline text-[#9fa6b2] leading-5 text-xs w-auto',
       },
@@ -26,6 +29,7 @@ const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
+        dele: 'h-8 w-20',
       },
     },
     defaultVariants: {
