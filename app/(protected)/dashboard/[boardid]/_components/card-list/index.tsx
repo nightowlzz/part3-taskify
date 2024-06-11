@@ -95,6 +95,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
+  console.log(cardList)
 
   return (
     <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
