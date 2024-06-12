@@ -26,7 +26,7 @@ const SideBar: React.FC = () => {
     const loadDashboards = async () => {
       setLoading(true)
       try {
-        const data = await fetchDashboards('infiniteScroll')
+        const data = await fetchDashboards()
         setDashboards(data.dashboards)
       } catch (error) {
         console.error('Failed to fetch dashboards:', error)

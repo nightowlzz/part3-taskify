@@ -44,11 +44,15 @@ export default function DashboardId({
   const handleOnDragEnd = useDragCardEnd()
 
   const handleScroll = (e: WheelEvent): void => {
+    if (!e.cancelable) {
+      return
+    }
+    e.preventDefault()
+
     const el = scrollRef.current
     const { deltaY } = e
     if (el) {
       if (deltaY === 0) return
-      e.preventDefault()
       el.scrollTo({
         left: el.scrollLeft + deltaY,
         behavior: 'auto',

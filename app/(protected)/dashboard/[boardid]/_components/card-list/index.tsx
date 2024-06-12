@@ -7,7 +7,7 @@ import AddTodo from '../add-todo-button'
 import Number from './number'
 // import UpdateColumn from '../update-column'
 import CreateTask from '../create-task'
-import useInfiniteScroll from '../../_hook/useInfiniteScroll'
+import useInfiniteScroll from '../../../_hook/useInfiniteScroll'
 import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
 import {
   cardListStateAboutColumn,
@@ -95,6 +95,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
+  console.log(cardList)
 
   return (
     <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
@@ -115,7 +116,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
           </button>
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <AlertDialog>
+          <AlertDialog open={isOpenCreateTodo} onOpenChange={openCreateTodoModal}>
             <AlertDialogTrigger asChild>
               <AddTodo onClick={openCreateTodoModal} />
             </AlertDialogTrigger>
