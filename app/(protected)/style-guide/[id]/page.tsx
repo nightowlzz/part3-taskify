@@ -27,14 +27,14 @@ export default async function Page({ params }: { params: { id: number } }) {
         {data
           ? data.map((data: any) => (
               <li key={data.id}>
-                <div className='mt-4 border-t-4 pt-4'>[컴럼 수정 모달]</div>
+                <div className='mt-4 border-t-4 pt-4'>[컬럼 수정 모달]</div>
                 {/* 컴럼수정 모달 */}
                 <ColumnEditButton
                   initialValues={data.title}
                   columnId={Number(data.id)}
                   dashboardId={Number(params.id)}
                 />
-                <div className='mt-4 border-t-4 pt-4'>[할일 수정 모달]</div>
+                <div className='mt-4 border-t-4 pt-4'>[할 일 카드 생성]</div>
                 <TaskCreactButton dashboardId={params.id} columnId={data.id} />
                 <div className='mt-4 border-t-4 pt-4'>
                   [ 할일 카드 상세 모달]

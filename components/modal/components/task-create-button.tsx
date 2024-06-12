@@ -14,8 +14,17 @@ export const TaskCreactButton = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className='bg-violet_light p-3'>
-        할 일 카드 생성
+      <AlertDialogTrigger
+        className='
+	    flex h-[32px] w-full items-center
+	    justify-center gap-[10px]
+	    rounded-lg border 
+    	border-gray_dark3 bg-white text-[10px] 
+	    shadow-sm transition-shadow duration-300 hover:shadow-md md:h-[40px] 
+	    md:text-[18px] xl:h-[40px] xl:text-[18px] 
+      '
+      >
+        <span className='rounded bg-violet_light px-1 text-violet'>+</span>
       </AlertDialogTrigger>
       <TaskCreate
         dashboardId={dashboardId}

@@ -1,18 +1,14 @@
 'use client'
 
-import settingIcon from '@/public/settings_icon.svg'
 import Colors from './color'
 import { CardInfo } from '@/lib/type'
-import AddTodo from '../add-todo-button'
 import Number from './number'
 // import UpdateColumn from '../update-column'
-import CreateTask from '../create-task'
 import useInfiniteScroll from '../../../_hook/useInfiniteScroll'
 import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
 import {
   cardListStateAboutColumn,
   countAboutCardList,
-  createTodoAboutColumnId,
 } from '../../_recoil/todo'
 import { api } from '@/lib/utils'
 import {
@@ -20,12 +16,12 @@ import {
   DraggableProvided,
   DraggableStateSnapshot,
 } from '@hello-pangea/dnd'
-import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 // import UpdateColumn from '../update-column'
-import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import Card from './card'
+import { TaskCreactButton } from '@/components/modal/components/task-create-button'
+import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
 
 interface CardListProps {
   id: number
@@ -34,9 +30,6 @@ interface CardListProps {
 }
 
 export function CardList({ id, title, dashboardId }: CardListProps) {
-  const [isOpenCreateTodo, setIsOpenCreateTodo] = useRecoilState(
-    createTodoAboutColumnId(id),
-  )
   const [cardList, setCardList] = useRecoilState<CardInfo[] | []>(
     cardListStateAboutColumn(id),
   )
@@ -66,7 +59,6 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
   }, [cursorId])
 
   const openUpdateColumnModal = () => setIsOpenUpdateColumn(true)
-  const openCreateTodoModal = () => setIsOpenCreateTodo(true)
   const onIntersect: IntersectionObserverCallback = (entries) => {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0) {
@@ -95,7 +87,6 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
-  console.log(cardList)
 
   return (
     <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
@@ -108,20 +99,18 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
             <h3>{title}</h3>
             <Number num={cardNumCount} />
           </div>
-          <button
-            className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'
-            onClick={openUpdateColumnModal}
-          >
-            <Image src={settingIcon.src} fill alt='설정 아이콘' />
-          </button>
+
+          <ColumnEditButton
+            initialValues={title}
+            columnId={id}
+            dashboardId={parseInt(dashboardId, 10)}
+          />
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>
-          <AlertDialog open={isOpenCreateTodo} onOpenChange={openCreateTodoModal}>
-            <AlertDialogTrigger asChild>
-              <AddTodo onClick={openCreateTodoModal} />
-            </AlertDialogTrigger>
-            <CreateTask columnId={id} dashboardId={parseInt(dashboardId, 10)} />
-          </AlertDialog>
+          <TaskCreactButton
+            dashboardId={parseInt(dashboardId, 10)}
+            columnId={id}
+          />
         </div>
       </div>
       <div className='flex flex-col justify-center gap-[0.625rem] md:gap-4'>
@@ -148,6 +137,10 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                     bgColor={Colors[card.id % 5]}
                     nickname={card.assignee?.nickname}
                     profileImageUrl={card.assignee?.profileImageUrl}
+					columnTitle={title}
+					description={card.description}
+					dashboardId={parseInt(dashboardId,10)}
+					assignee={card.assignee}
                   />
                 </div>
               </div>

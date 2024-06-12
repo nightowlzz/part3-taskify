@@ -25,9 +25,23 @@ export const getColumnTasks = async (columnId: number) => {
 export const TaskCard = async ({
   columnId,
   columnTitle,
+  title,
+  tags,
+  dueDate,
+  bgColor,
+  imageUrl,
+  nickname,
+  profileImageUrl,
 }: {
   columnId: number
   columnTitle: string
+  title: string
+  tags: string[]
+  dueDate: string
+  bgColor: string
+  imageUrl: string
+  nickname: string
+  profileImageUrl: string
 }) => {
   const tasks = await getColumnTasks(columnId)
 
