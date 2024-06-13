@@ -67,10 +67,8 @@ const DashboardPage: React.FC = () => {
           />
         ))}
       </div>
-      <div className='w-[200px] ml-auto flex items-center gap-3'>
-        <span
-          className='flex w-full text-[0.75rem] md:text-[0.875rem]'
-        >
+      <div className='ml-auto flex w-[200px] items-center gap-3'>
+        <span className='flex w-full text-[0.75rem] md:text-[0.875rem]'>
           {totalPages} 페이지 중 {page}
         </span>
         <PageNation
@@ -85,3 +83,5 @@ const DashboardPage: React.FC = () => {
     </main>
   )
 }
+
+export default DashboardPage

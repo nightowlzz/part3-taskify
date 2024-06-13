@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import toast from 'react-hot-toast'
+
 import { useSetRecoilState } from 'recoil'
 import { Invitations } from '@/lib/type'
 import InvitationList from './invitation-list'
@@ -17,6 +17,7 @@ import { dashboardState } from '../../_recoil/dashboard'
 import { DashboardProps } from '../../_recoil/props'
 import { putInvitation } from '../../_api-wrapper/put-invitation'
 import { fetchDashboards } from '../../_api-wrapper/fetch-dashboards'
+import { toast } from 'sonner'
 
 export default function InvitationDashboard({
   setDashboards,
