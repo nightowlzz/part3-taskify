@@ -7,6 +7,8 @@ import { toast } from 'sonner'
 import ColumnEdit from '../column-edit'
 import { ConfirmAlert } from '../confirm-alert'
 import { columnEdit } from '../types/modal-type'
+import Image from 'next/image'
+import settingIcon from '@/public/settings_icon.svg'
 
 export const ColumnEditButton = ({
   columnId,
@@ -32,8 +34,10 @@ export const ColumnEditButton = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className='bg-violet_light p-3'>
-        {initialValues}
+      <AlertDialogTrigger>
+        <button className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'>
+          <Image src={settingIcon.src} fill alt='설정 아이콘' />
+        </button>
       </AlertDialogTrigger>
       {step === 1 && (
         <ColumnEdit

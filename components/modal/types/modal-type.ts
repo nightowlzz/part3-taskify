@@ -54,7 +54,7 @@ export interface taskDetail {
   id: number
   title: string
   description: string
-  tags?: []
+  tags?: string[]
   dueDate?: string
   assignee?: assignee | null
   imageUrl?: string

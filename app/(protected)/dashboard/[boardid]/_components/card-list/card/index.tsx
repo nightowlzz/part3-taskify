@@ -3,15 +3,13 @@ import Tag from './tag'
 // import DeleteTodo from '@/src/app/_component/modal/todo/delete';
 // import DetailToDo from '@/src/app/_component/modal/todo/detail';
 // import UpdateTodo from '@/src/app/_component/modal/todo/update';
-import {
-  deleteTodoAboutCardId,
-  detailTodoAboutCardId,
-  openPopOverState,
-  updateTodoAboutCardId,
-} from '../../modal/modal-atom'
+import { detailTodoAboutCardId } from '../../modal/modal-atom'
 import Image from 'next/image'
 import React from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
+import { assignee } from '@/components/modal/types/modal-type'
+import DetailInfo from './detail-info'
+
 interface CardProps {
   title: string
   tags: string[]
@@ -22,42 +20,52 @@ interface CardProps {
   profileImageUrl: string
   id: number
   columnId: number
+  columnTitle: string
+  description: string
+  dashboardId: number
+  assignee: assignee
 }
 
 export default function Card({
+  columnId,
+  columnTitle,
+  id,
   title,
   tags,
   dueDate,
-  bgColor,
   imageUrl,
   nickname,
+  bgColor,
   profileImageUrl,
-  id,
-  columnId,
+  description,
+  dashboardId,
+  assignee,
 }: CardProps) {
-  const setIsOpenPopOver = useSetRecoilState(openPopOverState)
-  const [isOpenDetailTodoModal, setIsOpenDetailTodoModal] = useRecoilState(
+  const [isOpenDetailInfo, setIsOpenDetailInfo] = useRecoilState(
     detailTodoAboutCardId(id),
   )
-  const isOpenUpdateTodoModal = useRecoilValue(updateTodoAboutCardId(id))
-  const isOpenDeleteTodoModal = useRecoilValue(deleteTodoAboutCardId(id))
-  const openDetailTodoModal = (e: React.MouseEvent<HTMLElement>) => {
+  const openDetailInfo = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
-    setIsOpenDetailTodoModal(true)
-    setIsOpenPopOver(false)
+    setIsOpenDetailInfo(true)
+  }
+  const closeDetailInfo = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+    setIsOpenDetailInfo(false)
   }
 
   return (
     <>
       <div
-        onClick={openDetailTodoModal}
+        onClick={openDetailInfo}
         className='border-gray30 flex flex-grow-0 flex-col gap-[0.625rem] 
 		rounded-[0.375rem] border bg-white px-3 py-3 
 		md:flex-row lg:flex-col lg:items-stretch lg:p-5'
       >
         {imageUrl && (
-          <div className='flex h-full w-full items-center overflow-hidden rounded 
-		  md:h-[3.3125rem] md:w-[5.6725rem] lg:h-full lg:w-full'>
+          <div
+            className='flex h-full w-full items-center overflow-hidden rounded 
+		  md:h-[3.3125rem] md:w-[5.6725rem] lg:h-full lg:w-full'
+          >
             <Image
               src={imageUrl}
               sizes='100vw'
@@ -70,9 +78,7 @@ export default function Card({
           </div>
         )}
         <div className='flex flex-1 flex-col gap-[0.625rem]'>
-          <div
-            className={`text-black80 text-[0.875rem] md:text-[1rem]`}
-          >
+          <div className={`text-black80 text-[0.875rem] md:text-[1rem]`}>
             {title}
           </div>
           <div className='flex justify-between gap-4'>
@@ -116,9 +122,23 @@ export default function Card({
             </div>
           </div>
         </div>
-        {/* {isOpenDetailTodoModal && <DetailToDo cardId={id} columnId={columnId} />}
-        {isOpenUpdateTodoModal && <UpdateTodo cardId={id} columnId={columnId} />}
-        {isOpenDeleteTodoModal && <DeleteTodo cardId={id} columnId={columnId} />} */}
+        {isOpenDetailInfo && (
+          <DetailInfo
+            columnId={columnId}
+            columnTitle={columnTitle}
+            id={id}
+            title={title}
+            tags={tags}
+            dueDate={dueDate}
+            imageUrl={imageUrl}
+            nickname={nickname}
+            profileImageUrl={profileImageUrl}
+            description={description}
+            dashboardId={dashboardId}
+            assignee={assignee}
+			closeInfo={closeDetailInfo}
+          />
+        )}
       </div>
     </>
   )
