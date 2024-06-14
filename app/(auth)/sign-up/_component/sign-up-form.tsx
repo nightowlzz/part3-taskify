@@ -18,7 +18,8 @@ import { signUpFormSchema } from '@/schema'
 import { api } from '@/lib/utils'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
+import { Eye } from 'lucide-react'
 
 type SignUpFormValues = z.infer<typeof signUpFormSchema>
 
@@ -26,6 +27,8 @@ export const SignUpForm = () => {
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
+  const [isShow, setIsShow] = useState(false)
+  const [isShow2, setIsShow2] = useState(false)
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema),
@@ -55,6 +58,9 @@ export const SignUpForm = () => {
     name: keyof SignUpFormValues
     label: string
     placeholder: string
+    type?: string
+    t?: string
+    onClick?: () => void
   }[] = [
     {
       name: 'email',
@@ -70,11 +76,17 @@ export const SignUpForm = () => {
       name: 'password',
       label: '비밀번호',
       placeholder: '8자 이상 입력해 주세요.',
+      type: isShow ? 'text' : 'password',
+      t: 'password',
+      onClick: () => setIsShow((value) => !value),
     },
     {
       name: 'confirmPassword',
       label: '비밀번호 확인',
       placeholder: '비밀번호를 한번 더 입력해 주세요.',
+      type: isShow2 ? 'text' : 'password',
+      t: 'password',
+      onClick: () => setIsShow2((value) => !value),
     },
   ]
 
@@ -90,16 +102,23 @@ export const SignUpForm = () => {
             control={form.control}
             name={field.name}
             render={({ field: inputField }) => (
-              <FormItem>
+              <FormItem className='relative'>
                 <FormLabel>{field.label}</FormLabel>
                 <FormControl>
                   <Input
+                    type={field.type}
                     disabled={isPending}
                     placeholder={field.placeholder}
                     {...inputField}
                   />
                 </FormControl>
                 <FormMessage />
+                {field.t === 'password' && (
+                  <Eye
+                    className='absolute right-2 top-8 transform cursor-pointer'
+                    onClick={field.onClick}
+                  />
+                )}
               </FormItem>
             )}
           />

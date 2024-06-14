@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -37,6 +36,8 @@ import { TagsInput } from 'react-tag-input-component'
 import { Member } from '@/type'
 import { Textarea } from '@/components/ui/textarea'
 import { createCard } from '@/app/action/card'
+import { useRef, useState } from 'react'
+import Image from 'next/image'
 
 const formSchema = z.object({
   memberId: z.number({
@@ -59,6 +60,10 @@ type Props = {
 }
 
 export const AddCardButton = ({ dashboardId, members, columnId }: Props) => {
+  const [file, setFile] = useState<File | undefined>()
+  const [imgUrl, setImgUrl] = useState<string | undefined>()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,22 +75,27 @@ export const AddCardButton = ({ dashboardId, members, columnId }: Props) => {
     },
   })
 
-  const [date, setDate] = React.useState<Date | undefined>()
+  const [date, setDate] = useState<Date | undefined>()
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { memberId, description, tags, title, date } = values
-    console.log(memberId)
     const dueDateString = date
       ? `${format(date, 'yyyy-MM-dd')} ${format(new Date(), '00:00')}`
       : undefined
+
+    const formData = new FormData()
+    if (file) {
+      formData.append('image', file)
+    }
 
     const res = await createCard({
       assigneeUserId: memberId,
       columnId,
       dashboardId,
-      description,
       tags,
       title,
+      description,
+      formData,
       dueDate: dueDateString,
     })
     if (!res) {
@@ -94,6 +104,16 @@ export const AddCardButton = ({ dashboardId, members, columnId }: Props) => {
     }
     toast.success('카드가 성공적으로 추가되었습니다.')
     form.reset()
+    setFile(undefined)
+    setImgUrl(undefined)
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]
+    if (selectedFile) {
+      setImgUrl(URL.createObjectURL(selectedFile))
+      setFile(selectedFile)
+    }
   }
 
   return (
@@ -119,12 +139,9 @@ export const AddCardButton = ({ dashboardId, members, columnId }: Props) => {
                   <FormControl>
                     <select
                       {...field}
-                      className='border-gray-300 focus:ring-blue-500 w-full rounded border p-2 focus:outline-none focus:ring-2'
+                      className='w-full rounded border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
                       onChange={(e) => field.onChange(Number(e.target.value))}
                     >
-                      {/* <option value='' disabled>
-                        담당자를 선택해 주세요
-                      </option> */}
                       {members.map((member) => (
                         <option key={member.id} value={member.userId}>
                           {member.nickname}
@@ -211,6 +228,32 @@ export const AddCardButton = ({ dashboardId, members, columnId }: Props) => {
                   <FormMessage />
                 </FormItem>
               )}
+            />
+            {imgUrl ? (
+              <Image
+                src={imgUrl}
+                alt='userImg'
+                width={160}
+                height={160}
+                sizes='100vw 50vw'
+                className='aspect-square cursor-pointer rounded-md object-cover transition-all hover:brightness-75'
+                onClick={() => fileInputRef.current?.click()}
+              />
+            ) : (
+              <Button
+                type='button'
+                className='h-40 w-40 rounded-md bg-stone-200 hover:bg-stone-300'
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Plus className='h-8 w-8 text-black' />
+              </Button>
+            )}
+            <Input
+              ref={fileInputRef}
+              type='file'
+              accept='image/*'
+              onChange={handleFileChange}
+              className='hidden'
             />
             <AlertDialogFooter>
               <AlertDialogCancel className='px-10 py-6'>취소</AlertDialogCancel>

@@ -27,7 +27,7 @@ import {
   updateComment,
 } from '@/app/action/comment'
 import { toast } from 'sonner'
-import { Comment } from '@/type'
+import { Assignee, Comment, Member } from '@/type'
 import { formatDate } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -39,11 +39,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { deleteCard } from '@/app/action/card'
 import { CategoryTag } from '@/components/category-tag'
+import Image from 'next/image'
+import { EditColumnModalContent } from './edit-card-modal-content'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   tags: string[]
   title: string
   description: string
+  imgUrl?: string
   profileImageUrl?: string
   firstName: string
   nickname: string
@@ -52,6 +56,8 @@ type Props = {
   dashboardId: number
   columnId: number
   comments?: Comment[]
+  assignee: Assignee
+  members: Member[]
 }
 
 const FormSchema = z.object({
@@ -70,18 +76,22 @@ export const CardModalContent = ({
   title,
   description,
   profileImageUrl,
+  imgUrl,
   firstName,
   nickname,
   dueDate,
   cardId,
   dashboardId,
   columnId,
+  assignee,
   comments,
+  members,
 }: Props) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { content: '' },
   })
+  const router = useRouter()
 
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null)
   const [editContent, setEditContent] = useState<string>('')
@@ -115,7 +125,7 @@ export const CardModalContent = ({
   const handleDelete = async (commentId: number) => {
     const res = await deleteComment({ commentId })
     if (!res) {
-      toast.error('에러발생')
+      // toast.error('에러발생')
       return
     }
     toast.success('삭제 성공')
@@ -123,8 +133,9 @@ export const CardModalContent = ({
 
   const deleteCard123 = async () => {
     const res = await deleteCard({ cardId })
+    router.refresh()
     if (!res) {
-      toast.error('에러발생')
+      // toast.error('에러발생')
       return
     }
     toast.success('삭제 성공')
@@ -134,10 +145,10 @@ export const CardModalContent = ({
       <DialogContent className='min-w-full lg:min-w-[800px]'>
         <DialogHeader>
           <DialogTitle className='flex justify-between'>
-            <h1 className='text-2xl'>새로운 일정 관리 Taskify</h1>
+            <span className='text-2xl'>새로운 일정 관리 Taskify</span>
             <div className='flex gap-x-3'>
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                   <Button variant={'ghost'} size={'icon'}>
                     <EllipsisVerticalIcon className='h-8 w-8' />
                   </Button>
@@ -146,9 +157,11 @@ export const CardModalContent = ({
                   <DropdownMenuItem onClick={() => setContentType('type2')}>
                     수정하기
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={deleteCard123}>
-                    삭제하기
-                  </DropdownMenuItem>
+                  <DialogClose asChild>
+                    <DropdownMenuItem onClick={deleteCard123}>
+                      삭제하기
+                    </DropdownMenuItem>
+                  </DialogClose>
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -173,6 +186,16 @@ export const CardModalContent = ({
                 </div>
               </div>
               <div>{description}</div>
+              {imgUrl && (
+                <div className='relative aspect-video w-full rounded-md'>
+                  <Image
+                    src={imgUrl}
+                    alt={'card'}
+                    fill
+                    className='rounded-md object-cover'
+                  />
+                </div>
+              )}
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -258,7 +281,7 @@ export const CardModalContent = ({
                           {formatDate(comment.createdAt)}
                         </span>
                       </div>
-                      <div>{comment.content}</div>
+                      <p className='whitespace-pre'>{comment.content}</p>
                       <div className='mt-3 space-x-2 text-xs text-muted-foreground underline'>
                         <button
                           onClick={() => {
@@ -284,10 +307,18 @@ export const CardModalContent = ({
 
   if (contentType === 'type2') {
     return (
-      <DialogContent>
-        <h1>weq</h1>
-        <Button onClick={() => setContentType('type1')}>취소</Button>
-      </DialogContent>
+      <EditColumnModalContent
+        assignee={assignee}
+        columnId={columnId}
+        cardId={cardId}
+        date={dueDate}
+        tags={tags}
+        description={description}
+        title={title}
+        members={members}
+        onClose={() => setContentType('type1')}
+        imgUrl={imgUrl}
+      />
     )
   }
 }

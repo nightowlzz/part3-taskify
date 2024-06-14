@@ -6,6 +6,8 @@ import { getCardById } from '@/app/data/card'
 import { getComments } from '@/app/data/comment'
 import { formatDate } from '@/lib/utils'
 import { CategoryTag } from '@/components/category-tag'
+import Image from 'next/image'
+import { getDashboardMembers } from '@/app/data/dashboard'
 
 type Props = {
   cardId: number
@@ -30,12 +32,24 @@ export const ColumnCard = async ({
 }: Props) => {
   const card = await getCardById({ cardId })
   const comment = await getComments({ cardId })
+  const members = await getDashboardMembers(dashboardId)
   if (!card) return
+  if (!members) return
 
   return (
     <Dialog>
       <DialogTrigger>
         <div className='cursor-pointer space-y-4 rounded-lg border bg-white p-6 text-start transition hover:bg-slate-50'>
+          {card.imageUrl && (
+            <div className='relative aspect-video h-40 rounded-md'>
+              <Image
+                src={card.imageUrl}
+                alt={'card'}
+                fill
+                className='rounded-md object-cover'
+              />
+            </div>
+          )}
           <h2 className='truncate text-xl font-semibold'>{title}</h2>
           <div className='flex flex-wrap gap-x-2 gap-y-2'>
             {tags.map((tag) => (
@@ -57,6 +71,7 @@ export const ColumnCard = async ({
       <CardModalContent
         tags={card.tags}
         cardId={card.id}
+        imgUrl={card.imageUrl}
         columnId={columnId}
         dashboardId={dashboardId}
         title={card.title}
@@ -65,6 +80,8 @@ export const ColumnCard = async ({
         nickname={card.assignee.nickname}
         dueDate={card.dueDate}
         comments={comment?.comments}
+        assignee={card.assignee}
+        members={members.members}
       />
     </Dialog>
   )

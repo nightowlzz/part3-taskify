@@ -5,6 +5,7 @@ import { AddCardButton } from './add-card-button'
 import { Member } from '@/type'
 import { ColumnCard } from './column-card'
 import { getCards } from '@/app/data/card'
+import { EditColumnButton } from './edit-column-button'
 
 type Props = {
   dashboardId: number
@@ -27,15 +28,14 @@ export const Column = async ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-y-4 px-3 pt-5 md:w-[350px]',
+        'flex min-h-full flex-col gap-y-4 px-3 pt-5 md:min-w-[350px]',
         !isFirst && 'border-l',
       )}
     >
       <div className='flex items-center justify-between'>
         <h2>{title}</h2>
-        <Button variant={'ghost'} size={'sm'}>
-          <Settings className='text-gray-400' />
-        </Button>
+
+        <EditColumnButton columnId={columnId} title={title} />
       </div>
       <AddCardButton
         members={members}

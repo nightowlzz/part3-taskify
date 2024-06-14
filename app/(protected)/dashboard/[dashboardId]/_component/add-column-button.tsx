@@ -50,6 +50,7 @@ export const AddColumnButton = ({ dashboardId }: Props) => {
       toast.error('에러밸')
       return
     }
+    form.reset()
     toast.success('성공')
   }
   return (

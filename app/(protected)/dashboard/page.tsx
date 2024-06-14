@@ -10,6 +10,7 @@ import { SearchBar } from './_components/search-bar'
 import { ResultLabels } from './_components/result-labels'
 import { InviteInfo } from './_components/invite-info'
 import { Navbar } from './_components/navbar'
+import { EmptyInvite } from './_components/empty-invite'
 
 const DashboardPage = async ({
   searchParams,
@@ -51,19 +52,23 @@ const DashboardPage = async ({
             </div>
             <PaginationButtons currentPage={currentPage} maxPage={maxPage} />
           </section>
-          <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
-            <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
-            <SearchBar />
-            <ResultLabels />
-            {invitations.invitations.map((invitation) => (
-              <InviteInfo
-                key={invitation.id}
-                id={invitation.id}
-                title={invitation.dashboard.title}
-                nickname={invitation.inviter.nickname}
-              />
-            ))}
-          </section>
+          {!invitations.invitations.length ? (
+            <EmptyInvite />
+          ) : (
+            <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
+              <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
+              <SearchBar />
+              <ResultLabels />
+              {invitations.invitations.map((invitation) => (
+                <InviteInfo
+                  key={invitation.id}
+                  id={invitation.id}
+                  title={invitation.dashboard.title}
+                  nickname={invitation.inviter.nickname}
+                />
+              ))}
+            </section>
+          )}
         </div>
       </PageContainer>
     </>

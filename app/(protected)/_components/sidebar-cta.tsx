@@ -36,7 +36,7 @@ const SidebarCta = ({ dashboardId, title, color, isOwner }: Props) => {
         />
         <div className='ml-2 hidden truncate text-base md:block'>{title}</div>
         {isOwner && (
-          <FaCrown className='ml-auto hidden h-5 w-5 text-yellow-500 md:block' />
+          <FaCrown className='ml-auto hidden min-h-5 min-w-5 text-yellow-500 md:block' />
         )}
       </Link>
     </Button>

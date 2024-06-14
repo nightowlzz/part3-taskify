@@ -14,9 +14,10 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { updatePassword } from '@/app/action/user'
 import { toast } from 'sonner'
+import { Eye } from 'lucide-react'
 
 export const updatePasswordFormSchema = z
   .object({
@@ -36,6 +37,9 @@ export const updatePasswordFormSchema = z
 type UpdatePasswordFormValues = z.infer<typeof updatePasswordFormSchema>
 
 export const ChangePassword = () => {
+  const [isShow, setIsShow] = useState(false)
+  const [isShow2, setIsShow2] = useState(false)
+
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<UpdatePasswordFormValues>({
@@ -65,6 +69,9 @@ export const ChangePassword = () => {
     name: keyof UpdatePasswordFormValues
     label: string
     placeholder: string
+    type?: string
+    t?: string
+    onClick?: () => void
   }[] = [
     {
       name: 'currentPassword',
@@ -75,11 +82,17 @@ export const ChangePassword = () => {
       name: 'newPassword',
       label: '새 비밀번호',
       placeholder: '8자 이상 입력해 주세요.',
+      type: isShow2 ? 'text' : 'password',
+      t: 'password',
+      onClick: () => setIsShow2((value) => !value),
     },
     {
       name: 'confirmPassword',
       label: '새 비밀번호 확인',
       placeholder: '비밀번호를 한번 더 입력해 주세요.',
+      type: isShow2 ? 'text' : 'password',
+      t: 'password',
+      onClick: () => setIsShow2((value) => !value),
     },
   ]
 
@@ -95,16 +108,23 @@ export const ChangePassword = () => {
             control={form.control}
             name={field.name}
             render={({ field: inputField }) => (
-              <FormItem>
+              <FormItem className='relative'>
                 <FormLabel>{field.label}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isPending}
+                    type={field.type}
                     placeholder={field.placeholder}
                     {...inputField}
                   />
                 </FormControl>
                 <FormMessage />
+                {field.t === 'password' && (
+                  <Eye
+                    className='absolute right-2 top-8 transform cursor-pointer'
+                    onClick={field.onClick}
+                  />
+                )}
               </FormItem>
             )}
           />

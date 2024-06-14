@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { UserSettingButton } from './user-setting-button'
 import { generateFixedColors, makeTextDarker } from '@/lib/utils'
+import Link from 'next/link'
 
 type Props = {
   firstName: string
@@ -37,6 +38,13 @@ export const UserButton = ({ firstName, imgUrl, name }: Props) => {
       <DropdownMenuContent>
         <DropdownMenuItem className='p-0'>
           <UserSettingButton />
+        </DropdownMenuItem>
+        <DropdownMenuItem className='p-0'>
+          <Button asChild variant={'ghost'}>
+            <Link href={'/dashboard'} className='flex w-full justify-center'>
+              내 대시보드
+            </Link>
+          </Button>
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0'>
           <LogoutButton />

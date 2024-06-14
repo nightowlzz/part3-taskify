@@ -17,23 +17,22 @@ const DashboardIdPage = async ({
   if (!members) return <div>맴버가 존재하지 않습니다</div>
 
   return (
-    <PageContainer>
-      <div className='bg-stone-100 '>
-        <div className='flex flex-col md:flex-row'>
-          {columns.data.map((column, index) => (
-            <Column
-              key={column.id}
-              members={members.members}
-              dashboardId={dashboardId}
-              columnId={column.id}
-              isFirst={index === 0}
-              title={column.title}
-            />
-          ))}
-        </div>
+    <>
+      <div className='flex h-screen w-full flex-col overflow-x-scroll pl-[67px] pt-16 md:flex-row md:pl-[160px] xl:pl-[300px]'>
+        {columns.data.map((column, index) => (
+          <Column
+            key={column.id}
+            members={members.members}
+            dashboardId={dashboardId}
+            columnId={column.id}
+            isFirst={index === 0}
+            title={column.title}
+          />
+        ))}
       </div>
+
       <AddColumnButton dashboardId={dashboardId} />
-    </PageContainer>
+    </>
   )
 }
 
