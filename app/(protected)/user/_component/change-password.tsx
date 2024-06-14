@@ -82,9 +82,9 @@ export const ChangePassword = () => {
       name: 'newPassword',
       label: '새 비밀번호',
       placeholder: '8자 이상 입력해 주세요.',
-      type: isShow2 ? 'text' : 'password',
+      type: isShow ? 'text' : 'password',
       t: 'password',
-      onClick: () => setIsShow2((value) => !value),
+      onClick: () => setIsShow((value) => !value),
     },
     {
       name: 'confirmPassword',
