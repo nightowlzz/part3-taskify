@@ -31,7 +31,7 @@ export const SignInForm = () => {
     resolver: zodResolver(signInFormSchema),
     mode: 'onChange',
     defaultValues: {
-      email: 'test111@mail.com',
+      email: 'test1234@mail.com',
       password: 'test1234',
     },
   })
