@@ -19,7 +19,7 @@ import { signInFormSchema } from '@/schema'
 import { api } from '@/lib/utils'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { setAccessToken } from '@/app/api/cookie'
+import { setAccessToken } from '@/app/data/cookie'
 
 type SignInFormValues = z.infer<typeof signInFormSchema>
 

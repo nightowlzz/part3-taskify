@@ -9,29 +9,29 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { UserSettingButton } from './user-setting-button'
+import { generateFixedColors, makeTextDarker } from '@/lib/utils'
 
 type Props = {
   firstName: string
-  profileImageUrl?: string
-  nickname: string
+  imgUrl?: string
+  name: string
 }
 
-export const UserButton = async ({
-  firstName,
-  profileImageUrl,
-  nickname,
-}: Props) => {
+export const UserButton = ({ firstName, imgUrl, name }: Props) => {
+  const bgColor = generateFixedColors(name)
+  const textColor = makeTextDarker(bgColor)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={'ghost'} className='flex items-center gap-x-2 px-2'>
           <Avatar>
-            <AvatarImage src={profileImageUrl} />
-            <AvatarFallback className='bg-green-600 text-white'>
+            <AvatarImage src={imgUrl} />
+            <AvatarFallback style={{ background: bgColor, color: textColor }}>
               {firstName}
             </AvatarFallback>
           </Avatar>
-          <span className='hidden md:block'>{nickname}</span>
+          <span className='hidden md:block'>{name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
