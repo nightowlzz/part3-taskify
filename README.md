@@ -1,3 +1,1 @@
-## Taskify
-
-next.js
+## 1팀 Taskify
