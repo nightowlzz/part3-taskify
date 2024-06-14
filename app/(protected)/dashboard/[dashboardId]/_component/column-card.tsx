@@ -35,6 +35,7 @@ export const ColumnCard = async ({
   const members = await getDashboardMembers(dashboardId)
   if (!card) return
   if (!members) return
+  if (!comment) return
 
   return (
     <Dialog>
@@ -69,18 +70,10 @@ export const ColumnCard = async ({
         </div>
       </DialogTrigger>
       <CardModalContent
-        tags={card.tags}
-        cardId={card.id}
-        imgUrl={card.imageUrl}
+        card={card}
         columnId={columnId}
         dashboardId={dashboardId}
-        title={card.title}
-        description={card.description}
-        firstName={card.assignee.nickname[0]}
-        nickname={card.assignee.nickname}
-        dueDate={card.dueDate}
-        comments={comment?.comments}
-        assignee={card.assignee}
+        comments={comment.comments}
         members={members.members}
       />
     </Dialog>

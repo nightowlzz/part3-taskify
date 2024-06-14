@@ -27,7 +27,7 @@ import {
   updateComment,
 } from '@/app/action/comment'
 import { toast } from 'sonner'
-import { Assignee, Comment, Member } from '@/type'
+import { Assignee, CardIdModel, Comment, Member } from '@/type'
 import { formatDate } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -44,19 +44,10 @@ import { EditColumnModalContent } from './edit-card-modal-content'
 import { useRouter } from 'next/navigation'
 
 type Props = {
-  tags: string[]
-  title: string
-  description: string
-  imgUrl?: string
-  profileImageUrl?: string
-  firstName: string
-  nickname: string
-  dueDate?: string
-  cardId: number
+  card: CardIdModel
   dashboardId: number
   columnId: number
-  comments?: Comment[]
-  assignee: Assignee
+  comments: Comment[]
   members: Member[]
 }
 
@@ -72,20 +63,11 @@ const FormSchema = z.object({
 })
 
 export const CardModalContent = ({
-  tags,
-  title,
-  description,
-  profileImageUrl,
-  imgUrl,
-  firstName,
-  nickname,
-  dueDate,
-  cardId,
+  card,
   dashboardId,
   columnId,
-  assignee,
-  comments,
   members,
+  comments,
 }: Props) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -99,7 +81,7 @@ export const CardModalContent = ({
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const res = await createComment({
-      cardId,
+      cardId: card.id,
       dashboardId,
       columnId,
       content: data.content,
@@ -128,11 +110,12 @@ export const CardModalContent = ({
       // toast.error('에러발생')
       return
     }
+    router.refresh()
     toast.success('삭제 성공')
   }
 
   const deleteCard123 = async () => {
-    const res = await deleteCard({ cardId })
+    const res = await deleteCard({ cardId: card.id })
     router.refresh()
     if (!res) {
       // toast.error('에러발생')
@@ -176,20 +159,21 @@ export const CardModalContent = ({
             <div className='mr-4 flex-1'>
               <div className='flex'>
                 <Badge variant={'secondary'} className='rounded-full'>
-                  <div className='mr-1 rounded-full bg-black p-1' /> {title}
+                  <div className='mr-1 rounded-full bg-black p-1' />{' '}
+                  {card.title}
                 </Badge>
                 <div className='mx-5 border-r' />
                 <div className='flex flex-wrap gap-x-2 gap-y-2'>
-                  {tags.map((tag, index) => (
+                  {card.tags.map((tag, index) => (
                     <CategoryTag key={index} text={tag} />
                   ))}
                 </div>
               </div>
-              <div>{description}</div>
-              {imgUrl && (
+              <div>{card.description}</div>
+              {card.imageUrl && (
                 <div className='relative aspect-video w-full rounded-md'>
                   <Image
-                    src={imgUrl}
+                    src={card.imageUrl}
                     alt={'card'}
                     fill
                     className='rounded-md object-cover'
@@ -232,17 +216,17 @@ export const CardModalContent = ({
               <div>담당자</div>
               <div className='flex items-center gap-x-2'>
                 <Avatar>
-                  <AvatarImage src={profileImageUrl} />
-                  <AvatarFallback>{firstName}</AvatarFallback>
+                  <AvatarImage src={card.assignee.profileImageUrl} />
+                  <AvatarFallback>{card.assignee.nickname[0]}</AvatarFallback>
                 </Avatar>
-                <span>{nickname}</span>
+                <span>{card.assignee.nickname}</span>
               </div>
               <div>마감일</div>
-              <div>{dueDate}</div>
+              <div>{card.dueDate}</div>
             </div>
           </div>
           <div className='h-[300px] space-y-3 overflow-auto'>
-            {comments?.map((comment) => (
+            {comments.map((comment) => (
               <div key={comment.id} className='flex gap-x-3'>
                 <div className='flex gap-x-2'>
                   <Avatar>
@@ -308,16 +292,16 @@ export const CardModalContent = ({
   if (contentType === 'type2') {
     return (
       <EditColumnModalContent
-        assignee={assignee}
+        assignee={card.assignee}
         columnId={columnId}
-        cardId={cardId}
-        date={dueDate}
-        tags={tags}
-        description={description}
-        title={title}
+        cardId={card.id}
+        date={card.dueDate}
+        tags={card.tags}
+        description={card.description}
+        title={card.title}
         members={members}
         onClose={() => setContentType('type1')}
-        imgUrl={imgUrl}
+        imgUrl={card.imageUrl}
       />
     )
   }
