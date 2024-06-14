@@ -95,19 +95,6 @@ export const editCard = async ({
   imgUrl?: string
 }) => {
   try {
-    if (imgUrl) {
-      await api.put(`/cards/${cardId}`, {
-        assigneeUserId,
-        columnId,
-        title,
-        description,
-        dueDate,
-        tags,
-        imageUrl: imgUrl,
-      })
-      revalidatePath('/dashboard')
-      return true
-    }
     if (formData) {
       const res = await api.post(`/columns/${columnId}/card-image`, formData, {
         headers: {
@@ -128,6 +115,21 @@ export const editCard = async ({
       return true
     }
 
+    if (imgUrl) {
+      console.log('hello')
+      console.log(imgUrl)
+      await api.put(`/cards/${cardId}`, {
+        assigneeUserId,
+        columnId,
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl: imgUrl,
+      })
+      revalidatePath('/dashboard')
+      return true
+    }
     await api.put(`/cards/${cardId}`, {
       assigneeUserId,
       columnId,
@@ -140,7 +142,7 @@ export const editCard = async ({
 
     return true
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return null
   }
 }

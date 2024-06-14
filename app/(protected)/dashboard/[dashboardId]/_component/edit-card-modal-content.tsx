@@ -27,7 +27,7 @@ import { TagsInput } from 'react-tag-input-component'
 import { Assignee, Member } from '@/type'
 import { Textarea } from '@/components/ui/textarea'
 import { createCard, editCard } from '@/app/action/card'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import {
   Dialog,
@@ -79,6 +79,7 @@ export const EditColumnModalContent = ({
   const [file, setFile] = useState<File | undefined>()
   const [imgUrl, setImgUrl] = useState<string | undefined>(ImgUrl)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isChanged, setIsChanged] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,6 +95,22 @@ export const EditColumnModalContent = ({
   const [date, setDate] = useState<Date | undefined>(
     dueDate ? new Date(dueDate) : undefined,
   )
+
+  // Check if form values have changed
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const hasChanged =
+        value.memberId !== assignee.id ||
+        value.title !== title ||
+        value.description !== description ||
+        value.date?.toISOString() !== new Date(dueDate || '').toISOString() ||
+        JSON.stringify(value.tags) !== JSON.stringify(tags)
+
+      setIsChanged(hasChanged || !!file)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [form.watch, assignee.id, title, description, dueDate, tags, file])
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { memberId, description, tags, title, date } = values
@@ -115,7 +132,7 @@ export const EditColumnModalContent = ({
       description,
       formData,
       dueDate: dueDateString,
-      imgUrl,
+      imgUrl: ImgUrl,
     })
     if (!res) {
       toast.error('카드 추가 중 오류가 발생했습니다.')
@@ -277,7 +294,7 @@ export const EditColumnModalContent = ({
               취소
             </Button>
             <Button
-              disabled={!form.formState.isValid}
+              disabled={!form.formState.isValid || !isChanged}
               className='px-10 py-6'
               type='submit'
               asChild
