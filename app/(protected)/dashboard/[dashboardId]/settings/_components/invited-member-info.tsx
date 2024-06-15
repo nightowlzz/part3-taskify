@@ -43,7 +43,7 @@ export const InvitedMemberInfo = ({ dashboardId, invitations }: Props) => {
               <ChevronRight />
             </Button>
           </div>
-          <div className='absolute left-0 top-8'>
+          <div className='absolute left-0 top-8 md:static'>
             <InvitedButton dashboardId={dashboardId} />
           </div>
         </div>
