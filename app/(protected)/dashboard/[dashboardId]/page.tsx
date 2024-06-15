@@ -60,7 +60,7 @@ export default function DashboardId() {
 
   useEffect(() => {
     getData()
-  }, []) // Add setColumns to dependencies to re-fetch data when it changes
+  }, [dashboardId, setColumns]) // Add setColumns to dependencies to re-fetch data when it changes
 
   return (
     <>
