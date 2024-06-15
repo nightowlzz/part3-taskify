@@ -90,8 +90,8 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
 
   return (
     <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
-      <div className='bg-gray10 flex flex-col gap-4 dark:bg-black md:gap-6 lg:sticky lg:top-0 lg:z-10 lg:pb-4 lg:pt-5'>
-        <div className='flex items-center gap-2'>
+      <div className='flex flex-col gap-4 bg-[#fff] dark:bg-black md:gap-6 lg:sticky lg:top-0 lg:z-10 lg:pb-4 lg:pt-5'>
+        <div className='flex items-center gap-2 '>
           <span
             className={`flex h-2 w-2 items-center justify-center rounded-3xl bg-violet-500 text-[0.75rem] text-white`}
           ></span>

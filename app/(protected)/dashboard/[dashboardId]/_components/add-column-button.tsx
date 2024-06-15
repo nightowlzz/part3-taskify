@@ -16,7 +16,9 @@ export default function AddColumn({ onClick }: AddColumnProps) {
       onClick={onClick}
     >
       <span className='text-black_light_2'>새로운 컬럼 추가하기</span>
-      <span className='rounded bg-violet-300 px-1 text-violet-500'>+</span>
+      <span className='h-[28px] w-[28px] rounded bg-violet-200 px-1 leading-6 text-violet-500'>
+        +
+      </span>
     </button>
   )
 }

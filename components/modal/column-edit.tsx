@@ -21,7 +21,7 @@ const ColumnEdit = ({
   }
   return (
     <AlertDialogContent>
-      <div className='px-5 py-7 md:py-8'>
+      <div className='py-3 md:py-4'>
         <ModalHead>컬럼 관리</ModalHead>
         <ColumnForm
           initialValues={{ title: initialValues }}

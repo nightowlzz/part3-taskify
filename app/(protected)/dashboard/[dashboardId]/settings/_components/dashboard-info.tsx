@@ -25,9 +25,12 @@ type Props = {
 }
 
 const formSchema = z.object({
-  title: z.string().min(2, {
-    message: '최소 1글자 이상 입력해 주세요.',
-  }),
+  title: z
+    .string()
+    .min(2, {
+      message: '최소 1글자 이상 입력해 주세요.',
+    })
+    .max(10, { message: '최대 10글자 입력해 주세요.' }),
   color: z.string(),
 })
 
@@ -63,12 +66,12 @@ export const DashboardInfo = ({ id, title, selectedColor }: Props) => {
   }
 
   return (
-    <div className='rounded-lg bg-white p-8'>
+    <div className='rounded-lg bg-white p-6 md:p-8'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-          <div className='flex justify-between'>
+          <div className='md:flex-low flex  flex-col justify-between md:flex-row'>
             <h1 className='text-xl font-bold'>{title}</h1>
-            <div className='flex space-x-2'>
+            <div className='mt-2 flex space-x-2 md:mt-0'>
               {colorList.map((color) => (
                 <CircleColorButton
                   key={color}

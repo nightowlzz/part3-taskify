@@ -100,7 +100,7 @@ export const ChangePassword = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='mt-8 flex w-full flex-col gap-y-1 rounded-lg bg-white px-5 py-8'
+        className='mt-8 flex w-full flex-col gap-y-1 rounded-lg bg-white px-5 py-5 md:py-8'
       >
         {formFields.map((field, index) => (
           <FormField

@@ -12,7 +12,7 @@ const UserPage = async () => {
 
   return (
     <PageContainer>
-      <div className='mt-12 w-full space-y-4 px-4 xl:max-w-3xl'>
+      <div className='mt-4 w-full space-y-4 px-4 md:mt-12 xl:max-w-3xl'>
         <BackButton href='/dashboard' />
         <Profile
           name={user.nickname}

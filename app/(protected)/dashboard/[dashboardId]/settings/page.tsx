@@ -25,7 +25,7 @@ const DashboardSettingPage = async ({ params }: Props) => {
 
   return (
     <div className='min-h-screen bg-stone-100 pt-16'>
-      <div className='w-full space-y-5 px-5 py-8 xl:max-w-2xl'>
+      <div className='w-full space-y-5 px-5 py-4 md:py-8 xl:max-w-2xl'>
         <BackButton href={`/dashboard/${params.dashboardId}`} />
         <DashboardInfo
           id={dashboardId}

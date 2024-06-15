@@ -34,10 +34,8 @@ export const ColumnEditButton = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
-        <button className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'>
-          <Image src={settingIcon.src} fill alt='설정 아이콘' />
-        </button>
+      <AlertDialogTrigger className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'>
+        <Image src={settingIcon.src} fill alt='설정 아이콘' />
       </AlertDialogTrigger>
       {step === 1 && (
         <ColumnEdit
