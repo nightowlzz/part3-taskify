@@ -1,14 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { useEffect, useState } from 'react'
 import { EditCardProps } from '../editCard-layout'
-import { useState, useEffect } from 'react'
-import {
-  fetchInvitees,
-  Invitations,
-} from '@/app/(protected)/dashboard/_api-wrapper/fetch-invitees'
-import { deleteInvitee } from '@/app/(protected)/dashboard/_api-wrapper/delete-invitee'
-import { MyPaginationComponent } from '@/components/ui/myPagination'
+import { deleteInvitee } from '@/app/_api-wrapper/delete-invitee'
+import { Invitations, fetchInvitees } from '@/app/_api-wrapper/fetch-invitees'
 import Invitation from '@/components/modal/invitation'
+import { MyPaginationComponent } from '@/components/ui/myPagination'
 
 const InvitationsList: React.FC<EditCardProps> = ({ dashboardId }) => {
   const [invitations, setInvitations] = useState<Invitations[]>([])

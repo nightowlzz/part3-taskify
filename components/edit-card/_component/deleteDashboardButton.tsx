@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { EditCardProps } from '../editCard-layout'
-import { deleteDashboard } from '@/app/(protected)/dashboard/_api-wrapper/delete-dashboard'
+import { deleteDashboard } from '@/app/_api-wrapper/delete-dashboard'
 
 const DeleteDashboardButton: React.FC<EditCardProps> = ({ dashboardId }) => {
   const handleDelete = async () => {
