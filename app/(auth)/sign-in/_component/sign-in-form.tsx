@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -19,19 +19,21 @@ import { signInFormSchema } from '@/schema'
 import { api } from '@/lib/utils'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { setAccessToken } from '@/app/api/cookie'
+import { setAccessToken } from '@/app/data/cookie'
+import { Eye } from 'lucide-react'
 
 type SignInFormValues = z.infer<typeof signInFormSchema>
 
 export const SignInForm = () => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [isShow, setIsShow] = useState(false)
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     mode: 'onChange',
     defaultValues: {
-      email: 'test111@mail.com',
+      email: 'test1234@mail.com',
       password: 'test1234',
     },
   })
@@ -56,6 +58,9 @@ export const SignInForm = () => {
     name: keyof SignInFormValues
     label: string
     placeholder: string
+    type?: string
+    t?: string
+    onClick?: () => void
   }[] = [
     {
       name: 'email',
@@ -66,6 +71,9 @@ export const SignInForm = () => {
       name: 'password',
       label: '비밀번호',
       placeholder: '비밀번호를 입력해 주세요.',
+      type: isShow ? 'text' : 'password',
+      t: 'password',
+      onClick: () => setIsShow((value) => !value),
     },
   ]
 
@@ -81,15 +89,23 @@ export const SignInForm = () => {
             control={form.control}
             name={field.name}
             render={({ field: inputField }) => (
-              <FormItem>
+              <FormItem className='relative'>
                 <FormLabel>{field.label}</FormLabel>
                 <FormControl>
                   <Input
+                    className='pr-10'
                     disabled={isPending}
+                    type={field.type}
                     placeholder={field.placeholder}
                     {...inputField}
                   />
                 </FormControl>
+                {field.t === 'password' && (
+                  <Eye
+                    className='absolute right-2 top-8 transform cursor-pointer'
+                    onClick={field.onClick}
+                  />
+                )}
                 <FormMessage />
               </FormItem>
             )}

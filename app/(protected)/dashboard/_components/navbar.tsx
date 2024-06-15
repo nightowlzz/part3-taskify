@@ -1,14 +1,20 @@
-import { api } from '@/lib/utils'
-import { LogoutButton } from './logout-button'
+import { NavContainer } from '@/components/nav-container'
+import { UserButton } from '@/components/user-button'
 
-export const Navbar = async () => {
-  const user = await api.get('/users/me')
-  // console.log(user.data)
+type Props = {
+  userImg?: string
+  username: string
+}
+
+export const Navbar = ({ userImg, username }: Props) => {
+  const firstName = username ? username[0] : 'U'
 
   return (
-    <nav className='flex h-14 items-center justify-between border-b px-10'>
-      <span className='text-sm font-bold'>내 대시보드</span>
-      <LogoutButton />
-    </nav>
+    <NavContainer>
+      <div className='flex h-16 items-center justify-between  bg-white px-10'>
+        <h1 className='text-lg font-bold'>내 대시보드</h1>
+        <UserButton firstName={firstName} name={username} imgUrl={userImg} />
+      </div>
+    </NavContainer>
   )
 }
