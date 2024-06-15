@@ -89,17 +89,17 @@ export const Profile = ({ name, email, ImgUrl: initialImgUrl }: Props) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className='w-full space-y-6 rounded-lg bg-white px-5 py-8'>
-          <h1 className='text-2xl font-bold'>프로필</h1>
-          <div className='flex h-[180px] gap-x-4'>
-            <div className='relative h-[180px] w-[180px]'>
+        <div className='w-full space-y-6 rounded-lg bg-white px-5 py-5 md:py-8'>
+          <h1 className='text-xl font-bold md:text-2xl'>프로필</h1>
+          <div className='flex h-auto flex-col gap-x-4 md:h-[180px] md:flex-row'>
+            <div className='relative h-[100px] w-[100px] md:h-[180px] md:w-[180px] '>
               {imgUrl ? (
                 <Image
                   src={imgUrl}
                   alt='userImg'
                   fill
                   sizes='100vw 50vw'
-                  className='cursor-pointer object-cover transition-all hover:brightness-75'
+                  className='cursor-pointer rounded-lg object-cover transition-all hover:brightness-75'
                   onClick={() => fileInputRef.current?.click()}
                 />
               ) : (
@@ -119,13 +119,13 @@ export const Profile = ({ name, email, ImgUrl: initialImgUrl }: Props) => {
               onChange={handleFileChange}
               className='hidden'
             />
-            <div className='flex flex-1 flex-col justify-between'>
+            <div className='mt-6 flex flex-1 flex-col justify-between md:mt-0'>
               <FormField
                 control={form.control}
                 name='email'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-lg font-semibold'>
+                    <FormLabel className='text-base font-semibold md:text-lg'>
                       이메일
                     </FormLabel>
                     <FormControl>
@@ -140,7 +140,7 @@ export const Profile = ({ name, email, ImgUrl: initialImgUrl }: Props) => {
                 name='username'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-lg font-semibold'>
+                    <FormLabel className='block pt-4 text-base font-semibold md:pt-0 md:text-lg'>
                       닉네임
                     </FormLabel>
                     <FormControl>

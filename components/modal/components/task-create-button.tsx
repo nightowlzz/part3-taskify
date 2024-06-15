@@ -5,7 +5,6 @@ import { useState } from 'react'
 import TaskCreate from '../task-create'
 import { columnDashboardId } from '../types/modal-type'
 
-// 추 후 삭제예정[파일]
 export const TaskCreactButton = ({
   dashboardId,
   columnId,
@@ -24,7 +23,9 @@ export const TaskCreactButton = ({
 	    md:text-[18px] xl:h-[40px] xl:text-[18px] 
       '
       >
-        <span className='rounded bg-violet-300 px-1 text-violet-500'>+</span>
+        <span className='h-[24px] w-[24px] rounded bg-violet-200 px-1 leading-5 text-violet-500'>
+          +
+        </span>
       </AlertDialogTrigger>
       <TaskCreate
         dashboardId={dashboardId}

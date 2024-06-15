@@ -73,8 +73,6 @@ export const Comment = ({
       } else {
         toast.error('전송 실패')
       }
-    } finally {
-      router.refresh()
     }
   }
 

@@ -1,3 +1,4 @@
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -62,10 +63,10 @@ export const DetailInfo = ({
   return (
     <div className='fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
       <div
-        className={`block h-[90vh] max-w-[730px] md:max-h-[80vh] ${styled.dialogWrap} fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]`}
+        className={`block h-[90vh] max-w-[730px] ${styled.dialogWrap} fixed left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]`}
       >
         <ScrollArea className='h-full w-full'>
-          <div className='px-5 pb-7 pt-10 md:px-7 md:py-8 md:pr-[244px]'>
+          <div className='px-5 pb-5 pt-10 md:px-7 md:py-8 md:pr-[244px]'>
             <div className='pb-6 sm:text-2xl md:pb-8'>{title}</div>
             {/* 담당자 */}
             <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
@@ -138,7 +139,11 @@ export const DetailInfo = ({
                     sizes='100vw'
                     width={0}
                     height={0}
-                    style={{ width: '100%', height: 'auto' }}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      maxHeight: '400px',
+                    }}
                     alt={title}
                     priority
                   />

@@ -65,7 +65,7 @@ export default function DashboardId() {
   return (
     <>
       <div
-        className='scrollbar-hide flex w-full flex-col overflow-x-auto pt-[4.3125rem] dark:bg-black lg:h-screen lg:flex-row'
+        className='flex w-full flex-col overflow-x-auto pt-[4.3125rem] dark:bg-black lg:h-screen lg:flex-row'
         ref={scrollRef}
         onWheel={handleScroll}
       >

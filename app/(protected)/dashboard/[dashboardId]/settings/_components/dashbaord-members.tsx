@@ -12,24 +12,30 @@ export const DashboardMembers = async ({ dashboardId }: Props) => {
   if (!memberRes) return <div>대시보드 맴버 에러</div>
 
   return (
-    <div className='flex flex-col rounded-lg bg-white p-8'>
+    <div className='flex flex-col rounded-lg bg-white p-6 md:p-8'>
       <div className='flex justify-between'>
         <h2 className='text-xl font-bold'>구성원</h2>
-        <div className='flex items-center gap-x-3'>
+        <div className='flex flex-col items-center justify-center gap-x-3 md:flex-row'>
           <div>
             <span>1 / 1</span>
           </div>
-          <div>
-            <Button className='px-2' variant={'outline'}>
+          <div className='pt-2 md:pt-0'>
+            <Button
+              className='h-7 w-7 px-2 md:h-10 md:w-10'
+              variant={'outline'}
+            >
               <ChevronLeft />
             </Button>
-            <Button className='px-2' variant={'outline'}>
+            <Button
+              className='h-7 w-7 px-2 md:h-10 md:w-10'
+              variant={'outline'}
+            >
               <ChevronRight />
             </Button>
           </div>
         </div>
       </div>
-      <span className='my-6 text-muted-foreground'>이름</span>
+      <span className='my-3 text-muted-foreground md:my-6'>이름</span>
       {memberRes.members.map((member) => (
         <MemberInfo
           key={member.id}
