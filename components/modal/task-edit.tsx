@@ -280,7 +280,7 @@ export const TaskCardEdit = ({
                             <SelectItem key={column.id} value={`${column.id}`}>
                               <Badge
                                 variant='dotted'
-                                className={`${styled.badge} bg-violet_light text-violet`}
+                                className={`${styled.badge} bg-violet-300 text-violet-500`}
                               >
                                 {column.title}
                               </Badge>
@@ -337,7 +337,7 @@ export const TaskCardEdit = ({
               render={({ field }) => (
                 <FormItem className='md:pt-2'>
                   <FormLabel className='text-base font-bold md:text-lg'>
-                    제목 <sup className='text-ms text-violet'>*</sup>
+                    제목 <sup className='text-ms text-violet-500'>*</sup>
                   </FormLabel>
                   <FormControl>
                     <Input placeholder='제목을 입력해 주세요' {...field} />
@@ -499,7 +499,7 @@ export const TaskCardEdit = ({
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-gray_light bg-center bg-no-repeat`}
+                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview
@@ -510,7 +510,7 @@ export const TaskCardEdit = ({
                       {preview && (
                         <Button
                           type='button'
-                          className='absolute right-0 top-0 m-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-white p-0 hover:bg-gray_dark3'
+                          className='hover:bg-gray_dark3 absolute right-0 top-0 m-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-white p-0'
                           onClick={handleImageDelete}
                         >
                           <Image
@@ -529,11 +529,11 @@ export const TaskCardEdit = ({
             />
             <AlertDialogFooter className='absolute bottom-0 left-0 w-full flex-col-reverse items-start justify-start bg-white px-5 pb-7 pt-6 md:flex-row-reverse md:items-end md:justify-between  md:p-7'>
               <div className='flex w-full items-end justify-end gap-3'>
-                <AlertDialogCancel className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'>
+                <AlertDialogCancel className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'>
                   취소
                 </AlertDialogCancel>
                 <Button
-                  className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
+                  className='h-10 w-full md:h-12 md:w-[120px]'
                   disabled={!form.formState.isValid}
                 >
                   변경

@@ -275,7 +275,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
               render={({ field }) => (
                 <FormItem className='md:pt-2'>
                   <FormLabel className='text-base font-medium md:text-lg'>
-                    제목 <sup className='text-ms text-violet'>*</sup>
+                    제목 <sup className='text-ms text-violet-500'>*</sup>
                   </FormLabel>
                   <FormControl>
                     <Input placeholder='제목을 입력해 주세요' {...field} />
@@ -438,7 +438,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-gray_light bg-center bg-no-repeat`}
+                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview
@@ -449,7 +449,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                       {preview && (
                         <Button
                           type='button'
-                          className='absolute right-0 top-0 m-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-white p-0 hover:bg-gray_dark3'
+                          className='hover:bg-gray_dark3 absolute right-0 top-0 m-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-white p-0'
                           onClick={handleImageDelete}
                         >
                           <Image
@@ -468,14 +468,14 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
             />
             <AlertDialogFooter className='absolute bottom-0 left-0 flex w-full gap-3 bg-white px-5 pb-7 pt-6 md:justify-end md:p-7'>
               <AlertDialogCancel
-                className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
+                className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
                 onClick={() => form.reset()}
               >
                 취소
               </AlertDialogCancel>
               <Button
                 type='submit'
-                className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
+                className='h-10 w-full md:h-12 md:w-[120px]'
               >
                 생성
               </Button>

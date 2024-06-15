@@ -30,13 +30,13 @@ export const ConfirmAlert = ({
         </div>
         <AlertDialogFooter className='flex w-full gap-3 bg-white pt-6 md:justify-end md:pt-7'>
           <AlertDialogCancel
-            className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
+            className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
             onClick={onCancle}
           >
             취소
           </AlertDialogCancel>
           <AlertDialogAction
-            className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
+            className='h-10 w-full bg-violet-500 md:h-12 md:w-[120px]'
             onClick={onConfirm}
           >
             {confirmText}

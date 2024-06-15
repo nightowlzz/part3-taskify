@@ -123,7 +123,7 @@ export const ColumnForm = ({
         <AlertDialogFooter className='flex-col-reverse  items-start justify-start pt-6 md:flex-row-reverse md:items-end md:justify-between md:pt-7'>
           <div className='flex w-full items-end justify-end gap-3'>
             <AlertDialogCancel
-              className='h-10 w-full border-gray_dark3 md:h-12 md:w-[120px]'
+              className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
               onClick={() => {
                 setStep ? form.reset(initialValues) : form.reset()
               }}
@@ -131,7 +131,7 @@ export const ColumnForm = ({
               취소
             </AlertDialogCancel>
             <Button
-              className='h-10 w-full bg-violet md:h-12 md:w-[120px]'
+              className='h-10 w-full md:h-12 md:w-[120px]'
               disabled={!form.formState.isValid}
             >
               {setStep ? '변경' : '추가'}

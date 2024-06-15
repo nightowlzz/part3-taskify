@@ -1,6 +1,6 @@
 'use client'
 
-import { logout } from '@/app/api/cookie'
+import { logout } from '@/app/data/cookie'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 

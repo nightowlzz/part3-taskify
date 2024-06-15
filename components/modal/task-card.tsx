@@ -52,7 +52,7 @@ export const TaskCard = async ({
       {tasks &&
         tasks.map((task) => (
           <AlertDialog key={task.id}>
-            <AlertDialogTrigger className='flex gap-2 bg-orange p-3'>
+            <AlertDialogTrigger className='bg-orange flex gap-2 p-3'>
               {task.title}
             </AlertDialogTrigger>
             <AlertDialogContent className='block h-[90vh] max-w-[730px] md:max-h-[80vh]'>
@@ -101,7 +101,7 @@ export const TaskCard = async ({
                     {/* 현재 컬럼 보여줌 */}
                     <Badge
                       variant='dotted'
-                      className={`${styled.badge} shrink-0 text-wrap bg-violet_light text-violet`}
+                      className={`${styled.badge} shrink-0 text-wrap bg-violet-300 text-violet-500`}
                     >
                       {columnTitle}
                     </Badge>

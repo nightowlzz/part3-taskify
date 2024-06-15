@@ -16,7 +16,7 @@ import { useState } from 'react'
 
 const styled = {
   popoverButton:
-    'bg-transparent hover:bg-violet_light h-7 md:h-8 hover:text-violet leading-5 text w-full text-sm',
+    'bg-transparent hover:bg-violet-300 h-7 md:h-8 hover:text-violet-500 leading-5 text w-full text-sm',
 }
 
 export const TaskPopoder = (task: taskDetail) => {

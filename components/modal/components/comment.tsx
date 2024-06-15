@@ -109,7 +109,7 @@ export const Comment = ({
             />
             <Button
               variant={'outline'}
-              className='ml-auto block h-[28px] w-[78px] py-0 font-bold text-violet md:h-8'
+              className='ml-auto block h-[28px] w-[78px] py-0 font-bold text-violet-500 md:h-8'
             >
               입력
             </Button>

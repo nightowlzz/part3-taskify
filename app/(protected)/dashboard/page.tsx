@@ -1,86 +1,73 @@
-'use client'
+import { PageContainer } from '@/components/page-container'
+import DashboardCta from './_components/dashboard-cta'
+import { getDashboards } from '@/app/data/dashboard'
+import { getCurrentUser } from '@/app/data/user'
+import { redirect } from 'next/navigation'
+import { CreateDashboardButton } from './_components/create-dashboard-button'
+import { PaginationButtons } from './_components/pagination-buttons'
+import { getDashboardInvitations } from '@/app/data/invitation'
+import { SearchBar } from './_components/search-bar'
+import { ResultLabels } from './_components/result-labels'
+import { InviteInfo } from './_components/invite-info'
+import { Navbar } from './_components/navbar'
+import { EmptyInvite } from './_components/empty-invite'
 
-import React, { useState, useEffect } from 'react'
-import CreateDashboard from './_components/create-dashboard'
-import DashboardCta from './_components/dashboardCta'
-import { fetchDashboards } from './_api-wrapper/fetch-dashboards'
-import InvitationDashboard from './_components/invitation'
-import PageNation from './_components/pagenation'
+const DashboardPage = async ({
+  searchParams,
+}: {
+  [key: string]: { page: string; search: string } | undefined
+}) => {
+  const currentPage = Number(searchParams?.page) || 1
+  const search = searchParams?.search || ''
+  const size = 5
 
-interface Dashboard {
-  id: number
-  title: string
-  color: string
-  createdAt: string
-  updatedAt: string
-  createdByMe: boolean
-  userId: number
-}
+  const dashboardRes = await getDashboards({ page: currentPage, size })
+  const user = await getCurrentUser()
+  const invitations = await getDashboardInvitations(search)
 
-const DashboardPage: React.FC = () => {
-  const [page, setPage] = useState(1)
-  const [dashboards, setDashboards] = useState<Dashboard[]>([])
-  const [totalPages, setTotalPages] = useState(1)
-  const [isActiveBack, setIsActiveBack] = useState(false)
-  const [isActiveForward, setIsActiveForward] = useState(false)
+  if (dashboardRes === null) return <div>대시보드를 가져오는 중에 오류발생</div>
+  if (user === null) return redirect('/sign-in')
+  if (!invitations) return <div>초대 리스트 가져오는 중에 오류발생</div>
 
-  useEffect(() => {
-    const loadDashboards = async () => {
-      try {
-        const data = await fetchDashboards(page, 5, 'pagination')
-        setDashboards(data.dashboards)
-        setTotalPages(Math.ceil(data.totalCount / 5))
-        console.log(totalPages)
-        setIsActiveBack(page > 1)
-        setIsActiveForward(data.totalCount > page * 5)
-      } catch (error) {
-        console.error('Failed to fetch dashboards:', error)
-      }
-    }
-
-    loadDashboards()
-  }, [page])
-
-  const handlePageNation = (direction: 'back' | 'forward') => {
-    if (direction === 'back') {
-      setPage(page - 1)
-    } else if (direction === 'forward') {
-      setPage(page + 1)
-    }
-  }
+  const dashboards = dashboardRes.dashboards
+  const maxPage = Math.max(1, Math.ceil(dashboardRes.totalCount / size))
 
   return (
-    <main>
-      <div
-        className='ml-[13px] mt-[10px] grid auto-rows-auto grid-cols-1 gap-y-[8px] 
-       md:w-[504px] md:grid-cols-2 md:gap-x-[10px] md:gap-y-[10px] 
-       xl:w-[1024px] xl:grid-cols-3 xl:gap-x-[13px] xl:gap-y-[10px] '
-      >
-        <CreateDashboard mode={'main'} />
-        {dashboards.map((dashboard) => (
-          <DashboardCta
-            key={dashboard.id}
-            id={dashboard.id}
-            color={dashboard.color}
-            createdByMe={dashboard.createdByMe}
-            title={dashboard.title}
-          />
-        ))}
-      </div>
-      <div className='ml-auto flex w-[200px] items-center gap-3'>
-        <span className='flex w-full text-[0.75rem] md:text-[0.875rem]'>
-          {totalPages} 페이지 중 {page}
-        </span>
-        <PageNation
-          size='small'
-          isActiveBack={isActiveBack}
-          isActiveForward={isActiveForward}
-          onClickBack={() => handlePageNation('back')}
-          onClickForward={() => handlePageNation('forward')}
-        />
-      </div>
-      <InvitationDashboard setDashboards={setDashboards} page={page} />
-    </main>
+    <>
+      <Navbar userImg={user.profileImageUrl} username={user.nickname} />
+      <PageContainer>
+        <div className='mt-14 max-w-7xl px-8'>
+          <section>
+            <div className='grid w-full grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-2 xl:grid-cols-3'>
+              <CreateDashboardButton />
+              {dashboards.map((dashboard) => (
+                <DashboardCta
+                  key={dashboard.id}
+                  dashboardId={dashboard.id}
+                  color={dashboard.color}
+                  createdByMe={dashboard.createdByMe}
+                  title={dashboard.title}
+                />
+              ))}
+            </div>
+            <PaginationButtons currentPage={currentPage} maxPage={maxPage} />
+          </section>
+          <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
+            <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
+            <SearchBar />
+            <ResultLabels />
+            {invitations.invitations.map((invitation) => (
+              <InviteInfo
+                key={invitation.id}
+                id={invitation.id}
+                title={invitation.dashboard.title}
+                nickname={invitation.inviter.nickname}
+              />
+            ))}
+          </section>
+        </div>
+      </PageContainer>
+    </>
   )
 }
 

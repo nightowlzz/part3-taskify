@@ -137,14 +137,14 @@ export const CommentView = ({
                   <div className='flex items-center justify-end gap-2'>
                     <Button
                       variant={'outline'}
-                      className='block h-5 w-[78px] py-0 font-bold text-violet md:h-7'
+                      className='block h-5 w-[78px] py-0 font-bold text-violet-500 md:h-7'
                       onClick={() => setIsCommentVisible(true)}
                     >
                       취소
                     </Button>
                     <Button
                       variant={'outline'}
-                      className='block h-5 w-[78px] py-0 font-bold text-violet md:h-7'
+                      className='block h-5 w-[78px] py-0 font-bold text-violet-500 md:h-7'
                     >
                       입력
                     </Button>

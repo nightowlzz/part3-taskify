@@ -118,7 +118,7 @@ export type CardsResponse = {
   cards: Card[]
 }
 
-interface Assignee {
+export interface Assignee {
   profileImageUrl: string
   nickname: string
   id: number

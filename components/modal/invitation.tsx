@@ -1,6 +1,5 @@
 'use client'
 
-import { postInvitation } from '@/app/(protected)/dashboard/_api-wrapper/post-invitation'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +12,7 @@ import { useState } from 'react'
 import { EditCardProps } from '../edit-card/editCard-layout'
 import { Button } from '../ui/button'
 import { CiSquarePlus } from 'react-icons/ci'
+import { postInvitation } from '@/app/_api-wrapper/post-invitation'
 
 const Invitation: React.FC<EditCardProps> = ({ dashboardId }) => {
   const [isModal, setIsModal] = useState(false)
@@ -66,7 +66,7 @@ const Invitation: React.FC<EditCardProps> = ({ dashboardId }) => {
                     취소
                   </AlertDialogCancel>
                   <AlertDialogAction
-                    className='absolute left-[169px] top-[223px] h-[42px] w-[138px] bg-violet md:left-[392px] md:top-[200px] md:h-12 md:w-full md:max-w-[120px]'
+                    className='absolute left-[169px] top-[223px] h-[42px] w-[138px] bg-violet-500 md:left-[392px] md:top-[200px] md:h-12 md:w-full md:max-w-[120px]'
                     onClick={handleConfirm}
                   >
                     초대
