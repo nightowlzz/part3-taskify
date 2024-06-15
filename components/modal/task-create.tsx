@@ -179,8 +179,8 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       tags: data.tags || [],
     }
 
-    if (data.manager || !null) {
-      formData.append('assigneeUserId', data.manager)
+    if (data.manager) {
+      requestData.assigneeUserId = Number(data.manager)
     }
 
     try {
@@ -194,7 +194,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       } else {
         res = await api.post(`/cards`, { ...requestData })
       }
-
+      console.log('resresresres', res)
       setTagList([])
       setPreview(null)
       form.reset()
@@ -467,9 +467,9 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                 </FormItem>
               )}
             />
-            <AlertDialogFooter className='flex w-full gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
+            <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
               <AlertDialogCancel
-                className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
+                className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
                 onClick={() => form.reset()}
               >
                 취소

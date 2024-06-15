@@ -248,7 +248,7 @@ export const TaskCardEdit = ({
 
   return (
     <AlertDialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>
-      <div className='h-full overflow-y-auto px-7 pb-[100px] pt-7 md:pb-[136px] md:pt-8'>
+      <div className='h-full overflow-y-auto pb-[100px] pt-3 md:pb-[136px] md:pt-4'>
         <ModalHead>할 일 수정</ModalHead>
         <Form {...form}>
           <form
