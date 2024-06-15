@@ -1,3 +1,0 @@
-## Taskify
-
-next.js
