@@ -52,23 +52,19 @@ const DashboardPage = async ({
             </div>
             <PaginationButtons currentPage={currentPage} maxPage={maxPage} />
           </section>
-          {!invitations.invitations.length ? (
-            <EmptyInvite />
-          ) : (
-            <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
-              <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
-              <SearchBar />
-              <ResultLabels />
-              {invitations.invitations.map((invitation) => (
-                <InviteInfo
-                  key={invitation.id}
-                  id={invitation.id}
-                  title={invitation.dashboard.title}
-                  nickname={invitation.inviter.nickname}
-                />
-              ))}
-            </section>
-          )}
+          <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
+            <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
+            <SearchBar />
+            <ResultLabels />
+            {invitations.invitations.map((invitation) => (
+              <InviteInfo
+                key={invitation.id}
+                id={invitation.id}
+                title={invitation.dashboard.title}
+                nickname={invitation.inviter.nickname}
+              />
+            ))}
+          </section>
         </div>
       </PageContainer>
     </>
