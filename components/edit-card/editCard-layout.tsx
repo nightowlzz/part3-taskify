@@ -3,7 +3,7 @@ import EditDashboardName from '@/components/edit-card/_component/editDashboardNa
 import MembersList from '@/components/edit-card/_component/membersList'
 import InvitationsList from '@/components/edit-card/_component/invitationsList'
 import DeleteDashboardButton from '@/components/edit-card/_component/deleteDashboardButton'
-import { Dashboard } from '@/app/(protected)/dashboard/_api-wrapper/fetch-dashboards'
+import { Dashboard } from '@/app/_api-wrapper/fetch-dashboards'
 
 export interface EditCardProps {
   dashboard?: Dashboard

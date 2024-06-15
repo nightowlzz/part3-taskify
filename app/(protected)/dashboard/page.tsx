@@ -15,8 +15,9 @@ import { EmptyInvite } from './_components/empty-invite'
 const DashboardPage = async ({
   searchParams,
 }: {
-  [key: string]: { page: string; search: string } | undefined
+  searchParams: { [key: string]: string | undefined }
 }) => {
+  console.log('searchParams', searchParams)
   const currentPage = Number(searchParams?.page) || 1
   const search = searchParams?.search || ''
   const size = 5
