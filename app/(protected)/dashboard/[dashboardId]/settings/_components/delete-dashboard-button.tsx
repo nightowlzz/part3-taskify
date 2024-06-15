@@ -26,7 +26,7 @@ export const DeleteDashboardButton = ({ dashboardId, isShow }: Props) => {
   return (
     <>
       {isShow && (
-        <Button onClick={onDelete} variant={'outline'}>
+        <Button onClick={onDelete} variant={'destructive'} className='w-full'>
           삭제하기
         </Button>
       )}

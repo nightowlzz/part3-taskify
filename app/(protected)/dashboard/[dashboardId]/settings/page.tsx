@@ -24,7 +24,7 @@ const DashboardSettingPage = async ({ params }: Props) => {
   if (!invitedMemberRes) return <div>초대 맴버 패치 실패</div>
 
   return (
-    <PageContainer>
+    <div className='min-h-screen bg-stone-100 pt-16'>
       <div className='w-full space-y-5 px-5 py-8 xl:max-w-2xl'>
         <BackButton href={`/dashboard/${params.dashboardId}`} />
         <DashboardInfo
@@ -42,7 +42,7 @@ const DashboardSettingPage = async ({ params }: Props) => {
           isShow={user!.id === dashboardDetails.userId}
         />
       </div>
-    </PageContainer>
+    </div>
   )
 }
 

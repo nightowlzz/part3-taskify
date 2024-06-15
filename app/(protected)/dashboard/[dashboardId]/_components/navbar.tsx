@@ -1,4 +1,3 @@
-import { Title } from './title'
 import { Button } from '@/components/ui/button'
 import { Send, Settings } from 'lucide-react'
 import { UserButton } from '@/components/user-button'
@@ -8,6 +7,7 @@ import { NavContainer } from '@/components/nav-container'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { InviteModalContent } from '@/components/invite-modal-content'
+import { Title } from './title'
 
 type Props = {
   dashboardId: number
@@ -42,14 +42,14 @@ export const Navbar = async ({
                   href={`/dashboard/${dashboardId}/settings`}
                   className='flex gap-x-2'
                 >
-                  <Settings className='text-gray-400 h-5 w-5' />
+                  <Settings className='h-5 w-5 text-gray-400' />
                   <span>관리</span>
                 </Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant={'outline'} className='flex gap-x-2'>
-                    <Send className='text-gray-400 h-5 w-5' />
+                    <Send className='h-5 w-5 text-gray-400' />
                     초대하기
                   </Button>
                 </AlertDialogTrigger>

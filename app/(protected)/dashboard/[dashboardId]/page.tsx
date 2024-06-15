@@ -1,39 +1,112 @@
-import { getColumns } from '@/app/data/column'
-import { getDashboardMembers } from '@/app/data/dashboard'
-import { PageContainer } from '@/components/page-container'
-import { Column } from './_component/column'
-import { AddColumnButton } from './_component/add-column-button'
+'use client'
+import { CardList } from './_components/card-list'
+import AddColumn from './_components/add-column-button'
+import CreateColumn from './_components/create-column'
+import useDragCardEnd from './_hook/useDragEnd'
+import { createColumnState } from './_components/modal/modal-atom'
+import { columnState, dashboardIdState } from './_recoil/todo'
+import { api } from '@/lib/utils'
+import { DragDropContext, Droppable } from '@hello-pangea/dnd'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState, WheelEvent } from 'react'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
-const DashboardIdPage = async ({
-  params,
-}: {
-  params: { dashboardId: string }
-}) => {
-  const dashboardId = Number(params.dashboardId)
-  const columns = await getColumns(dashboardId)
-  const members = await getDashboardMembers(dashboardId)
+export default function DashboardId() {
+  const params = useParams()
+  const dashboardId = params.dashboardId as string
+  const [columns, setColumns] = useRecoilState(columnState)
+  const setDashBoardId = useSetRecoilState(dashboardIdState)
+  const [isOpenCreateColumn, setIsOpenCreateColumn] =
+    useRecoilState(createColumnState)
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-  if (!columns) return <div>컬럼이 존재하지않습니다</div>
-  if (!members) return <div>맴버가 존재하지 않습니다</div>
+  const getData = async () => {
+    setLoading(true)
+    try {
+      const { data } = await api.get(`columns?dashboardId=${dashboardId}`)
+      setColumns(data.data)
+      setDashBoardId(dashboardId)
+    } catch (error) {
+      console.error('Failed to fetch columns:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const openCreateColumn = () => {
+    setIsOpenCreateColumn(true)
+  }
+
+  const handleOnDragEnd = useDragCardEnd()
+
+  const handleScroll = (e: WheelEvent): void => {
+    if (!e.cancelable) {
+      return
+    }
+    e.preventDefault()
+
+    const el = scrollRef.current
+    const { deltaY } = e
+    if (el) {
+      if (deltaY === 0) return
+      el.scrollTo({
+        left: el.scrollLeft + deltaY,
+        behavior: 'auto',
+      })
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, []) // Add setColumns to dependencies to re-fetch data when it changes
 
   return (
     <>
-      <div className='flex h-screen w-full flex-col overflow-x-scroll pl-[67px] pt-16 md:flex-row md:pl-[160px] xl:pl-[300px]'>
-        {columns.data.map((column, index) => (
-          <Column
-            key={column.id}
-            members={members.members}
-            dashboardId={dashboardId}
-            columnId={column.id}
-            isFirst={index === 0}
-            title={column.title}
-          />
-        ))}
+      <div
+        className='scrollbar-hide flex w-full flex-col overflow-x-auto pt-[4.3125rem] dark:bg-black lg:h-screen lg:flex-row'
+        ref={scrollRef}
+        onWheel={handleScroll}
+      >
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          {columns.map((column) => (
+            <Droppable key={column.id} droppableId={column.id.toString()}>
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={`${
+                    snapshot.isDraggingOver
+                      ? 'bg-violet-800'
+                      : 'bg-gray10 dark:bg-black'
+                  } border-gray-20 bg-gray10 dark:border-black80 flex flex-col border-b lg:h-full lg:min-w-[22.125rem] lg:flex-col lg:border-b-0 lg:border-r`}
+                >
+                  <CardList
+                    key={column.id + 'col'}
+                    id={column.id}
+                    title={column.title}
+                    dashboardId={dashboardId}
+                  />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </DragDropContext>
+        {loading ? (
+          <></>
+        ) : (
+          <div className='border-gray-20 bg-gray10 dark:border-black80 flex w-full flex-col gap-[1.0625rem] border-b px-3 py-4 dark:bg-black md:gap-[1.5625rem] md:p-5 lg:flex-col lg:pt-[4.5rem]'>
+            <div className='h-[3.75rem] md:h-[4.375rem] lg:w-[22.125rem]'>
+              <AddColumn onClick={openCreateColumn} />
+            </div>
+          </div>
+        )}
       </div>
-
-      <AddColumnButton dashboardId={dashboardId} />
+      {isOpenCreateColumn && (
+        <CreateColumn dashboardId={Number(dashboardId)} onUpdate={getData} />
+      )}
     </>
   )
 }
-
-export default DashboardIdPage

@@ -10,7 +10,7 @@ const SideBar = async () => {
   const dashboards = dashboardRes.dashboards
 
   return (
-    <div className='scrollbar-hide fixed z-30 h-screen w-[67px] overflow-y-scroll border-r bg-white md:w-[160px] xl:w-[300px]'>
+    <div className=' scrollbar-hide fixed z-30 h-screen w-[67px] overflow-y-scroll border-r bg-white md:w-[160px] xl:w-[300px]'>
       <Logo />
       <div className='mt-12'>
         <CreateDashboardButton />
