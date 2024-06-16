@@ -64,7 +64,7 @@ export const Comment = ({
     try {
       api.post('/comments', { ...requestData }).then((res) => {
         toast.success('댓글을 작성하였습니다.')
-        form.reset()
+        form.setValue('commnet', '')
         fetchComments()
       })
     } catch (e: any) {
@@ -73,8 +73,6 @@ export const Comment = ({
       } else {
         toast.error('전송 실패')
       }
-    } finally {
-      router.refresh()
     }
   }
 

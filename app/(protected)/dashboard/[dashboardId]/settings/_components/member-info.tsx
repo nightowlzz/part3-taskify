@@ -29,7 +29,7 @@ export const MemberInfo = ({
   }
 
   return (
-    <div className='flex justify-between border-b py-4'>
+    <div className='flex justify-between border-b py-3 md:py-4'>
       <div className='flex items-center gap-x-2'>
         <Avatar>
           <AvatarImage src={userImgUrl} />
@@ -39,7 +39,11 @@ export const MemberInfo = ({
         {isOwner && <Crown className='text-yellow-500' />}
       </div>
       {!isOwner && (
-        <Button onClick={onDelete} size={'lg'} variant={'outline'}>
+        <Button
+          onClick={onDelete}
+          variant={'outline'}
+          className='md:w-100px h-8 w-[52px] p-0'
+        >
           삭제
         </Button>
       )}

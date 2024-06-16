@@ -16,8 +16,8 @@ export const InvitedButton = ({ dashboardId }: Props) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
-        <Button className='flex gap-x-2'>
-          <Plus className='h-5 w-5' />
+        <Button className='flex h-7 w-[80px] gap-x-2 md:h-10 md:w-auto'>
+          <Plus className='hidden h-5 w-5 md:block' />
           <span>초대하기</span>
         </Button>
       </AlertDialogTrigger>

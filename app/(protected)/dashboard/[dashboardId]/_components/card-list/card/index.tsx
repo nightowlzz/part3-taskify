@@ -59,11 +59,11 @@ export default function Card({
         onClick={openDetailInfo}
         className='border-gray30 flex flex-grow-0 flex-col gap-[0.625rem] 
 		rounded-[0.375rem] border bg-white px-3 py-3 
-		md:flex-row lg:flex-col lg:items-stretch lg:p-5'
+		md:flex-row lg:flex-col lg:items-stretch lg:p-5 '
       >
         {imageUrl && (
           <div
-            className='flex h-full w-full items-center overflow-hidden rounded 
+            className='relative flex h-full w-full items-center overflow-hidden rounded 
 		  md:h-[3.3125rem] md:w-[5.6725rem] lg:h-full lg:w-full'
           >
             <Image
@@ -71,7 +71,12 @@ export default function Card({
               sizes='100vw'
               width={0}
               height={0}
-              style={{ width: '100%', height: 'auto' }}
+              style={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: '160px',
+                objectFit: 'cover',
+              }}
               alt={title}
               priority
             />
@@ -136,7 +141,7 @@ export default function Card({
             description={description}
             dashboardId={dashboardId}
             assignee={assignee}
-			closeInfo={closeDetailInfo}
+            closeInfo={closeDetailInfo}
           />
         )}
       </div>

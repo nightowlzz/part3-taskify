@@ -179,8 +179,8 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       tags: data.tags || [],
     }
 
-    if (data.manager || !null) {
-      formData.append('assigneeUserId', data.manager)
+    if (data.manager) {
+      requestData.assigneeUserId = Number(data.manager)
     }
 
     try {
@@ -194,7 +194,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       } else {
         res = await api.post(`/cards`, { ...requestData })
       }
-
+      console.log('resresresres', res)
       setTagList([])
       setPreview(null)
       form.reset()
@@ -221,7 +221,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
 
   return (
     <AlertDialogContent className='block h-[90vh] max-w-[506px] md:max-h-[80vh]'>
-      <div className='h-full overflow-y-auto px-5 pb-[100px] pt-7 md:pb-[136px] md:pt-8'>
+      <div className='h-full overflow-y-auto pt-3 md:pt-4'>
         <ModalHead>할 일 생성</ModalHead>
         <Form {...form}>
           <form
@@ -438,12 +438,13 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-center bg-no-repeat`}
+                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview
                           ? `url(${preview})`
                           : `url(${IMAGE_ADD_ICON})`,
+                        backgroundColor: '#fff',
                       }}
                     >
                       {preview && (
@@ -466,9 +467,9 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                 </FormItem>
               )}
             />
-            <AlertDialogFooter className='absolute bottom-0 left-0 flex w-full gap-3 bg-white px-5 pb-7 pt-6 md:justify-end md:p-7'>
+            <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
               <AlertDialogCancel
-                className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
+                className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
                 onClick={() => form.reset()}
               >
                 취소

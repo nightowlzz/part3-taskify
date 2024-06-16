@@ -22,22 +22,30 @@ export const InvitedMemberInfo = ({ dashboardId, invitations }: Props) => {
   }
 
   return (
-    <div className='flex flex-col rounded-lg bg-white p-8'>
-      <div className='flex justify-between'>
+    <div className='flex flex-col rounded-lg bg-white p-6 md:p-8'>
+      <div className='relative flex justify-between'>
         <h2 className='text-xl font-bold'>초대 내역</h2>
-        <div className='flex items-center gap-x-3'>
-          <div>
+        <div className='flex flex-col items-end gap-x-3 md:flex-row md:items-center'>
+          <div className='pr-2.5'>
             <span>1 / 1</span>
           </div>
           <div>
-            <Button className='px-2' variant={'outline'}>
+            <Button
+              className='h-7 w-7 px-2 md:h-10 md:w-10'
+              variant={'outline'}
+            >
               <ChevronLeft />
             </Button>
-            <Button className='px-2' variant={'outline'}>
+            <Button
+              className='h-7 w-7 px-2 md:h-10 md:w-10'
+              variant={'outline'}
+            >
               <ChevronRight />
             </Button>
           </div>
-          <InvitedButton dashboardId={dashboardId} />
+          <div className='absolute left-0 top-8 md:static'>
+            <InvitedButton dashboardId={dashboardId} />
+          </div>
         </div>
       </div>
       <span className='my-6 text-muted-foreground'>이메일</span>
@@ -46,7 +54,7 @@ export const InvitedMemberInfo = ({ dashboardId, invitations }: Props) => {
           <span>{invitation.invitee.email}</span>
           <Button
             onClick={() => onCancel(invitation.id)}
-            className='px-8'
+            className='md:w-100px h-8 w-[52px] p-0'
             variant={'outline'}
           >
             취소

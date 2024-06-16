@@ -22,6 +22,8 @@ import Card from './card'
 import { TaskCreactButton } from '@/components/modal/components/task-create-button'
 import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
 import useInfiniteScroll from '@/app/_hook/useInfiniteScroll'
+import { columnForm } from '@/components/modal/types/modal-type'
+import { useRouter } from 'next/navigation'
 
 interface CardListProps {
   id: number
@@ -30,6 +32,8 @@ interface CardListProps {
 }
 
 export function CardList({ id, title, dashboardId }: CardListProps) {
+  const router = useRouter()
+  const [columnTitle, setColumnTitle] = useState<string>(title)
   const [cardList, setCardList] = useRecoilState<CardInfo[] | []>(
     cardListStateAboutColumn(id),
   )
@@ -84,26 +88,43 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
     }
   }
 
+  // 컬럼 제목 수정
+  const onSubmit = async (title: string) => {
+    console.log('data', title)
+    try {
+      await api.put(`/columns/${id}`, {
+        title: title.trim(),
+        columnId: id,
+      })
+      setColumnTitle(title)
+    } catch (e: any) {
+      console.error(e.message)
+    } finally {
+      router.refresh()
+    }
+  }
+
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
 
   return (
     <div className='md:min-w-none scrollbar-hide bg-gray10 relative flex flex-1 flex-col gap-[1.0625rem] px-3 py-4 text-black dark:bg-black md:w-full md:gap-[1.5625rem] md:p-5 lg:h-full lg:flex-col lg:gap-0 lg:overflow-scroll lg:pt-0'>
-      <div className='bg-gray10 flex flex-col gap-4 dark:bg-black md:gap-6 lg:sticky lg:top-0 lg:z-10 lg:pb-4 lg:pt-5'>
-        <div className='flex items-center gap-2'>
+      <div className='flex flex-col gap-4 bg-[#fff] dark:bg-black md:gap-6 lg:sticky lg:top-0 lg:z-10 lg:pb-4 lg:pt-5'>
+        <div className='flex items-center gap-2 '>
           <span
             className={`flex h-2 w-2 items-center justify-center rounded-3xl bg-violet-500 text-[0.75rem] text-white`}
           ></span>
           <div className='dark:text-white8 flex items-center gap-3 text-[1rem] font-bold md:text-[1.125rem]'>
-            <h3>{title}</h3>
+            <h3>{columnTitle}</h3>
             <Number num={cardNumCount} />
           </div>
 
           <ColumnEditButton
-            initialValues={title}
+            initialValues={columnTitle}
             columnId={id}
             dashboardId={parseInt(dashboardId, 10)}
+            onSubmit={onSubmit}
           />
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>

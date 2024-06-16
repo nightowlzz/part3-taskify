@@ -15,8 +15,9 @@ import { EmptyInvite } from './_components/empty-invite'
 const DashboardPage = async ({
   searchParams,
 }: {
-  [key: string]: { page: string; search: string } | undefined
+  searchParams: { [key: string]: string | undefined }
 }) => {
+  console.log('searchParams', searchParams)
   const currentPage = Number(searchParams?.page) || 1
   const search = searchParams?.search || ''
   const size = 5
@@ -36,7 +37,7 @@ const DashboardPage = async ({
     <>
       <Navbar userImg={user.profileImageUrl} username={user.nickname} />
       <PageContainer>
-        <div className='mt-14 max-w-7xl px-8'>
+        <div className='mt-6 max-w-7xl px-6 md:mt-14 md:px-8'>
           <section>
             <div className='grid w-full grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-2 xl:grid-cols-3'>
               <CreateDashboardButton />
@@ -53,7 +54,7 @@ const DashboardPage = async ({
             <PaginationButtons currentPage={currentPage} maxPage={maxPage} />
           </section>
           <section className='scrollbar-hide mt-10 h-[500px] space-y-5 overflow-y-scroll rounded-lg bg-white px-5 py-8'>
-            <h1 className='text-2xl font-bold'>초대받은 대시보드</h1>
+            <h1 className='text-lg font-bold md:text-2xl'>초대받은 대시보드</h1>
             <SearchBar />
             <ResultLabels />
             {invitations.invitations.map((invitation) => (

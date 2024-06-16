@@ -10,11 +10,19 @@ import { columnEdit } from '../types/modal-type'
 import Image from 'next/image'
 import settingIcon from '@/public/settings_icon.svg'
 
+interface editColumnBtn {
+  columnId: number
+  dashboardId: number
+  initialValues: string
+  onSubmit: (title: string) => void
+}
+
 export const ColumnEditButton = ({
   columnId,
   initialValues,
   dashboardId,
-}: columnEdit) => {
+  onSubmit,
+}: editColumnBtn) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1)
@@ -34,10 +42,8 @@ export const ColumnEditButton = ({
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
-        <button className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'>
-          <Image src={settingIcon.src} fill alt='설정 아이콘' />
-        </button>
+      <AlertDialogTrigger className='relative ml-auto h-[1.375rem] w-[1.375rem] md:h-[1.5rem] md:w-[1.5rem]'>
+        <Image src={settingIcon.src} fill alt='설정 아이콘' />
       </AlertDialogTrigger>
       {step === 1 && (
         <ColumnEdit
@@ -46,6 +52,7 @@ export const ColumnEditButton = ({
           dashboardId={dashboardId}
           setOpen={setOpen}
           setStep={setStep}
+          onSubmit={onSubmit}
         />
       )}
       {step === 2 && (

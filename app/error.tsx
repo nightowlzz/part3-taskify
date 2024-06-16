@@ -6,10 +6,8 @@ import { useEffect } from 'react'
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void
 }) {
   useEffect(() => {
     console.error(error)
@@ -25,18 +23,12 @@ export default function Error({
         </h1>
         <div className='mt-8 flex flex-wrap items-center justify-center gap-3'>
           <Button
+            asChild
             variant={'p_btn'}
-            onClick={() => reset()}
             className='h-auto rounded-lg bg-[#5534DA] px-5 py-3 text-base font-bold text-white hover:bg-[#5534DA]/70 md:px-6 md:py-4'
           >
-            다시 시도하기
+            <Link href='/'>처음으로 이동</Link>
           </Button>
-          <Link
-            href='/'
-            className='rounded-lg bg-[#4B4B4B]/90 px-5 py-3 font-bold text-white hover:bg-[#787486] md:px-6 md:py-4'
-          >
-            처음으로 이동
-          </Link>
         </div>
       </div>
     </div>

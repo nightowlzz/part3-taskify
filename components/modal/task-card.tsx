@@ -25,23 +25,9 @@ export const getColumnTasks = async (columnId: number) => {
 export const TaskCard = async ({
   columnId,
   columnTitle,
-  title,
-  tags,
-  dueDate,
-  bgColor,
-  imageUrl,
-  nickname,
-  profileImageUrl,
 }: {
   columnId: number
   columnTitle: string
-  title: string
-  tags: string[]
-  dueDate: string
-  bgColor: string
-  imageUrl: string
-  nickname: string
-  profileImageUrl: string
 }) => {
   const tasks = await getColumnTasks(columnId)
 
@@ -62,7 +48,7 @@ export const TaskCard = async ({
                   {/* 담당자 */}
                   <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
                     <li className='flex-1 md:pb-5'>
-                      <h6 className='pb-[2px] text-xs font-bold leading-5 md:pb-1'>
+                      <h6 className='pb-[2px] text-xs font-bold leading-[26px] md:pb-1'>
                         담당자
                       </h6>
                       <div className='flex items-center'>
@@ -81,16 +67,18 @@ export const TaskCard = async ({
                             </span>
                           </>
                         ) : (
-                          <span>담당자가 없습니다.</span>
+                          <span className='text-xs leading-[26px] '>
+                            담당자가 없습니다.
+                          </span>
                         )}
                       </div>
                     </li>
                     {task.dueDate ? (
                       <li className='flex-1'>
-                        <h6 className='pb-[6px] text-xs font-bold leading-[26px]'>
+                        <h6 className='text-xs font-bold leading-[26px]'>
                           마감일
                         </h6>
-                        <div className='leading-6.5 text-xs'>
+                        <div className='text-xs leading-[26px]'>
                           {task.dueDate}
                         </div>
                       </li>

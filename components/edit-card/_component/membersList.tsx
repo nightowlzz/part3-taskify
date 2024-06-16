@@ -1,14 +1,11 @@
-import {
-  fetchMembers,
-  Member,
-} from '@/app/(protected)/dashboard/_api-wrapper/fetch-members'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { MyPaginationComponent } from '@/components/ui/myPagination'
 import { useEffect, useState } from 'react'
 import { EditCardProps } from '../editCard-layout'
-import { deleteMember } from '@/app/(protected)/dashboard/_api-wrapper/delete-member'
 import { toast } from 'sonner'
+import { Member, fetchMembers } from '@/app/_api-wrapper/fetch-members'
+import { deleteMember } from '@/app/_api-wrapper/delete-member'
 
 const MembersList: React.FC<EditCardProps> = ({ dashboardId }) => {
   const [members, setMembers] = useState<Member[]>([])

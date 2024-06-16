@@ -1,6 +1,6 @@
 'use server'
 
-import { ValueOfCircleColor } from '@/enum'
+// import { ValueOfCircleColor } from '@/enum'
 import { api } from '@/lib/utils'
 import { Dashboard } from '@/type'
 import { revalidatePath } from 'next/cache'
@@ -31,7 +31,7 @@ export const createDashboard = async ({
 type UpdateDashboardDetailsInput = {
   id: number
   title: string
-  color: ValueOfCircleColor
+  color: string
 }
 export const updateDashboardDetails = async ({
   id,

@@ -32,24 +32,29 @@ export const Navbar = async ({
 
   return (
     <NavContainer>
-      <div className='flex h-full items-center justify-between px-8'>
+      <div className='flex h-full items-center justify-between px-3 md:px-8'>
         <Title title={title} isOwner={isOwner} />
-        <div className='flex items-center gap-x-4'>
+        <div
+          className={`flex flex-1  ${isOwner ? 'justify-end' : 'justify-end'} items-center gap-x-2 md:gap-x-4`}
+        >
           {isOwner && (
             <>
               <Button variant={'outline'} asChild>
                 <Link
                   href={`/dashboard/${dashboardId}/settings`}
-                  className='flex gap-x-2'
+                  className='flex w-[36px] gap-x-1 p-1 md:w-auto md:gap-x-2'
                 >
-                  <Settings className='h-5 w-5 text-gray-400' />
+                  <Settings className='hidden h-4 w-4 text-gray-400 md:block md:h-5 md:w-5' />
                   <span>관리</span>
                 </Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant={'outline'} className='flex gap-x-2'>
-                    <Send className='h-5 w-5 text-gray-400' />
+                  <Button
+                    variant={'outline'}
+                    className='fflex gap-x-1 p-1 md:gap-x-2'
+                  >
+                    <Send className='hidden h-4 w-4 text-gray-400 md:block md:h-auto md:w-auto' />
                     초대하기
                   </Button>
                 </AlertDialogTrigger>
@@ -63,16 +68,18 @@ export const Navbar = async ({
               return (
                 <Avatar
                   key={member.id}
-                  className='-ml-4 min-h-10 min-w-10 rounded-full'
+                  className='-ml-2 h-7 w-7 rounded-full md:-ml-4 md:h-10 md:w-10'
                 >
                   <AvatarImage src={member.profileImageUrl} />
-                  <AvatarFallback>{member.nickname[0]}</AvatarFallback>
+                  <AvatarFallback className='text-xs md:text-lg'>
+                    {member.nickname[0]}
+                  </AvatarFallback>
                 </Avatar>
               )
             })}
             {!!remainingMembersCount && (
-              <Avatar className='-ml-3 min-h-10 min-w-10 rounded-full'>
-                <AvatarFallback className='text-lg'>
+              <Avatar className='-ml-2 h-7 w-7 rounded-full p-0 md:-ml-3'>
+                <AvatarFallback className='text-xs md:text-lg'>
                   +{remainingMembersCount}
                 </AvatarFallback>
               </Avatar>

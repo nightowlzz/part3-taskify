@@ -26,9 +26,12 @@ import { Input } from '@/components/ui/input'
 import { CircleColorButton } from './circle-color-button'
 
 const formSchema = z.object({
-  title: z.string().min(2, {
-    message: '최소 1글자 이상 입력해 주세요.',
-  }),
+  title: z
+    .string()
+    .min(2, {
+      message: '최소 1글자 이상 입력해 주세요.',
+    })
+    .max(10, { message: '최대 10글자 입력해 주세요.' }),
   color: z.string(),
 })
 
