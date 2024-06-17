@@ -74,7 +74,7 @@ const FormSchema = z.object({
     .string()
     .min(1, { message: '1자 이상 작성해 주세요' })
     .max(300, { message: '300자 이내로 적어주세요' }),
-  dueDate: z.date().min(new Date('1900-01-01')),
+  dueDate: z.date().min(new Date('1900-01-01')).nullable(),
   tags: z.array(z.string(), { message: '하나 이상의 태그 필수 입니다' }),
   image: z.string().nullable(),
 })
@@ -114,7 +114,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       manager: '',
       title: '',
       desc: '',
-      dueDate: new Date(),
+      dueDate: null,
       tags: [],
       image: null,
     },
@@ -181,8 +181,12 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       columnId: Number(columnId),
       title: data.title,
       description: data.desc,
-      dueDate: format(data.dueDate, 'yyyy-MM-dd HH:mm'),
+
       tags: data.tags || [],
+    }
+
+    if (data.dueDate) {
+      requestData.dueDate = format(data.dueDate, 'yyyy-MM-dd HH:mm')
     }
 
     if (data.manager) {
@@ -200,25 +204,8 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       } else {
         res = await api.post(`/cards`, { ...requestData })
       }
-      console.log('res', res)
-      const newCard: CardInfo = {
-        id: res.data.id,
-        title: res.data.title,
-        description: res.data.description,
-        tags: res.data.tags,
-        dueDate: res.data.dueDate,
-        assignee: {
-          id: res.data.assignee.id,
-          nickname: res.data.assignee.nickname,
-          profileImageUrl: res.data.assignee.profileImageUrl,
-        },
-        imageUrl: res.data.imageUrl ?? '', // 이미지 URL이 null일 경우를 대비하여 기본값 설정
-        teamId: res.data.teamId,
-        columnId: res.data.columnId,
-        createdAt: new Date(res.data.createdAt), // 데이터가 ISO 날짜 형식인 경우 변환 필요
-        updatedAt: new Date(res.data.updatedAt), // 데이터가 ISO 날짜 형식인 경우 변환 필요
-      }
-      const updatedCardList = [...columnCardList, newCard]
+
+      const updatedCardList = [...columnCardList, res.data]
       setColumnCardList(updatedCardList)
       setTagList([])
       setPreview(null)
@@ -369,7 +356,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                     <PopoverContent className='w-auto p-0' align='start'>
                       <Calendar
                         mode='single'
-                        selected={field.value}
+                        selected={field.value ? field.value : undefined}
                         onSelect={field.onChange}
                         initialFocus
                       />
@@ -425,7 +412,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                         className='h-6 max-w-[180px] border-0 px-1 outline-0'
                         value={tagAdd}
                         placeholder={
-                          tagAdd.length
+                          tagList?.length
                             ? '입력 후 엔터'
                             : '태그를 입력해 주세요'
                         }
@@ -463,7 +450,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border bg-center bg-no-repeat`}
+                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border border bg-white bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview

@@ -90,7 +90,6 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
 
   // 컬럼 제목 수정
   const onSubmit = async (title: string) => {
-    console.log('data', title)
     try {
       await api.put(`/columns/${id}`, {
         title: title.trim(),
