@@ -116,8 +116,6 @@ export const editCard = async ({
     }
 
     if (imgUrl) {
-      console.log('hello')
-      console.log(imgUrl)
       await api.put(`/cards/${cardId}`, {
         assigneeUserId,
         columnId,
@@ -142,7 +140,7 @@ export const editCard = async ({
 
     return true
   } catch (error) {
-    // console.log(error)
+    console.error(error)
     return null
   }
 }

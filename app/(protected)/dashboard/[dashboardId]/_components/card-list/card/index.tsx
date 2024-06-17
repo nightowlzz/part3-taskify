@@ -1,11 +1,8 @@
 import calendarIcon from '@/public/icon-calendar.svg'
 import Tag from './tag'
-// import DeleteTodo from '@/src/app/_component/modal/todo/delete';
-// import DetailToDo from '@/src/app/_component/modal/todo/detail';
-// import UpdateTodo from '@/src/app/_component/modal/todo/update';
 import { detailTodoAboutCardId } from '../../modal/modal-atom'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { assignee } from '@/components/modal/types/modal-type'
 import DetailInfo from './detail-info'
@@ -24,6 +21,7 @@ interface CardProps {
   description: string
   dashboardId: number
   assignee: assignee
+  setDragDisabled: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Card({
@@ -40,6 +38,7 @@ export default function Card({
   description,
   dashboardId,
   assignee,
+  setDragDisabled,
 }: CardProps) {
   const [isOpenDetailInfo, setIsOpenDetailInfo] = useRecoilState(
     detailTodoAboutCardId(id),
@@ -52,7 +51,9 @@ export default function Card({
     e.stopPropagation()
     setIsOpenDetailInfo(false)
   }
-
+  useEffect(() => {
+    setDragDisabled(isOpenDetailInfo)
+  }, [isOpenDetailInfo])
   return (
     <>
       <div

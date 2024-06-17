@@ -24,6 +24,7 @@ import { ColumnEditButton } from '@/components/modal/components/column-edit-butt
 import useInfiniteScroll from '@/app/_hook/useInfiniteScroll'
 import { columnForm } from '@/components/modal/types/modal-type'
 import { useRouter } from 'next/navigation'
+import { detailTodoAboutCardId } from '../modal/modal-atom'
 
 interface CardListProps {
   id: number
@@ -34,9 +35,12 @@ interface CardListProps {
 export function CardList({ id, title, dashboardId }: CardListProps) {
   const router = useRouter()
   const [columnTitle, setColumnTitle] = useState<string>(title)
+  const [dragDisabled, setDragDisabled] = useState<boolean>(false)
+
   const [cardList, setCardList] = useRecoilState<CardInfo[] | []>(
     cardListStateAboutColumn(id),
   )
+
   const [cardNumCount, setCardNumCount] = useRecoilState<number>(
     countAboutCardList(id),
   )
@@ -103,6 +107,8 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
     }
   }
 
+  const handleDragDisabled = () => {}
+
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
@@ -139,6 +145,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
             draggableId={card.id.toString()}
             index={index}
             key={card.id}
+            isDragDisabled={dragDisabled}
           >
             {({ innerRef, draggableProps, dragHandleProps }, snapshot) => (
               <div
@@ -161,6 +168,7 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
                     description={card.description}
                     dashboardId={parseInt(dashboardId, 10)}
                     assignee={card.assignee}
+                    setDragDisabled={setDragDisabled}
                   />
                 </div>
               </div>
