@@ -9,9 +9,9 @@ type ColumnEditPick = Pick<columnEditProps, 'dashboardId' | 'setOpen'>
 
 const ColumnCreate = ({ dashboardId, setOpen }: ColumnEditPick) => {
   // 컬럼 추가 API 호출 함수
-  const handleAddColumn = async (data: columnForm) => {
+  const handleAddColumn = async (title: string) => {
     await api.post('/columns', {
-      title: data.title.trim(),
+      title: title.trim(),
       dashboardId: Number(dashboardId),
     })
   }
