@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
+import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -45,16 +46,12 @@ import {
   useState,
 } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSetRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { ModalHead } from './components/modal-head'
 import { default as style, default as styled } from './modal.module.css'
 import { member, memberData, taskDetail, taskForm } from './types/modal-type'
-import { useRecoilState } from 'recoil'
-import {
-  cardListStateAboutColumn,
-  columnState,
-} from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
@@ -120,7 +117,7 @@ export const TaskCardEdit = ({
   setOpen,
 }: taskEdit) => {
   const router = useRouter()
-  const [columnCardList, setColumnCardList] = useRecoilState<CardInfo[] | []>(
+  const setColumnCardList = useSetRecoilState<CardInfo[] | []>(
     cardListStateAboutColumn(columnId),
   )
   const [users, setUsers] = useState<member[]>([]) // 담당자

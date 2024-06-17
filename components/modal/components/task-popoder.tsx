@@ -1,18 +1,21 @@
 'use client'
+import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { CardInfo } from '@/lib/type'
 import { api } from '@/lib/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { ConfirmAlert } from '../confirm-alert'
 import { TaskCardEdit } from '../task-edit'
 import { taskDetail } from '../types/modal-type'
-import { useState } from 'react'
 
 const styled = {
   popoverButton:
@@ -22,12 +25,18 @@ const styled = {
 export const TaskPopoder = (task: taskDetail) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const setColumnCardList = useSetRecoilState<CardInfo[] | []>(
+    cardListStateAboutColumn(task.columnId),
+  )
 
   // 할일 팝오버메뉴의 삭제하기
   const onSubmitDelete = async (cardId: number) => {
     try {
       await api.delete(`/cards/${cardId}`)
       toast.success(`할 일이 삭제 되었습니다.`)
+      setColumnCardList((prev) => {
+        return prev.filter((card: CardInfo) => card.id !== cardId)
+      })
     } catch (e: any) {
       if (e.response && e.response.data && e.response.data.message) {
         toast.error(e.response.data.message)
