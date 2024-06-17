@@ -1,4 +1,3 @@
-'use client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -60,6 +59,7 @@ export const DetailInfo = ({
     columnId,
   }
 
+  console.log('task.assignee?.nickname', nickname)
   return (
     <div className='fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'>
       <div
@@ -69,9 +69,9 @@ export const DetailInfo = ({
           <div className='px-5 pb-5 pt-10 md:px-7 md:py-8 md:pr-[244px]'>
             <div className='pb-6 sm:text-2xl md:pb-8'>{title}</div>
             {/* 담당자 */}
-            <ul className='mb-4 flex w-full flex-row rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:p-4'>
+            <ul className='mb-4 flex w-full flex-row gap-2 rounded-lg border border-slate-300 px-4 py-3 md:absolute md:right-7 md:top-[85px] md:w-[200px] md:flex-col md:gap-0 md:p-4'>
               <li className='flex-1 md:pb-5'>
-                <h6 className='pb-[2px] text-xs font-bold leading-5 md:pb-1'>
+                <h6 className='text-xs font-bold leading-5 leading-[26px] md:pb-1'>
                   담당자
                 </h6>
                 <div className='flex items-center'>
@@ -84,16 +84,16 @@ export const DetailInfo = ({
                       <span className='text-sm'>{nickname}</span>
                     </>
                   ) : (
-                    <span>담당자가 없습니다.</span>
+                    <span className='text-xs leading-[26px]'>
+                      담당자가 없습니다.
+                    </span>
                   )}
                 </div>
               </li>
               {dueDate ? (
                 <li className='flex-1'>
-                  <h6 className='pb-[6px] text-xs font-bold leading-[26px]'>
-                    마감일
-                  </h6>
-                  <div className='leading-6.5 text-xs'>{dueDate}</div>
+                  <h6 className='text-xs font-bold leading-[26px]'>마감일</h6>
+                  <div className='text-xs leading-[26px]'>{dueDate}</div>
                 </li>
               ) : null}
             </ul>
@@ -102,7 +102,7 @@ export const DetailInfo = ({
               {/* 현재 컬럼 보여줌 */}
               <Badge
                 variant='dotted'
-                className={`${styled.badge} shrink-0 text-wrap bg-violet-300 text-violet-500`}
+                className={`${styled.badge} shrink-0 text-wrap bg-violet-100 text-violet-500`}
               >
                 {columnTitle}
               </Badge>
@@ -133,7 +133,7 @@ export const DetailInfo = ({
             <div className='pb-6 pt-4 leading-6'>
               {description}
               {imageUrl && (
-                <div className='relative max-h-[260px] w-full'>
+                <div className='relative mt-6 w-full'>
                   <Image
                     src={imageUrl}
                     sizes='100vw'

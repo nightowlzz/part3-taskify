@@ -5,20 +5,23 @@ import { ColumnForm } from './components/column-form'
 import { ModalHead } from './components/modal-head'
 import { columnEditProps, columnForm } from './types/modal-type'
 
+interface editColumn {
+  columnId: number
+  dashboardId: number
+  initialValues: string
+  setOpen: (open: boolean) => void
+  setStep: (open: number) => void
+  onSubmit: (title: string) => void
+}
+
 const ColumnEdit = ({
   columnId,
   dashboardId,
   initialValues,
   setOpen,
   setStep,
-}: columnEditProps) => {
-  // 컬럼 추가 API 호출 함수
-  const handleEditColumn = async (data: columnForm) => {
-    await api.put(`/columns/${columnId}`, {
-      title: data.title.trim(),
-      columnId: Number(columnId),
-    })
-  }
+  onSubmit,
+}: editColumn) => {
   return (
     <AlertDialogContent>
       <div className='py-3 md:py-4'>
@@ -28,8 +31,8 @@ const ColumnEdit = ({
           dashboardId={dashboardId}
           columnId={columnId}
           setOpen={setOpen}
-          onSubmit={handleEditColumn}
           setStep={setStep}
+          onSubmit={onSubmit}
         />
       </div>
     </AlertDialogContent>

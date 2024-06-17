@@ -110,7 +110,7 @@ export const CreateColumn = ({
       <AlertDialogPortal>
         <AlertDialogOverlay />
         <AlertDialogContent>
-          <div className='px-5 py-7 md:py-8'>
+          <div className='py-3 md:py-4'>
             <ModalHead>새 컬럼 생성</ModalHead>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
@@ -129,9 +129,9 @@ export const CreateColumn = ({
                     </FormItem>
                   )}
                 />
-                <AlertDialogFooter className='flex w-full gap-3 bg-white pt-6 md:mt-2 md:justify-end md:pt-1'>
+                <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
                   <AlertDialogCancel
-                    className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
+                    className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
                     onClick={() => setIsOpen(false)} // 모달 닫기
                   >
                     취소

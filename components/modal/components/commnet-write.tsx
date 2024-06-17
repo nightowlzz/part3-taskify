@@ -21,7 +21,7 @@ import { toast } from 'sonner'
 import { commnet } from '../types/modal-type'
 
 const editFormSchema = z.object({
-  comment: z.string().min(1, {
+  commentEdit: z.string().min(1, {
     message: '한 글자 이상 적어주세요',
   }),
 })
@@ -37,15 +37,15 @@ export const CommentView = ({
   const editForm = useForm<z.infer<typeof editFormSchema>>({
     resolver: zodResolver(editFormSchema),
     defaultValues: {
-      comment: comment.content,
+      commentEdit: comment.content,
     },
   })
 
   function onSubmit(data: z.infer<typeof editFormSchema>) {
     try {
       api
-        .put(`/comments/${comment.id}`, { content: data.comment })
-        .then((res) => editForm.setValue('comment', res.data.content))
+        .put(`/comments/${comment.id}`, { content: data.commentEdit })
+        .then((res) => editForm.setValue('commentEdit', res.data.content))
       fetchComments()
       toast.success('수정 되었습니다.')
       setIsCommentVisible(true)
@@ -120,7 +120,7 @@ export const CommentView = ({
                 >
                   <FormField
                     control={editForm.control}
-                    name='comment'
+                    name='commentEdit'
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>

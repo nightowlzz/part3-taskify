@@ -22,6 +22,8 @@ import Card from './card'
 import { TaskCreactButton } from '@/components/modal/components/task-create-button'
 import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
 import useInfiniteScroll from '@/app/_hook/useInfiniteScroll'
+import { columnForm } from '@/components/modal/types/modal-type'
+import { useRouter } from 'next/navigation'
 
 interface CardListProps {
   id: number
@@ -30,6 +32,8 @@ interface CardListProps {
 }
 
 export function CardList({ id, title, dashboardId }: CardListProps) {
+  const router = useRouter()
+  const [columnTitle, setColumnTitle] = useState<string>(title)
   const [cardList, setCardList] = useRecoilState<CardInfo[] | []>(
     cardListStateAboutColumn(id),
   )
@@ -84,6 +88,22 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
     }
   }
 
+  // 컬럼 제목 수정
+  const onSubmit = async (title: string) => {
+    console.log('data', title)
+    try {
+      await api.put(`/columns/${id}`, {
+        title: title.trim(),
+        columnId: id,
+      })
+      setColumnTitle(title)
+    } catch (e: any) {
+      console.error(e.message)
+    } finally {
+      router.refresh()
+    }
+  }
+
   useEffect(() => {
     return () => setCardList([])
   }, [setCardList])
@@ -96,14 +116,15 @@ export function CardList({ id, title, dashboardId }: CardListProps) {
             className={`flex h-2 w-2 items-center justify-center rounded-3xl bg-violet-500 text-[0.75rem] text-white`}
           ></span>
           <div className='dark:text-white8 flex items-center gap-3 text-[1rem] font-bold md:text-[1.125rem]'>
-            <h3>{title}</h3>
+            <h3>{columnTitle}</h3>
             <Number num={cardNumCount} />
           </div>
 
           <ColumnEditButton
-            initialValues={title}
+            initialValues={columnTitle}
             columnId={id}
             dashboardId={parseInt(dashboardId, 10)}
+            onSubmit={onSubmit}
           />
         </div>
         <div className='h-[2rem] md:h-[2.5rem]'>

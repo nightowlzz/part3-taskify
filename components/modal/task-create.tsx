@@ -54,6 +54,9 @@ import {
   memberData,
   taskForm,
 } from './types/modal-type'
+import { CardInfo } from '@/lib/type'
+import { useRecoilState } from 'recoil'
+import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
@@ -96,6 +99,9 @@ const getRandomColor = () => {
 
 const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
   const router = useRouter()
+  const [columnCardList, setColumnCardList] = useRecoilState<CardInfo[] | []>(
+    cardListStateAboutColumn(columnId),
+  )
   const [users, setUsers] = useState<member[]>() // 담당자
   const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지
   const [preview, setPreview] = useState<string | null>(null) // 미리보기 이미지
@@ -179,8 +185,8 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       tags: data.tags || [],
     }
 
-    if (data.manager || !null) {
-      formData.append('assigneeUserId', data.manager)
+    if (data.manager) {
+      requestData.assigneeUserId = Number(data.manager)
     }
 
     try {
@@ -194,7 +200,26 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
       } else {
         res = await api.post(`/cards`, { ...requestData })
       }
-
+      console.log('res', res)
+      const newCard: CardInfo = {
+        id: res.data.id,
+        title: res.data.title,
+        description: res.data.description,
+        tags: res.data.tags,
+        dueDate: res.data.dueDate,
+        assignee: {
+          id: res.data.assignee.id,
+          nickname: res.data.assignee.nickname,
+          profileImageUrl: res.data.assignee.profileImageUrl,
+        },
+        imageUrl: res.data.imageUrl ?? '', // 이미지 URL이 null일 경우를 대비하여 기본값 설정
+        teamId: res.data.teamId,
+        columnId: res.data.columnId,
+        createdAt: new Date(res.data.createdAt), // 데이터가 ISO 날짜 형식인 경우 변환 필요
+        updatedAt: new Date(res.data.updatedAt), // 데이터가 ISO 날짜 형식인 경우 변환 필요
+      }
+      const updatedCardList = [...columnCardList, newCard]
+      setColumnCardList(updatedCardList)
       setTagList([])
       setPreview(null)
       form.reset()
@@ -467,9 +492,9 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                 </FormItem>
               )}
             />
-            <AlertDialogFooter className='flex w-full gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
+            <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
               <AlertDialogCancel
-                className='border-gray_dark3 h-10 w-full md:h-12 md:w-[120px]'
+                className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
                 onClick={() => form.reset()}
               >
                 취소

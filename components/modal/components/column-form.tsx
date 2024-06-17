@@ -43,7 +43,7 @@ export interface columnEditFrom {
   dashboardId: number
   setOpen: (open: boolean) => void
   setStep?: (step: number) => void
-  onSubmit: (data: ColumnForm) => Promise<void>
+  onSubmit: (title: string) => void
 }
 
 export const ColumnForm = ({
@@ -76,7 +76,7 @@ export const ColumnForm = ({
     }
 
     try {
-      await onSubmit(data)
+      await onSubmit(data.title)
       setOpen(false)
       setStep
         ? toast.success(`${data.title} 으로 컬럼명이 변경 되었습니다.`)
