@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
+import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -31,7 +32,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Column } from '@/lib/type'
+import { CardInfo, Column } from '@/lib/type'
 import { api, cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
@@ -45,6 +46,7 @@ import {
   useState,
 } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSetRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { ModalHead } from './components/modal-head'
@@ -68,7 +70,7 @@ const FormSchema = z.object({
     .string()
     .min(1, { message: '1자 이상 작성해 주세요' })
     .max(300, { message: '300자 이내로 적어주세요' }),
-  dueDate: z.date(),
+  dueDate: z.date().min(new Date('1900-01-01')).nullable(),
   tags: z.array(z.string(), { message: '하나 이상의 태그 필수 입니다' }),
   image: z.string().nullable(),
 })
@@ -115,9 +117,12 @@ export const TaskCardEdit = ({
   setOpen,
 }: taskEdit) => {
   const router = useRouter()
+  const setColumnCardList = useSetRecoilState<CardInfo[] | []>(
+    cardListStateAboutColumn(columnId),
+  )
   const [users, setUsers] = useState<member[]>([]) // 담당자
   const [columns, setColumns] = useState<Column[]>() // 상태(컬럼)
-  const [imageFile, setImageFile] = useState<File | undefined>() // api post 이미지
+  const [imageFile, setImageFile] = useState<File | null>() // api post 이미지
   const [tagAdd, setTagAdd] = useState<string>('') // input tag 추가
   const [preview, setPreview] = useState<string | null>(imageUrl || null) // 미리보기 이미지
   const [tagList, setTagList] = useState<string[] | undefined>(tags) // 추가된 tag 리스트
@@ -129,7 +134,7 @@ export const TaskCardEdit = ({
       manager: assignee ? String(assignee?.id) : '',
       title: title || '',
       desc: description || '',
-      dueDate: dueDate ? new Date(dueDate) : new Date(),
+      dueDate: dueDate ? new Date(dueDate) : null,
       tags: tags || [],
       image: imageUrl || null,
     },
@@ -185,23 +190,30 @@ export const TaskCardEdit = ({
     e.preventDefault()
     form.setValue('image', '')
     setPreview('')
+    setImageFile(null)
   }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const formData = new FormData()
     if (imageFile) formData.append('image', imageFile)
-
     type TaskFormWithoutDashboard = Omit<taskForm, 'dashboardId'>
     let requestData: TaskFormWithoutDashboard = {
       columnId: Number(data.status),
       title: data.title,
       description: data.desc,
-      dueDate: format(data.dueDate, 'yyyy-MM-dd HH:mm'),
       tags: data.tags,
+    }
+
+    if (data.dueDate) {
+      requestData.dueDate = format(data.dueDate, 'yyyy-MM-dd HH:mm')
     }
 
     if (data.manager) {
       requestData.assigneeUserId = Number(data.manager)
+    }
+
+    if (!data.image) {
+      requestData.imageUrl = null
     }
 
     try {
@@ -218,6 +230,18 @@ export const TaskCardEdit = ({
       } else {
         res = await api.put(`/cards/${cardId}`, { ...requestData })
       }
+
+      setColumnCardList((prev) => {
+        return prev.map((card: CardInfo) => {
+          if (card.id === res.data.id) {
+            return {
+              ...res.data,
+            }
+          } else {
+            return card
+          }
+        })
+      })
 
       toast.success('전송 완료')
       if (setOpen) setOpen(false)
@@ -280,7 +304,7 @@ export const TaskCardEdit = ({
                             <SelectItem key={column.id} value={`${column.id}`}>
                               <Badge
                                 variant='dotted'
-                                className={`${styled.badge} bg-violet-300 text-violet-500`}
+                                className={`${styled.badge} bg-violet-100 text-violet-500`}
                               >
                                 {column.title}
                               </Badge>
@@ -406,7 +430,7 @@ export const TaskCardEdit = ({
                     <PopoverContent className='w-auto p-0' align='start'>
                       <Calendar
                         mode='single'
-                        selected={field.value}
+                        selected={field.value ? field.value : undefined}
                         onSelect={field.onChange}
                         initialFocus
                       />
@@ -462,7 +486,7 @@ export const TaskCardEdit = ({
                         className='h-6 max-w-[180px] border-0 px-1 outline-0'
                         value={tagAdd}
                         placeholder={
-                          tagAdd.length
+                          tagList?.length
                             ? '입력 후 엔터'
                             : '태그를 입력해 주세요'
                         }
@@ -499,7 +523,7 @@ export const TaskCardEdit = ({
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} bg-gray_light relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md bg-center bg-no-repeat`}
+                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border bg-white bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview
