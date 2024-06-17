@@ -304,7 +304,7 @@ export const TaskCardEdit = ({
                             <SelectItem key={column.id} value={`${column.id}`}>
                               <Badge
                                 variant='dotted'
-                                className={`${styled.badge} bg-violet-300 text-violet-500`}
+                                className={`${styled.badge} bg-violet-100 text-violet-500`}
                               >
                                 {column.title}
                               </Badge>

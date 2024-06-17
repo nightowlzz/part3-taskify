@@ -103,51 +103,45 @@ export const CreateColumn = ({
   }, [dashboardId])
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)}>새 컬럼 추가</Button>
-      </AlertDialogTrigger>
-      <AlertDialogPortal>
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <div className='py-3 md:py-4'>
-            <ModalHead>새 컬럼 생성</ModalHead>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-                <FormField
-                  control={form.control}
-                  name='title'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className='text-base font-medium md:text-lg'>
-                        이름
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder='새로운 프로젝트' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
-                  <AlertDialogCancel
-                    className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
-                    onClick={() => setIsOpen(false)} // 모달 닫기
-                  >
-                    취소
-                  </AlertDialogCancel>
-                  <Button
-                    className='h-10 w-full md:h-12 md:w-[120px]'
-                    disabled={!form.formState.isValid}
-                  >
-                    추가
-                  </Button>
-                </AlertDialogFooter>
-              </form>
-            </Form>
-          </div>
-        </AlertDialogContent>
-      </AlertDialogPortal>
+    <AlertDialog open={true}>
+      <AlertDialogContent>
+        <div className='py-3 md:py-4'>
+          <ModalHead>새 컬럼 생성</ModalHead>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+              <FormField
+                control={form.control}
+                name='title'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='text-base font-medium md:text-lg'>
+                      이름
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder='새로운 프로젝트' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <AlertDialogFooter className='flex w-full flex-row items-center gap-3 bg-white px-0 pt-6 md:justify-end md:pt-7'>
+                <AlertDialogCancel
+                  className='border-gray_dark3 mt-0 h-10 w-full md:h-12 md:w-[120px]'
+                  onClick={() => setIsOpen(false)} // 모달 닫기
+                >
+                  취소
+                </AlertDialogCancel>
+                <Button
+                  className='h-10 w-full md:h-12 md:w-[120px]'
+                  disabled={!form.formState.isValid}
+                >
+                  추가
+                </Button>
+              </AlertDialogFooter>
+            </form>
+          </Form>
+        </div>
+      </AlertDialogContent>
     </AlertDialog>
   )
 }
