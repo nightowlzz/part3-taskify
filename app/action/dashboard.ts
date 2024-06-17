@@ -121,7 +121,6 @@ export const deleteDashboard = async ({
 }) => {
   try {
     const res = await api.delete(`/dashboards/${dashboardId}`)
-    console.log('sdadasdsadsa', res.status)
 
     revalidatePath('/dashboard')
     return true

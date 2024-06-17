@@ -219,7 +219,6 @@ export const TaskCardEdit = ({
     try {
       let res
       if (imageFile) {
-        console.log('이미지 있어')
         const image = await api.post(
           `/columns/${columnId}/card-image`,
           formData,
@@ -229,7 +228,6 @@ export const TaskCardEdit = ({
           ...requestData,
         })
       } else {
-        console.log('이미지 없다~~~')
         res = await api.put(`/cards/${cardId}`, { ...requestData })
       }
 
