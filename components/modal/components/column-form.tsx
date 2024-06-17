@@ -43,7 +43,7 @@ export interface columnEditFrom {
   dashboardId: number
   setOpen: (open: boolean) => void
   setStep?: (step: number) => void
-  onSubmit: (edit: string) => void
+  onSubmit: (title: string) => void
 }
 
 export const ColumnForm = ({
