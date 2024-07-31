@@ -45,7 +45,6 @@ export const TaskEditButton = ({
     }
   }
 
-  // 모달의 다중 열림으로 cardid에 맞는 모달만 열리도록 수정
   const addHookAliases = (isOpen: boolean, card: number) => {
     if (isOpen) {
       setOpenCardId(card)

@@ -21,8 +21,6 @@ export const ConfirmAlert = ({
   onCancle,
   onConfirm,
   confirmText = '확인',
-  dashboardId,
-  columnId,
 }: IConfirm) => {
   return (
     <AlertDialogContent>

@@ -50,7 +50,7 @@ import { useSetRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { ModalHead } from './components/modal-head'
-import { default as style, default as styled } from './modal.module.css'
+import styled from './styles/modal.module.css'
 import { member, memberData, taskDetail, taskForm } from './types/modal-type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
@@ -514,7 +514,7 @@ export const TaskCardEdit = ({
                         id='picture'
                         type='file'
                         accept='image/*'
-                        className={`${style.inputFile}`}
+                        className={`${styled.inputFile}`}
                         onChange={(e) => {
                           handleImageChange(e)
                           field.onChange(e)
@@ -523,7 +523,7 @@ export const TaskCardEdit = ({
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border bg-white bg-center bg-no-repeat`}
+                      className={`${styled.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border bg-white bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview

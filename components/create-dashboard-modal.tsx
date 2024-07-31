@@ -1,12 +1,11 @@
 'use client'
 
+import { createDashboard } from '@/app/action/dashboard'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { createDashboard } from '@/app/action/dashboard'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
-import React from 'react'
 import {
   AlertDialogAction,
   AlertDialogCancel,

@@ -1,8 +1,6 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import styled from '@/components/modal/modal.module.css'
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -35,16 +33,18 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { api, cn } from '@/lib/utils'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { ITaskCreateOpen } from './modal/modal-type'
-import styled from '@/components/modal/modal.module.css'
-import { ModalHead } from './modal/modal-head'
+import { useForm } from 'react-hook-form'
 import { useRecoilState } from 'recoil'
+import { toast } from 'sonner'
+import { z } from 'zod'
 import { createTaskState } from './modal/modal-atom'
+import { ModalHead } from './modal/modal-head'
+import { ITaskCreateOpen } from './modal/modal-type'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 
@@ -202,7 +202,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
               onSubmit={form.handleSubmit(onSubmit)}
               className='w-full space-y-6'
             >
-              {/* 담당자 */}
               <FormField
                 control={form.control}
                 name='manager'
@@ -239,7 +238,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 )}
               />
 
-              {/* 제목 */}
               <FormField
                 control={form.control}
                 name='title'
@@ -256,7 +254,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 )}
               />
 
-              {/* 설명 */}
               <FormField
                 control={form.control}
                 name='desc'
@@ -277,7 +274,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 )}
               />
 
-              {/* 마감일 */}
               <FormField
                 control={form.control}
                 name='dueDate'
@@ -326,7 +322,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 )}
               />
 
-              {/* 태그 추가 */}
               <FormField
                 control={form.control}
                 name='tags'
@@ -372,7 +367,6 @@ const CreateTask = ({ dashboardId, columnId }: ITaskCreateOpen) => {
                 )}
               />
 
-              {/* 이미지 추가 */}
               <FormField
                 control={form.control}
                 name='image'

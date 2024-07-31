@@ -2,14 +2,11 @@
 
 import {
   AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogPortal,
-  AlertDialogOverlay,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
 } from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -24,13 +21,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { IColumnCreate } from './modal/modal-type'
-import { ModalHead } from './modal/modal-head'
-import { useRecoilState } from 'recoil'
 import { createColumnState } from './modal/modal-atom'
+import { ModalHead } from './modal/modal-head'
+import { IColumnCreate } from './modal/modal-type'
 
 const ColumnSchema = z.object({
   title: z

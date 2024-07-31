@@ -8,7 +8,7 @@ export const getCards = async (columnId: number) => {
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }
@@ -20,7 +20,7 @@ export const getCardById = async ({ cardId }: { cardId: number }) => {
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }

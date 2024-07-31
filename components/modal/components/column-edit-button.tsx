@@ -1,14 +1,13 @@
 'use client'
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { api } from '@/lib/utils'
+import settingIcon from '@/public/settings_icon.svg'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import ColumnEdit from '../column-edit'
 import { ConfirmAlert } from '../confirm-alert'
-import { columnEdit } from '../types/modal-type'
-import Image from 'next/image'
-import settingIcon from '@/public/settings_icon.svg'
 
 interface editColumnBtn {
   columnId: number

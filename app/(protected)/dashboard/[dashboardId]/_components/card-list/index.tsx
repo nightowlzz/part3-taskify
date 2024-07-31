@@ -1,30 +1,26 @@
 'use client'
 
-import Colors from './color'
+import useInfiniteScroll from '@/app/_hook/useInfiniteScroll'
+import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
+import { TaskCreactButton } from '@/components/modal/components/task-create-button'
 import { CardInfo } from '@/lib/type'
-import Number from './number'
-// import UpdateColumn from '../update-column'
-import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
-import {
-  cardListStateAboutColumn,
-  countAboutCardList,
-} from '../../_recoil/todo'
 import { api } from '@/lib/utils'
 import {
   Draggable,
   DraggableProvided,
   DraggableStateSnapshot,
 } from '@hello-pangea/dnd'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-// import UpdateColumn from '../update-column'
+import {
+  cardListStateAboutColumn,
+  countAboutCardList,
+} from '../../_recoil/todo'
 import Card from './card'
-import { TaskCreactButton } from '@/components/modal/components/task-create-button'
-import { ColumnEditButton } from '@/components/modal/components/column-edit-button'
-import useInfiniteScroll from '@/app/_hook/useInfiniteScroll'
-import { columnForm } from '@/components/modal/types/modal-type'
-import { useRouter } from 'next/navigation'
-import { detailTodoAboutCardId } from '../modal/modal-atom'
+import Colors from './color'
+import { deleteColumnsForColumnId, updateColumnsForColumnId } from './column'
+import Number from './number'
 
 interface CardListProps {
   id: number

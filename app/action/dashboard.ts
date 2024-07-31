@@ -1,6 +1,5 @@
 'use server'
 
-// import { ValueOfCircleColor } from '@/enum'
 import { api } from '@/lib/utils'
 import { Dashboard } from '@/type'
 import { revalidatePath } from 'next/cache'
@@ -17,13 +16,10 @@ export const createDashboard = async ({
   try {
     const response = await api.post<Dashboard>('/dashboards', { title, color })
     const dashboard = response.data
-
     revalidatePath('/dashboard')
-
     return dashboard
   } catch (error) {
-    // console.log(error)
-
+    console.error(error)
     return null
   }
 }
@@ -44,13 +40,10 @@ export const updateDashboardDetails = async ({
       color,
     })
     const dashboard = response.data
-
     revalidatePath('/dashboard')
-
     return dashboard
   } catch (error) {
-    // console.log(error)
-
+    console.error(error)
     return null
   }
 }
@@ -68,12 +61,10 @@ export const inviteUserToDashboard = async ({
     await api.post(`/dashboards/${dashboardId}/invitations`, {
       email,
     })
-
     revalidatePath('/dashboard')
-
     return true
   } catch (error) {
-    // console.log(error)
+    console.error(error)
     return null
   }
 }
@@ -93,7 +84,7 @@ export const revokeDashboardInvite = async ({
     revalidatePath('/dashboard')
     return true
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }
@@ -109,7 +100,7 @@ export const deleteDashboardMember = async ({
     revalidatePath('/dashboard')
     return true
   } catch (error) {
-    // console.log(error)
+    console.error(error)
     return false
   }
 }
@@ -125,7 +116,7 @@ export const deleteDashboard = async ({
     revalidatePath('/dashboard')
     return true
   } catch (error) {
-    // console.log(error)
+    console.error(error)
     return null
   }
 }

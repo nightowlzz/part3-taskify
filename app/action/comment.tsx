@@ -25,7 +25,7 @@ export const createComment = async ({
     revalidatePath('/dashboard/[dashboardId]', 'page')
     return true
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }

@@ -1,5 +1,10 @@
 'use client'
 
+import { inviteUserToDashboard } from '@/app/action/dashboard'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import {
   AlertDialogAction,
@@ -17,11 +22,6 @@ import {
   FormMessage,
 } from './ui/form'
 import { Input } from './ui/input'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { toast } from 'sonner'
-import { inviteUserToDashboard } from '@/app/action/dashboard'
 
 type Props = {
   dashboardId: number

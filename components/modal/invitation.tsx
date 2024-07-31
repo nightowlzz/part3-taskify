@@ -1,5 +1,9 @@
 'use client'
 
+import { postInvitation } from '@/app/_api-wrapper/post-invitation'
+import { useState } from 'react'
+import { CiSquarePlus } from 'react-icons/ci'
+import { EditCardProps } from '../edit-card/editCard-layout'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -7,12 +11,8 @@ import {
   AlertDialogContent,
   AlertDialogFooter,
 } from '../ui/alert-dialog'
-import { Input } from '../ui/input'
-import { useState } from 'react'
-import { EditCardProps } from '../edit-card/editCard-layout'
 import { Button } from '../ui/button'
-import { CiSquarePlus } from 'react-icons/ci'
-import { postInvitation } from '@/app/_api-wrapper/post-invitation'
+import { Input } from '../ui/input'
 
 const Invitation: React.FC<EditCardProps> = ({ dashboardId }) => {
   const [isModal, setIsModal] = useState(false)

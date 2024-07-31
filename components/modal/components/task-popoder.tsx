@@ -59,7 +59,6 @@ export const TaskPopoder = (task: taskDetail) => {
         />
       </PopoverTrigger>
       <PopoverContent>
-        {/* 수정하기 모달 */}
         <AlertDialog open={open} onOpenChange={setOpen}>
           <AlertDialogTrigger className={styled.popoverButton}>
             수정하기
@@ -68,7 +67,6 @@ export const TaskPopoder = (task: taskDetail) => {
           <TaskCardEdit setOpen={setOpen} {...task} />
         </AlertDialog>
 
-        {/* 삭제하기 모달 */}
         <AlertDialog>
           <AlertDialogTrigger className={styled.popoverButton}>
             삭제하기

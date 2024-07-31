@@ -22,7 +22,7 @@ export const getDashboards = async ({
     const data = response.data
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }
@@ -36,7 +36,7 @@ export const getDashboardById = async (
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }
@@ -62,7 +62,7 @@ export const getDashboardMembers = async (dashboardId: number) => {
     const data = response.data
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return null
   }
 }

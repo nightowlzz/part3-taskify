@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 import {
   AlertDialogCancel,
   AlertDialogContent,
@@ -34,6 +35,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { CardInfo } from '@/lib/type'
 import { api, cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import Image from 'next/image'
@@ -45,18 +47,16 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useRecoilState } from 'recoil'
 import { toast } from 'sonner'
 import { ModalHead } from './components/modal-head'
-import style from './modal.module.css'
+import styled from './styles/modal.module.css'
 import {
   columnDashboardId,
   member,
   memberData,
   taskForm,
 } from './types/modal-type'
-import { CardInfo } from '@/lib/type'
-import { useRecoilState } from 'recoil'
-import { cardListStateAboutColumn } from '@/app/(protected)/dashboard/[dashboardId]/_recoil/todo'
 
 const IMAGE_ADD_ICON = '/icon-purple-add.svg'
 const IMAGE_CLOSE_ICON = '/icon-close.svg'
@@ -441,7 +441,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                         id='picture'
                         type='file'
                         accept='image/*'
-                        className={`${style.inputFile}`}
+                        className={`${styled.inputFile}`}
                         onChange={(e) => {
                           handleImageChange(e)
                           field.onChange(e)
@@ -450,7 +450,7 @@ const TaskCardCreate = ({ dashboardId, columnId, setOpen }: taskCreadProps) => {
                     </FormControl>
                     <FormLabel
                       htmlFor='picture'
-                      className={`${style.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border border bg-white bg-center bg-no-repeat`}
+                      className={`${styled.failLabel} relative flex h-[76px] w-[76px] cursor-pointer items-center justify-center rounded-md border border bg-white bg-center bg-no-repeat`}
                       style={{
                         backgroundSize: preview ? '100% auto' : 'auto auto',
                         backgroundImage: preview

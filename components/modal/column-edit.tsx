@@ -1,9 +1,7 @@
 'user client'
-import { api } from '@/lib/utils'
 import { AlertDialogContent } from '../ui/alert-dialog'
 import { ColumnForm } from './components/column-form'
 import { ModalHead } from './components/modal-head'
-import { columnEditProps, columnForm } from './types/modal-type'
 
 interface editColumn {
   columnId: number
